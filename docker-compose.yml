@@ -1,0 +1,27 @@
+services:
+  seo4geo:
+    build:
+      context: .
+      args:
+        GEMINI_API_KEY: ${GEMINI_API_KEY}
+        VITE_GEMINI_API_KEY: ${GEMINI_API_KEY}
+    container_name: seo4geo
+    restart: unless-stopped
+    expose:
+      - "3000"
+    env_file:
+      - .env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.seo4geo.rule=Host(`seo4geo.com`) || Host(`www.seo4geo.com`)
+      - traefik.http.routers.seo4geo.tls=true
+      - traefik.http.routers.seo4geo.entrypoints=web,websecure
+      - traefik.http.routers.seo4geo.tls.certresolver=mytlschallenge
+      - traefik.http.services.seo4geo.loadbalancer.server.port=3000
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true
+    name: root_default

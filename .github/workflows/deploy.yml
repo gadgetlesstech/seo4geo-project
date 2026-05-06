@@ -1,0 +1,41 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy files to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 148.230.95.195
+          username: root
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "server/,client/src/,client/components/,client/lib/,client/public/,client/index.html,client/vite.config.js,client/package.json,client/package-lock.json,client/tsconfig.json,package.json,package-lock.json,Dockerfile,docker-compose.yml,.dockerignore"
+          target: /var/www/seo4geo
+
+      - name: Write .env on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 148.230.95.195
+          username: root
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cat > /var/www/seo4geo/.env << 'ENVEOF'
+            GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+            GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+            APP_URL=https://seo4geo.com
+            DATAFORSEO_LOGIN=${{ secrets.DATAFORSEO_LOGIN }}
+            DATAFORSEO_PASSWORD=${{ secrets.DATAFORSEO_PASSWORD }}
+            ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
+            GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+            VITE_GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+            ENVEOF
+            cd /var/www/seo4geo
+            docker compose build --no-cache
+            docker compose up -d

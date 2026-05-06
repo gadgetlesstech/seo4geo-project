@@ -1,0 +1,9 @@
+node_modules/
+client/node_modules/
+client/dist/
+.env
+.claude/
+*.json.bak
+SEOFORGEO_client_secret_*.json
+push-env.sh
+server-setup.sh
