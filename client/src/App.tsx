@@ -6,6 +6,7 @@ import ClusterPage from "./pages/ClusterPage";
 import AuditPage from "./pages/AuditPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AboutUs from "./pages/AboutUs";
+import ContactPage from "./pages/ContactPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import VoiceChat from "./components/VoiceChat";
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/audit" element={<AuditPage />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>
         <Footer />
