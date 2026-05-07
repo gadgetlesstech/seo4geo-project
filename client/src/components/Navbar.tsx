@@ -1,6 +1,6 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import logo from "@/src/assets/logo.png";
+import logo from "@/src/assets/gadgetlesstech-logo.png";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
