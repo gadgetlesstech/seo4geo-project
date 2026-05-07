@@ -11,11 +11,17 @@ import Footer from "./components/Footer";
 import VoiceChat from "./components/VoiceChat";
 
 function ScrollToTop() {
-  const { pathname, state } = useLocation();
+  const { pathname, hash, state } = useLocation();
   useEffect(() => {
     if ((state as any)?.keepScroll) return;
-    window.scrollTo(0, 0);
-  }, [pathname, state]);
+    if (hash) {
+      setTimeout(() => {
+        document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash, state]);
   return null;
 }
 

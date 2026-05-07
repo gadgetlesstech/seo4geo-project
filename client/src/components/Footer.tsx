@@ -17,7 +17,7 @@ export default function Footer() {
             <h4 className="font-display font-black text-[12px] uppercase tracking-widest text-white mb-8">The Framework</h4>
             <ul className="space-y-4 text-[12px] font-bold uppercase tracking-widest">
               <li><Link to="/strategy" className="hover:text-cyan-400 transition-colors">Ranking System™</Link></li>
-              <li><a href="/#framework" className="hover:text-cyan-400 transition-colors">Authority Stack</a></li>
+              <li><Link to="/#framework" className="hover:text-cyan-400 transition-colors">Authority Stack</Link></li>
               <li><Link to="/audit" className="hover:text-cyan-400 transition-colors">Free SEO Audit</Link></li>
             </ul>
           </div>
