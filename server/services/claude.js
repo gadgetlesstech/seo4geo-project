@@ -3,8 +3,8 @@ import Anthropic from '@anthropic-ai/sdk';
 let _client;
 function getClient() {
   if (!_client) {
-    const apiKey = process.env.CLAUDE_API_KEY;
-    if (!apiKey) throw new Error('CLAUDE_API_KEY must be set');
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) throw new Error('ANTHROPIC_API_KEY must be set');
     _client = new Anthropic({ apiKey });
   }
   return _client;
