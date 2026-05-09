@@ -23,7 +23,8 @@ router.post('/', async (req, res) => {
     const competitorDomains = competitors.map((c) => c.domain);
     const userDomain = new URL(url).hostname.replace(/^www\./, '');
 
-    const keywordData = await getDomainKeywordOverlap(userDomain, competitorDomains, keyword);
+    const competitorTitles = competitors.map((c) => c.title).filter(Boolean);
+    const keywordData = await getDomainKeywordOverlap(userDomain, competitorDomains, keyword, competitorTitles);
 
     const auditData = { url, keyword, city, crawlData, competitors, keywordData };
 
