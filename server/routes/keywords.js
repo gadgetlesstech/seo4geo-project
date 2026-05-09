@@ -3,6 +3,19 @@ import { dataForSEORequest } from '../services/dataforseo.js';
 
 const router = Router();
 
+function extractBrandTerms(domains) {
+  return domains.flatMap((domain) => {
+    const base = domain.replace(/\.(com|net|org|io|co|us|biz|info|agency|media)$/i, '').toLowerCase();
+    const spaced = base.replace(/[^a-z0-9]+/g, ' ').trim();
+    return [base, spaced].filter((t) => t.length > 2);
+  });
+}
+
+function isBrandedKeyword(keyword, brandTerms) {
+  const kw = keyword.toLowerCase();
+  return brandTerms.some((term) => kw.includes(term));
+}
+
 async function getDomainRankedKeywords(domain) {
   const payload = [{ target: domain, language_name: 'English', limit: 100 }];
   const data = await dataForSEORequest('/dataforseo_labs/google/ranked_keywords/live', payload);
@@ -35,10 +48,14 @@ export async function getDomainKeywordOverlap(userDomain, competitorDomains, tar
         uniqueToCompetitor: kws.size - shared.length,
       };
     }),
-    keywordsUserIsMissing: competitorDomains
-      .flatMap((_, i) => [...competitorKeywordSets[i]].filter((k) => !userKeywords.has(k)))
-      .filter((v, i, a) => a.indexOf(v) === i)
-      .slice(0, 20),
+    keywordsUserIsMissing: (() => {
+      const brandTerms = extractBrandTerms([userDomain, ...competitorDomains]);
+      return competitorDomains
+        .flatMap((_, i) => [...competitorKeywordSets[i]].filter((k) => !userKeywords.has(k)))
+        .filter((v, i, a) => a.indexOf(v) === i)
+        .filter((k) => !isBrandedKeyword(k, brandTerms))
+        .slice(0, 20);
+    })(),
   };
 
   return coverage;
