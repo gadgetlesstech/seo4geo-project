@@ -10,6 +10,7 @@ import ContactPage from "./pages/ContactPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import VoiceChat from "./components/VoiceChat";
+import { ExitPopup } from "./components/ExitPopup";
 
 function ScrollToTop() {
   const { pathname, hash, state } = useLocation();
@@ -45,6 +46,7 @@ export default function App() {
         </main>
         <Footer />
         <VoiceChat />
+        <ExitPopup />
       </div>
     </Router>
   );
