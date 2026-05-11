@@ -36,9 +36,14 @@ export default function Navbar() {
           <div className="flex items-center">
             <button onClick={goHome} className="flex items-center space-x-2 group">
               <img src={logo} alt="Gadgetlesstech" className="w-9 h-9 object-contain group-hover:scale-110 transition-transform" />
-              <span className="font-display font-black text-xl tracking-tighter uppercase italic text-white leading-none">
-                Gadgetlesstech<span className="text-cyan-400">.</span>
-              </span>
+              <div className="flex flex-col leading-none">
+                <span className="font-display font-black text-xl tracking-tighter uppercase italic text-white leading-none">
+                  SEO4GEO<span className="text-cyan-400">™</span>
+                </span>
+                <span className="text-[9px] font-semibold tracking-widest uppercase text-gray-400 leading-tight mt-0.5">
+                  The Gadgetlesstech Ranking System™
+                </span>
+              </div>
             </button>
           </div>
 
