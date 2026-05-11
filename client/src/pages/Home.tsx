@@ -114,8 +114,9 @@ export default function Home() {
               <h1 className="font-display text-5xl md:text-8xl font-black tracking-tight text-white mb-8 leading-[0.9]">
                 YOUR COMPETITORS ARE<br /><span className="text-cyan-400 underline decoration-8 decoration-cyan-500/20 underline-offset-8 italic">RANKING FOR WHAT YOU'RE NOT.</span>
               </h1>
-              <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-                seo4geo surfaces the exact keywords your competitors rank for that you don't — powered by the Gadgetlesstech Ranking System™. Run a free audit and see your gaps in under 60 seconds.
+              <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto font-medium" style={{ lineHeight: "1.9" }}>
+                SEO4GEO surfaces the exact keywords your competitors rank for that you don't — powered by the Gadgetlesstech Ranking System™.<br />
+                Run a free audit and see your gaps in under 60 seconds.
               </p>
             </motion.div>
 
