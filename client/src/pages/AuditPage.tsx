@@ -172,7 +172,7 @@ export default function AuditPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AuditResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [unlocked, setUnlocked] = useState(() => localStorage.getItem(UNLOCK_KEY) === "1");
+  const [unlocked, setUnlocked] = useState(false);
   const [gateName, setGateName] = useState("");
   const [gateEmail, setGateEmail] = useState("");
   const [gateLoading, setGateLoading] = useState(false);
@@ -182,6 +182,7 @@ export default function AuditPage() {
     setLoading(true);
     setError(null);
     setResult(null);
+    setUnlocked(false);
 
     try {
       const res = await fetch("/api/analyze", {
@@ -216,7 +217,6 @@ export default function AuditPage() {
         });
       }
     } catch (_) {}
-    localStorage.setItem(UNLOCK_KEY, "1");
     setGateLoading(false);
     setUnlocked(true);
   };
