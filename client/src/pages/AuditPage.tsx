@@ -176,6 +176,7 @@ export default function AuditPage() {
   const [gateName, setGateName] = useState("");
   const [gateEmail, setGateEmail] = useState("");
   const [gateLoading, setGateLoading] = useState(false);
+  const [gateLimitReached, setGateLimitReached] = useState(false);
 
   const handleSubmit = async (e: { preventDefault(): void }) => {
     e.preventDefault();
@@ -204,6 +205,17 @@ export default function AuditPage() {
     e.preventDefault();
     setGateLoading(true);
     try {
+      const limitRes = await fetch("/api/audit-limit/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: gateEmail }),
+      });
+      const limitData = await limitRes.json();
+      if (!limitData.allowed) {
+        setGateLoading(false);
+        setGateLimitReached(true);
+        return;
+      }
       if (N8N_WEBHOOK) {
         await fetch(N8N_WEBHOOK, {
           method: "POST",
@@ -720,39 +732,58 @@ export default function AuditPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="w-full max-w-md bg-[#0a0f1a] border border-white/10 rounded-3xl p-10 shadow-[0_0_80px_rgba(0,184,219,0.18)] backdrop-blur-md"
                   >
-                    <p className="text-cyan-400 font-black uppercase tracking-[0.3em] text-xs mb-3">Your Audit Is Ready</p>
-                    <h3 className="font-display text-3xl font-black uppercase tracking-tighter text-white mb-3 leading-tight">
-                      Unlock Your Full Report
-                    </h3>
-                    <p className="text-white/40 text-sm mb-8">
-                      Enter your email to see the complete breakdown — technical issues, backlinks, AI visibility, keyword gaps, and your custom action plan.
-                    </p>
-                    <form onSubmit={handleUnlock} className="space-y-4">
-                      <input
-                        type="text"
-                        placeholder="First name"
-                        value={gateName}
-                        onChange={(e) => setGateName(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors"
-                      />
-                      <input
-                        type="email"
-                        placeholder="Email address *"
-                        value={gateEmail}
-                        onChange={(e) => setGateEmail(e.target.value)}
-                        required
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors"
-                      />
-                      <button
-                        type="submit"
-                        disabled={gateLoading || !gateEmail}
-                        className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-[#00b8db] text-black font-black uppercase tracking-widest text-sm rounded-xl hover:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {gateLoading ? "Unlocking…" : "Unlock Full Report"} <ArrowRight className="w-4 h-4" />
-                      </button>
-                    </form>
-                    <p className="text-white/20 text-xs text-center mt-5">No spam. Unsubscribe anytime.</p>
-                  </motion.div>
+                    {gateLimitReached ? (
+                      <div className="text-center">
+                        <p className="text-red-400 font-black uppercase tracking-[0.3em] text-xs mb-3">Free Audit Limit Reached</p>
+                        <h3 className="font-display text-3xl font-black uppercase tracking-tighter text-white mb-3 leading-tight">
+                          You've Used Your 2 Free Audits
+                        </h3>
+                        <p className="text-white/50 text-sm mb-8">
+                          Book a free strategy call to get unlimited access and a full custom ranking report built for your business.
+                        </p>
+                        <button
+                          onClick={() => window.dispatchEvent(new CustomEvent('open-calendar'))}
+                          className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-[#00b8db] text-black font-black uppercase tracking-widest text-sm rounded-xl hover:bg-white transition-all"
+                        >
+                          Book a Strategy Call <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        <p className="text-cyan-400 font-black uppercase tracking-[0.3em] text-xs mb-3">Your Audit Is Ready</p>
+                        <h3 className="font-display text-3xl font-black uppercase tracking-tighter text-white mb-3 leading-tight">
+                          Unlock Your Full Report
+                        </h3>
+                        <p className="text-white/40 text-sm mb-8">
+                          Enter your email to see the complete breakdown — technical issues, backlinks, AI visibility, keyword gaps, and your custom action plan.
+                        </p>
+                        <form onSubmit={handleUnlock} className="space-y-4">
+                          <input
+                            type="text"
+                            placeholder="First name"
+                            value={gateName}
+                            onChange={(e) => setGateName(e.target.value)}
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                          />
+                          <input
+                            type="email"
+                            placeholder="Email address *"
+                            value={gateEmail}
+                            onChange={(e) => setGateEmail(e.target.value)}
+                            required
+                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                          />
+                          <button
+                            type="submit"
+                            disabled={gateLoading || !gateEmail}
+                            className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-[#00b8db] text-black font-black uppercase tracking-widest text-sm rounded-xl hover:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {gateLoading ? "Unlocking…" : "Unlock Full Report"} <ArrowRight className="w-4 h-4" />
+                          </button>
+                        </form>
+                        <p className="text-white/20 text-xs text-center mt-5">No spam. Unsubscribe anytime.</p>
+                      </>
+                    )}
                 </div>
               )}
             </div>{/* end gated wrapper */}
