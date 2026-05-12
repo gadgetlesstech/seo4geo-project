@@ -24,7 +24,7 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "YOUR_SPREADSHEET_ID_HERE",
+          "value": "12YsabR38zT6qglwgE7wqzy18cf1T93JFwG8ghbZGGNc",
           "mode": "id"
         },
         "sheetName": {
@@ -364,7 +364,7 @@
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "YOUR_SPREADSHEET_ID_HERE",
+          "value": "12YsabR38zT6qglwgE7wqzy18cf1T93JFwG8ghbZGGNc",
           "mode": "id"
         },
         "sheetName": {
