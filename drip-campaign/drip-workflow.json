@@ -1,37 +1,87 @@
 {
-  "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "name": "Gadgetlesstech — Email Drip Campaign",
+  "id": "e1f2a3b4-c5d6-7890-e1f2-a3b4c5d6e7f8",
+  "name": "QES — Blueprint Drip Campaign",
   "nodes": [
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "gadgetlesstech-drip",
+        "path": "qes-blueprint",
         "responseMode": "onReceived",
         "options": {}
       },
-      "id": "3c4d5e6f-7a8b-9012-c3d4-e5f6a7b8c9d0",
-      "name": "Lead Signup Webhook",
+      "id": "00000001-a1b2-c3d4-e5f6-000000007891",
+      "name": "QES Blueprint Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
-      "position": [260, 80],
-      "webhookId": "4d5e6f7a-8b9c-0123-d4e5-f6a7b8c9d0e1"
+      "position": [
+        260,
+        80
+      ],
+      "webhookId": "00000063-a1b2-c3d4-e5f6-000000007989"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SPREADSHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "QES Leads",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ new Date().toISOString() }}",
+            "Name": "={{ $json.name || '' }}",
+            "Email": "={{ $json.email }}",
+            "Website": "={{ $json.website || '' }}",
+            "Source": "={{ $json.source || 'qes_blueprint' }}",
+            "Status": "Active",
+            "Last Email": "Welcome"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "00000002-a1b2-c3d4-e5f6-000000007892",
+      "name": "Add Lead to CRM",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        260,
+        240
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1",
+          "name": "Google Sheets Account"
+        }
+      }
     },
     {
       "parameters": {
         "fromEmail": "kevin@gadgetlesstech.com",
         "toEmail": "={{ $json.email }}",
-        "subject": "You're in — here's your blueprint + what's coming",
+        "subject": "You're in — your blueprint is ready",
         "emailType": "html",
-        "message": "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'></head><body style='margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;'><table width='100%' cellpadding='0' cellspacing='0'><tr><td align='center' style='padding:40px 20px;'><table width='600' cellpadding='0' cellspacing='0' style='max-width:600px;width:100%;'><tr><td style='background:#000000;padding:24px 32px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;'><p style='margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:Arial,sans-serif;'>Gadgetlesstech Ranking System™</p><p style='margin:4px 0 0;color:#ffffff;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-style:italic;font-family:Arial,sans-serif;'>SEO4GEO</p></td></tr><tr><td style='background:#ffffff;padding:36px 32px;font-size:15px;line-height:1.8;color:#333333;font-family:Arial,sans-serif;'><p style='margin:0 0 16px;'>Hey {{ $json.name || 'there' }},</p><p style='margin:0 0 16px;'>Welcome to the Gadgetlesstech ecosystem.</p><p style='margin:0 0 16px;'>Over the next few weeks you're going to get an inside look at the 4-pillar Ranking System that top local businesses use to dominate search — and how it applies to your business specifically.</p><p style='margin:0 0 8px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#000;'>Here's your roadmap:</p><table width='100%' cellpadding='0' cellspacing='0' style='margin:0 0 24px;'><tr><td style='padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;'><span style='color:#00b8db;font-weight:700;'>01 —</span> <strong>Query Expansion System</strong> — Why most SEO fails before it starts</td></tr><tr><td style='padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;'><span style='color:#00b8db;font-weight:700;'>02 —</span> <strong>SEO4GEO</strong> — The tool that surfaces your actual keyword gaps</td></tr><tr><td style='padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;'><span style='color:#00b8db;font-weight:700;'>03 —</span> <strong>Free Audit</strong> — Your personalized visibility report in 60 seconds</td></tr><tr><td style='padding:10px 0;font-size:14px;'><span style='color:#00b8db;font-weight:700;'>04 —</span> <strong>Gadgetlesstech</strong> — The team that executes the full system for you</td></tr></table><p style='margin:0 0 20px;'>Start here — this is the foundation everything else is built on:</p><table cellpadding='0' cellspacing='0'><tr><td style='background:#00b8db;border-radius:6px;'><a href='https://queryexpansionsystem.com' style='display:inline-block;padding:14px 28px;color:#000000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;'>Download Your Free Blueprint →</a></td></tr></table><p style='margin:24px 0 0;'>First lesson arrives in 2 days. It'll change how you think about SEO.</p><p style='margin:16px 0 0;'>— Kevin<br><span style='color:#999999;font-size:13px;'>Gadgetlesstech</span></p></td></tr><tr><td style='background:#f9f9f9;padding:20px 32px;border-top:1px solid #eeeeee;border-radius:0 0 8px 8px;'><p style='margin:0;font-size:11px;color:#999999;font-family:Arial,sans-serif;'>You received this because you signed up via SEO4GEO or the Gadgetlesstech Blueprint. <a href='#' style='color:#00b8db;text-decoration:none;'>Unsubscribe</a></p></td></tr></table></td></tr></table></body></html>"
+        "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:580px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">Gadgetlesstech Ranking System&#8482;</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">Query Expansion System&#8482;</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.name || 'there' }},</p><p>Your Query Expansion System Blueprint is ready. This document covers the foundational concept behind every ranking strategy we build at Gadgetlesstech.</p><table cellpadding=\"0\" cellspacing=\"0\" style=\"margin:24px 0;\"><tr><td style=\"background:#00b8db;border-radius:6px;\"><a href=\"https://queryexpansionsystem.com\" style=\"display:inline-block;padding:14px 28px;color:#000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;\">Download Your Blueprint &#8594;</a></td></tr></table><p>Over the next few weeks I will walk you through the complete 4-pillar system:</p><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin:16px 0;\"><tr><td style=\"padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">01 &#8212;</span> <strong>Query Expansion System</strong> &#8212; Why most SEO fails before it starts</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">02 &#8212;</span> <strong>SEO4GEO</strong> &#8212; The tool that surfaces your actual keyword gaps</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">03 &#8212;</span> <strong>Free Audit</strong> &#8212; Your personalized visibility report in 60 seconds</td></tr><tr><td style=\"padding:10px 0;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">04 &#8212;</span> <strong>Gadgetlesstech</strong> &#8212; The team that executes the full system for you</td></tr></table><p>First deep dive arrives in 2 days.</p><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you requested the Gadgetlesstech Blueprint. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
       },
-      "id": "5e6f7a8b-9c0d-1234-e5f6-a7b8c9d0e1f2",
-      "name": "Email 1 — Welcome",
+      "id": "00000003-a1b2-c3d4-e5f6-000000007893",
+      "name": "Email 1 — Welcome + Blueprint",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [260, 240],
+      "position": [
+        260,
+        400
+      ],
       "credentials": {
         "smtp": {
-          "id": "1",
+          "id": "2",
           "name": "Gmail SMTP"
         }
       }
@@ -42,29 +92,35 @@
         "amount": 2,
         "unit": "days"
       },
-      "id": "6f7a8b9c-0d1e-2345-f6a7-b8c9d0e1f2a3",
-      "name": "Wait 2 Days",
+      "id": "00000004-a1b2-c3d4-e5f6-000000007894",
+      "name": "Wait 2 Days (1)",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
-      "position": [260, 400],
-      "webhookId": "7a8b9c0d-1e2f-3456-a7b8-c9d0e1f2a3b4"
+      "position": [
+        260,
+        560
+      ],
+      "webhookId": "00000032-a1b2-c3d4-e5f6-000000007940"
     },
     {
       "parameters": {
         "fromEmail": "kevin@gadgetlesstech.com",
         "toEmail": "={{ $json.email }}",
-        "subject": "The real reason your competitors outrank you (it's not backlinks)",
+        "subject": "Why 90% of your potential searches go unranked",
         "emailType": "html",
-        "message": "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'></head><body style='margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;'><table width='100%' cellpadding='0' cellspacing='0'><tr><td align='center' style='padding:40px 20px;'><table width='600' cellpadding='0' cellspacing='0' style='max-width:600px;width:100%;'><tr><td style='background:#000000;padding:24px 32px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;'><p style='margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:Arial,sans-serif;'>Gadgetlesstech Ranking System™</p><p style='margin:4px 0 0;color:#ffffff;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-style:italic;font-family:Arial,sans-serif;'>SEO4GEO</p></td></tr><tr><td style='background:#ffffff;padding:36px 32px;font-size:15px;line-height:1.8;color:#333333;font-family:Arial,sans-serif;'><p style='margin:0 0 16px;'>Hey {{ $json.name || 'there' }},</p><p style='margin:0 0 16px;'>Let me ask you something: how many keywords are you actually targeting right now?</p><p style='margin:0 0 16px;'>Most local businesses have a list of 10–30 keywords they care about. Their top competitor? Often ranking for <strong>300–500+ variations</strong> of those same searches.</p><p style='margin:0 0 16px;'>That gap doesn't happen by accident. It happens because of <strong>Query Expansion</strong> — the single biggest lever in modern local SEO.</p><p style='margin:0 0 16px;'>When someone searches for your service, they use <em>hundreds of different phrasings</em>. You might rank for &quot;plumber near me&quot; but completely miss:</p><ul style='padding-left:20px;margin:0 0 16px;line-height:2.4;'><li>emergency pipe repair [your city]</li><li>how to fix a burst pipe fast</li><li>licensed plumber open on weekends</li><li>water heater replacement cost</li></ul><p style='margin:0 0 16px;'>Each one is a customer with their wallet out — with zero competition for your attention.</p><p style='margin:0 0 24px;'>The Query Expansion System was built around one idea: <strong>capture everything your customer could possibly search, without the content bloat.</strong></p><table cellpadding='0' cellspacing='0'><tr><td style='background:#00b8db;border-radius:6px;'><a href='https://queryexpansionsystem.com' style='display:inline-block;padding:14px 28px;color:#000000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;'>See the Full Methodology →</a></td></tr></table><p style='margin:24px 0 0;'>Next email: the real scale of your keyword gap. The numbers will surprise you.</p><p style='margin:16px 0 0;'>— Kevin<br><span style='color:#999999;font-size:13px;'>Gadgetlesstech</span></p></td></tr><tr><td style='background:#f9f9f9;padding:20px 32px;border-top:1px solid #eeeeee;border-radius:0 0 8px 8px;'><p style='margin:0;font-size:11px;color:#999999;font-family:Arial,sans-serif;'>You received this because you signed up via SEO4GEO or the Gadgetlesstech Blueprint. <a href='#' style='color:#00b8db;text-decoration:none;'>Unsubscribe</a></p></td></tr></table></td></tr></table></body></html>"
+        "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:580px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">The Why</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">Query Expansion System&#8482;</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.name || 'there' }},</p><p>You requested the blueprint because something about query expansion clicked. Let me go deeper.</p><p>Most businesses optimize for a fixed list of 10&#8211;30 keywords. That is the entire surface area of their SEO strategy. Their top local competitor? Ranking for 300&#8211;500 variations of those same searches.</p><p>When someone needs your service, they do not always type the same phrase. They search:</p><ul style=\"padding-left:20px;margin:0 0 16px;line-height:2.4;\"><li>the service name plus their city</li><li>a problem they are trying to solve</li><li>a question about cost, timing, or process</li><li>an emergency or urgent variation</li><li>a comparison against a competing option</li></ul><p>Each one is a separate ranking opportunity. Each one has intent. Each one represents a customer ready to act.</p><p>Query Expansion is the system for capturing all of them without creating a mountain of individual pages or bloating your content strategy.</p><table cellpadding=\"0\" cellspacing=\"0\" style=\"margin:24px 0;\"><tr><td style=\"background:#00b8db;border-radius:6px;\"><a href=\"https://queryexpansionsystem.com\" style=\"display:inline-block;padding:14px 28px;color:#000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;\">Read the Full Methodology &#8594;</a></td></tr></table><p>Next email: the real scale of the gap between you and your top competitor.</p><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you requested the Gadgetlesstech Blueprint. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
       },
-      "id": "8b9c0d1e-2f3a-4567-b8c9-d0e1f2a3b4c5",
-      "name": "Email 2 — Query Expansion (The Why)",
+      "id": "00000005-a1b2-c3d4-e5f6-000000007895",
+      "name": "Email 2 — Query Expansion Deep Dive",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [260, 560],
+      "position": [
+        260,
+        720
+      ],
       "credentials": {
         "smtp": {
-          "id": "1",
+          "id": "2",
           "name": "Gmail SMTP"
         }
       }
@@ -75,62 +131,35 @@
         "amount": 3,
         "unit": "days"
       },
-      "id": "9c0d1e2f-3a4b-5678-c9d0-e1f2a3b4c5d6",
-      "name": "Wait 3 Days (1)",
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1,
-      "position": [260, 720],
-      "webhookId": "0d1e2f3a-4b5c-6789-d0e1-f2a3b4c5d6e7"
-    },
-    {
-      "parameters": {
-        "fromEmail": "kevin@gadgetlesstech.com",
-        "toEmail": "={{ $json.email }}",
-        "subject": "Your keyword gap is probably 10x bigger than you think",
-        "emailType": "html",
-        "message": "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'></head><body style='margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;'><table width='100%' cellpadding='0' cellspacing='0'><tr><td align='center' style='padding:40px 20px;'><table width='600' cellpadding='0' cellspacing='0' style='max-width:600px;width:100%;'><tr><td style='background:#000000;padding:24px 32px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;'><p style='margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:Arial,sans-serif;'>Gadgetlesstech Ranking System™</p><p style='margin:4px 0 0;color:#ffffff;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-style:italic;font-family:Arial,sans-serif;'>SEO4GEO</p></td></tr><tr><td style='background:#ffffff;padding:36px 32px;font-size:15px;line-height:1.8;color:#333333;font-family:Arial,sans-serif;'><p style='margin:0 0 16px;'>Hey {{ $json.name || 'there' }},</p><p style='margin:0 0 16px;'>Here's a stat that should concern you:</p><table width='100%' cellpadding='16' cellspacing='0' style='margin:0 0 24px;border-left:4px solid #00b8db;background:#f9f9f9;'><tr><td style='font-size:16px;line-height:1.8;'><p style='margin:0;'>The average local business ranks for <strong>47 keywords.</strong></p><p style='margin:4px 0 0;'>Their top competitor ranks for <strong style='color:#00b8db;'>430+.</strong></p></td></tr></table><p style='margin:0 0 16px;'>That's a 10x visibility gap — and it compounds every month you don't close it.</p><p style='margin:0 0 16px;'>AI-powered search (Google AI Overviews, ChatGPT, Perplexity) doesn't just surface the highest-ranking page. It surfaces the business with <strong>topical authority</strong> — the one that's answered the most questions in your space.</p><p style='margin:0 0 16px;'>If you're ranking for 47 keywords, the algorithm doesn't see you as an authority. It sees you as a listing.</p><p style='margin:0 0 0;'>The businesses winning local search aren't creating more content. They're using systems that compress hundreds of keyword variations into lean, structured content that signals authority at scale. That's the Gadgetlesstech approach.</p><p style='margin:24px 0 0;'>In 3 days I'm going to show you a free tool that makes the gap between you and your top competitor impossible to ignore.</p><p style='margin:16px 0 0;'>— Kevin<br><span style='color:#999999;font-size:13px;'>Gadgetlesstech</span></p></td></tr><tr><td style='background:#f9f9f9;padding:20px 32px;border-top:1px solid #eeeeee;border-radius:0 0 8px 8px;'><p style='margin:0;font-size:11px;color:#999999;font-family:Arial,sans-serif;'>You received this because you signed up via SEO4GEO or the Gadgetlesstech Blueprint. <a href='#' style='color:#00b8db;text-decoration:none;'>Unsubscribe</a></p></td></tr></table></td></tr></table></body></html>"
-      },
-      "id": "1e2f3a4b-5c6d-7890-e1f2-a3b4c5d6e7f8",
-      "name": "Email 3 — The Gap Problem",
-      "type": "n8n-nodes-base.emailSend",
-      "typeVersion": 2,
-      "position": [260, 880],
-      "credentials": {
-        "smtp": {
-          "id": "1",
-          "name": "Gmail SMTP"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resume": "timeInterval",
-        "amount": 3,
-        "unit": "days"
-      },
-      "id": "2f3a4b5c-6d7e-8901-f2a3-b4c5d6e7f8a9",
+      "id": "00000006-a1b2-c3d4-e5f6-000000007896",
       "name": "Wait 3 Days (2)",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
-      "position": [260, 1040],
-      "webhookId": "3a4b5c6d-7e8f-9012-a3b4-c5d6e7f8a9b0"
+      "position": [
+        260,
+        880
+      ],
+      "webhookId": "00000033-a1b2-c3d4-e5f6-000000007941"
     },
     {
       "parameters": {
         "fromEmail": "kevin@gadgetlesstech.com",
         "toEmail": "={{ $json.email }}",
-        "subject": "We built a tool that shows exactly where you're losing (it's free)",
+        "subject": "The keyword gap costing you customers every day",
         "emailType": "html",
-        "message": "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'></head><body style='margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;'><table width='100%' cellpadding='0' cellspacing='0'><tr><td align='center' style='padding:40px 20px;'><table width='600' cellpadding='0' cellspacing='0' style='max-width:600px;width:100%;'><tr><td style='background:#000000;padding:24px 32px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;'><p style='margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:Arial,sans-serif;'>Gadgetlesstech Ranking System™</p><p style='margin:4px 0 0;color:#ffffff;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-style:italic;font-family:Arial,sans-serif;'>SEO4GEO</p></td></tr><tr><td style='background:#ffffff;padding:36px 32px;font-size:15px;line-height:1.8;color:#333333;font-family:Arial,sans-serif;'><p style='margin:0 0 16px;'>Hey {{ $json.name || 'there' }},</p><p style='margin:0 0 16px;'>We built SEO4GEO because we got tired of telling clients they had an SEO problem without being able to show them <em>exactly</em> what it was.</p><p style='margin:0 0 24px;'>So we built the tool that does exactly that. Here's what you get when you run a free audit:</p><table width='100%' cellpadding='0' cellspacing='0' style='margin:0 0 24px;'><tr><td style='padding:12px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;font-weight:900;'>✓</span> <strong>Keyword Gap Report</strong> — every keyword your competitors rank for that you don't</td></tr><tr><td style='padding:12px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;font-weight:900;'>✓</span> <strong>Competitor Rankings</strong> — real search data, not estimates</td></tr><tr><td style='padding:12px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;font-weight:900;'>✓</span> <strong>Local Visibility Score</strong> — how visible you are vs. your market</td></tr><tr><td style='padding:12px 0;font-size:14px;'><span style='color:#00b8db;font-weight:900;'>✓</span> <strong>AI Action Plan</strong> — mapped to the Gadgetlesstech Ranking System</td></tr></table><p style='margin:0 0 8px;'>Takes 60 seconds. Just your URL and one competitor. No credit card, no sales call required.</p><p style='margin:0 0 24px;'></p><table cellpadding='0' cellspacing='0'><tr><td style='background:#00b8db;border-radius:6px;'><a href='https://seo4geo.com' style='display:inline-block;padding:14px 28px;color:#000000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;'>Run Your Free Audit Now →</a></td></tr></table><p style='margin:24px 0 0;'>— Kevin<br><span style='color:#999999;font-size:13px;'>Gadgetlesstech</span></p></td></tr><tr><td style='background:#f9f9f9;padding:20px 32px;border-top:1px solid #eeeeee;border-radius:0 0 8px 8px;'><p style='margin:0;font-size:11px;color:#999999;font-family:Arial,sans-serif;'>You received this because you signed up via SEO4GEO or the Gadgetlesstech Blueprint. <a href='#' style='color:#00b8db;text-decoration:none;'>Unsubscribe</a></p></td></tr></table></td></tr></table></body></html>"
+        "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:580px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">The Data</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">Query Expansion System&#8482;</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.name || 'there' }},</p><p>Here is a number worth sitting with:</p><div style=\"border-left:4px solid #00b8db;background:#f9f9f9;padding:20px;margin:20px 0;font-size:16px;line-height:1.8;\"><p style=\"margin:0;\">The average local business ranks for <strong>47 keywords.</strong></p><p style=\"margin:4px 0 0;\">Their top local competitor ranks for <strong style=\"color:#00b8db;\">430+.</strong></p></div><p>That is a 10x visibility gap &#8212; and it compounds every month you do not close it.</p><p>AI-powered search does not just surface the highest-ranking page. It surfaces the business with <strong>topical authority</strong> &#8212; the one that has demonstrated the broadest, deepest coverage of your subject area.</p><p>If you are ranking for 47 keywords, the algorithm does not see you as an authority. It sees you as a listing.</p><p>The businesses winning local search right now are using systems that compress hundreds of keyword variations into lean, structured content that signals authority at scale. That is the Gadgetlesstech approach.</p><p>In 3 days I will show you the free tool that makes this gap impossible to ignore.</p><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you requested the Gadgetlesstech Blueprint. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
       },
-      "id": "4b5c6d7e-8f9a-0123-b4c5-d6e7f8a9b0c1",
-      "name": "Email 4 — SEO4GEO (The What)",
+      "id": "00000007-a1b2-c3d4-e5f6-000000007897",
+      "name": "Email 3 — The Gap Problem",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [260, 1200],
+      "position": [
+        260,
+        1040
+      ],
       "credentials": {
         "smtp": {
-          "id": "1",
+          "id": "2",
           "name": "Gmail SMTP"
         }
       }
@@ -141,12 +170,54 @@
         "amount": 3,
         "unit": "days"
       },
-      "id": "5c6d7e8f-9a0b-1234-c5d6-e7f8a9b0c1d2",
+      "id": "00000008-a1b2-c3d4-e5f6-000000007898",
       "name": "Wait 3 Days (3)",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
-      "position": [260, 1360],
-      "webhookId": "6d7e8f9a-0b1c-2345-d6e7-f8a9b0c1d2e3"
+      "position": [
+        260,
+        1200
+      ],
+      "webhookId": "00000034-a1b2-c3d4-e5f6-000000007942"
+    },
+    {
+      "parameters": {
+        "fromEmail": "kevin@gadgetlesstech.com",
+        "toEmail": "={{ $json.email }}",
+        "subject": "We built a tool that shows exactly where you are losing",
+        "emailType": "html",
+        "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:580px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">The What</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">Query Expansion System&#8482;</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.name || 'there' }},</p><p>We built SEO4GEO because we got tired of telling clients they had an SEO problem without being able to show them exactly what it was.</p><p>SEO4GEO is the proof layer of the Gadgetlesstech Ranking System. It does one thing well: it shows you the exact keywords your local competitors rank for that you do not.</p><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin:20px 0;\"><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">&#10003;</span> <strong>Keyword Gap Report</strong> &#8212; every keyword your competitor ranks for that you do not</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">&#10003;</span> <strong>Competitor Rankings</strong> &#8212; real search data, not estimates</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">&#10003;</span> <strong>Local Visibility Score</strong> &#8212; how visible you are vs. your market</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">&#10003;</span> <strong>AI Action Plan</strong> &#8212; mapped to the Gadgetlesstech Ranking System</td></tr></table><p>Takes 60 seconds. Just your website URL and one competitor. No credit card, no sales call required to see results.</p><table cellpadding=\"0\" cellspacing=\"0\" style=\"margin:24px 0;\"><tr><td style=\"background:#00b8db;border-radius:6px;\"><a href=\"https://seo4geo.com\" style=\"display:inline-block;padding:14px 28px;color:#000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;\">Run Your Free Audit &#8594;</a></td></tr></table><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you requested the Gadgetlesstech Blueprint. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
+      },
+      "id": "00000009-a1b2-c3d4-e5f6-000000007899",
+      "name": "Email 4 — SEO4GEO Introduction",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        260,
+        1360
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "2",
+          "name": "Gmail SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resume": "timeInterval",
+        "amount": 3,
+        "unit": "days"
+      },
+      "id": "0000000a-a1b2-c3d4-e5f6-000000007900",
+      "name": "Wait 3 Days (4)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        260,
+        1520
+      ],
+      "webhookId": "00000035-a1b2-c3d4-e5f6-000000007943"
     },
     {
       "parameters": {
@@ -154,16 +225,19 @@
         "toEmail": "={{ $json.email }}",
         "subject": "The 4-layer system behind every ranking we build",
         "emailType": "html",
-        "message": "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'></head><body style='margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;'><table width='100%' cellpadding='0' cellspacing='0'><tr><td align='center' style='padding:40px 20px;'><table width='600' cellpadding='0' cellspacing='0' style='max-width:600px;width:100%;'><tr><td style='background:#000000;padding:24px 32px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;'><p style='margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:Arial,sans-serif;'>Gadgetlesstech Ranking System™</p><p style='margin:4px 0 0;color:#ffffff;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-style:italic;font-family:Arial,sans-serif;'>SEO4GEO</p></td></tr><tr><td style='background:#ffffff;padding:36px 32px;font-size:15px;line-height:1.8;color:#333333;font-family:Arial,sans-serif;'><p style='margin:0 0 16px;'>Hey {{ $json.name || 'there' }},</p><p style='margin:0 0 16px;'>Most SEO agencies work one lever at a time — if they work any at all.</p><p style='margin:0 0 24px;'>We run four simultaneously. Here's the full Gadgetlesstech Ranking System:</p><table width='100%' cellpadding='16' cellspacing='0' style='border-left:4px solid #00b8db;background:#f9f9f9;margin-bottom:10px;'><tr><td><p style='margin:0;font-size:11px;color:#00b8db;font-weight:700;text-transform:uppercase;letter-spacing:2px;'>Layer 01</p><p style='margin:4px 0;font-weight:900;font-size:15px;color:#000;'>Keyword Compression</p><p style='margin:4px 0 0;color:#666;font-size:13px;line-height:1.6;'>Cover thousands of search variations through phrase stacking. Maximum visibility, zero content bloat.</p></td></tr></table><table width='100%' cellpadding='16' cellspacing='0' style='border-left:4px solid #00b8db;background:#f9f9f9;margin-bottom:10px;margin-top:10px;'><tr><td><p style='margin:0;font-size:11px;color:#00b8db;font-weight:700;text-transform:uppercase;letter-spacing:2px;'>Layer 02</p><p style='margin:4px 0;font-weight:900;font-size:15px;color:#000;'>Topical Authority</p><p style='margin:4px 0 0;color:#666;font-size:13px;line-height:1.6;'>Own entire subject areas through semantic saturation. Become the source Google and AI models trust above everyone else.</p></td></tr></table><table width='100%' cellpadding='16' cellspacing='0' style='border-left:4px solid #00b8db;background:#f9f9f9;margin-bottom:10px;margin-top:10px;'><tr><td><p style='margin:0;font-size:11px;color:#00b8db;font-weight:700;text-transform:uppercase;letter-spacing:2px;'>Layer 03</p><p style='margin:4px 0;font-weight:900;font-size:15px;color:#000;'>Page Authority</p><p style='margin:4px 0 0;color:#666;font-size:13px;line-height:1.6;'>Optimize individual pages to gain independent ranking power using on-page signals and engagement triggers.</p></td></tr></table><table width='100%' cellpadding='16' cellspacing='0' style='border-left:4px solid #00b8db;background:#f9f9f9;margin-bottom:24px;margin-top:10px;'><tr><td><p style='margin:0;font-size:11px;color:#00b8db;font-weight:700;text-transform:uppercase;letter-spacing:2px;'>Layer 04</p><p style='margin:4px 0;font-weight:900;font-size:15px;color:#000;'>Query Expansion</p><p style='margin:4px 0 0;color:#666;font-size:13px;line-height:1.6;'>Capture long-tail and AI-driven queries using People Also Ask strategies and query fan-out techniques. Where your competitors have zero coverage.</p></td></tr></table><p style='margin:0 0 0;'>This is what separates businesses that rank from businesses that wonder why they don't. In 3 days I'll show you how to get a full breakdown of where you stand on each layer — for free.</p><p style='margin:24px 0 0;'>— Kevin<br><span style='color:#999999;font-size:13px;'>Gadgetlesstech</span></p></td></tr><tr><td style='background:#f9f9f9;padding:20px 32px;border-top:1px solid #eeeeee;border-radius:0 0 8px 8px;'><p style='margin:0;font-size:11px;color:#999999;font-family:Arial,sans-serif;'>You received this because you signed up via SEO4GEO or the Gadgetlesstech Blueprint. <a href='#' style='color:#00b8db;text-decoration:none;'>Unsubscribe</a></p></td></tr></table></td></tr></table></body></html>"
+        "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:580px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">The Methodology</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">Query Expansion System&#8482;</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.name || 'there' }},</p><p>Most SEO agencies work one lever at a time &#8212; if they work any at all. We run four simultaneously.</p><p>Here is the full Gadgetlesstech Ranking System:</p><div style=\"border-left:4px solid #00b8db;background:#f9f9f9;padding:16px;margin-bottom:10px;\"><p style=\"margin:0;font-size:10px;color:#00b8db;font-weight:700;text-transform:uppercase;letter-spacing:2px;\">Layer 01</p><p style=\"margin:4px 0;font-size:15px;font-weight:900;color:#000;\">Keyword Compression</p><p style=\"margin:4px 0 0;font-size:13px;color:#666;line-height:1.6;\">Cover thousands of search variations through phrase stacking. Maximum visibility, zero content bloat.</p></div><div style=\"border-left:4px solid #00b8db;background:#f9f9f9;padding:16px;margin-bottom:10px;\"><p style=\"margin:0;font-size:10px;color:#00b8db;font-weight:700;text-transform:uppercase;letter-spacing:2px;\">Layer 02</p><p style=\"margin:4px 0;font-size:15px;font-weight:900;color:#000;\">Topical Authority</p><p style=\"margin:4px 0 0;font-size:13px;color:#666;line-height:1.6;\">Own entire subject areas through semantic saturation. Become the source Google and AI models trust above everyone else.</p></div><div style=\"border-left:4px solid #00b8db;background:#f9f9f9;padding:16px;margin-bottom:10px;\"><p style=\"margin:0;font-size:10px;color:#00b8db;font-weight:700;text-transform:uppercase;letter-spacing:2px;\">Layer 03</p><p style=\"margin:4px 0;font-size:15px;font-weight:900;color:#000;\">Page Authority</p><p style=\"margin:4px 0 0;font-size:13px;color:#666;line-height:1.6;\">Optimize individual pages to gain independent ranking power using on-page signals and engagement triggers.</p></div><div style=\"border-left:4px solid #00b8db;background:#f9f9f9;padding:16px;margin-bottom:10px;\"><p style=\"margin:0;font-size:10px;color:#00b8db;font-weight:700;text-transform:uppercase;letter-spacing:2px;\">Layer 04</p><p style=\"margin:4px 0;font-size:15px;font-weight:900;color:#000;\">Query Expansion</p><p style=\"margin:4px 0 0;font-size:13px;color:#666;line-height:1.6;\">Capture long-tail and AI-driven queries using People Also Ask strategies and query fan-out techniques. Where most competitors have zero coverage.</p></div><p>This is what separates businesses that rank from businesses that wonder why they do not.</p><p>In 3 days I will show you how to get your full breakdown across all 4 layers &#8212; for free.</p><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you requested the Gadgetlesstech Blueprint. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
       },
-      "id": "7e8f9a0b-1c2d-3456-e7f8-a9b0c1d2e3f4",
+      "id": "0000000b-a1b2-c3d4-e5f6-000000007901",
       "name": "Email 5 — The 4-Layer System",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [260, 1520],
+      "position": [
+        260,
+        1680
+      ],
       "credentials": {
         "smtp": {
-          "id": "1",
+          "id": "2",
           "name": "Gmail SMTP"
         }
       }
@@ -174,12 +248,15 @@
         "amount": 3,
         "unit": "days"
       },
-      "id": "8f9a0b1c-2d3e-4567-f8a9-b0c1d2e3f4a5",
-      "name": "Wait 3 Days (4)",
+      "id": "0000000c-a1b2-c3d4-e5f6-000000007902",
+      "name": "Wait 3 Days (5)",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
-      "position": [260, 1680],
-      "webhookId": "9a0b1c2d-3e4f-5678-a9b0-c1d2e3f4a5b6"
+      "position": [
+        260,
+        1840
+      ],
+      "webhookId": "00000036-a1b2-c3d4-e5f6-000000007944"
     },
     {
       "parameters": {
@@ -187,16 +264,19 @@
         "toEmail": "={{ $json.email }}",
         "subject": "Your free keyword gap audit is waiting",
         "emailType": "html",
-        "message": "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'></head><body style='margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;'><table width='100%' cellpadding='0' cellspacing='0'><tr><td align='center' style='padding:40px 20px;'><table width='600' cellpadding='0' cellspacing='0' style='max-width:600px;width:100%;'><tr><td style='background:#000000;padding:24px 32px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;'><p style='margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:Arial,sans-serif;'>Gadgetlesstech Ranking System™</p><p style='margin:4px 0 0;color:#ffffff;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-style:italic;font-family:Arial,sans-serif;'>SEO4GEO</p></td></tr><tr><td style='background:#ffffff;padding:36px 32px;font-size:15px;line-height:1.8;color:#333333;font-family:Arial,sans-serif;'><p style='margin:0 0 16px;'>Hey {{ $json.name || 'there' }},</p><p style='margin:0 0 16px;'>I've talked about the system. Now let me show you your numbers.</p><p style='margin:0 0 24px;'>Your free SEO4GEO audit gives you a full breakdown across all 4 layers in under 60 seconds:</p><table width='100%' cellpadding='0' cellspacing='0' style='margin:0 0 24px;'><tr><td style='padding:12px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;font-size:16px;'>→</span> The exact keywords your top competitor ranks for that you don't</td></tr><tr><td style='padding:12px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;font-size:16px;'>→</span> Your local visibility score vs. the market</td></tr><tr><td style='padding:12px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;font-size:16px;'>→</span> An AI-generated action plan tied to the 4 layers</td></tr><tr><td style='padding:12px 0;font-size:14px;'><span style='color:#00b8db;font-size:16px;'>→</span> Your fastest wins — things you can act on this week</td></tr></table><p style='margin:0 0 24px;'>Just your website URL and one competitor. No email, no credit card, no sales call required to see results.</p><table cellpadding='0' cellspacing='0'><tr><td style='background:#00b8db;border-radius:6px;'><a href='https://seo4geo.com/audit' style='display:inline-block;padding:14px 28px;color:#000000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;'>Get My Free Audit →</a></td></tr></table><p style='margin:24px 0 0;'>If you want someone to walk through your results live, reply to this email and we'll set it up.</p><p style='margin:16px 0 0;'>— Kevin<br><span style='color:#999999;font-size:13px;'>Gadgetlesstech</span></p></td></tr><tr><td style='background:#f9f9f9;padding:20px 32px;border-top:1px solid #eeeeee;border-radius:0 0 8px 8px;'><p style='margin:0;font-size:11px;color:#999999;font-family:Arial,sans-serif;'>You received this because you signed up via SEO4GEO or the Gadgetlesstech Blueprint. <a href='#' style='color:#00b8db;text-decoration:none;'>Unsubscribe</a></p></td></tr></table></td></tr></table></body></html>"
+        "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:580px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">The Proof</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">Query Expansion System&#8482;</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.name || 'there' }},</p><p>I have walked you through the system. Now let me show you your actual numbers.</p><p>Your free SEO4GEO audit gives you a full breakdown across all 4 layers in under 60 seconds:</p><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin:20px 0;\"><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-size:16px;\">&#8594;</span> The exact keywords your top competitor ranks for that you do not</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-size:16px;\">&#8594;</span> Your local visibility score vs. the market average</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-size:16px;\">&#8594;</span> An AI-generated action plan mapped to the 4 layers</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-size:16px;\">&#8594;</span> Your fastest wins &#8212; things you can act on this week</td></tr></table><p>Just your website URL and one competitor. No credit card. No sales call to see your results.</p><table cellpadding=\"0\" cellspacing=\"0\" style=\"margin:24px 0;\"><tr><td style=\"background:#00b8db;border-radius:6px;\"><a href=\"https://seo4geo.com/audit\" style=\"display:inline-block;padding:14px 28px;color:#000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;\">Get My Free Audit &#8594;</a></td></tr></table><p>If you want to walk through your results live, reply to this email and we will set it up.</p><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you requested the Gadgetlesstech Blueprint. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
       },
-      "id": "0b1c2d3e-4f5a-6789-b0c1-d2e3f4a5b6c7",
+      "id": "0000000d-a1b2-c3d4-e5f6-000000007903",
       "name": "Email 6 — Free Audit CTA",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [260, 1840],
+      "position": [
+        260,
+        2000
+      ],
       "credentials": {
         "smtp": {
-          "id": "1",
+          "id": "2",
           "name": "Gmail SMTP"
         }
       }
@@ -207,29 +287,35 @@
         "amount": 4,
         "unit": "days"
       },
-      "id": "1c2d3e4f-5a6b-7890-c1d2-e3f4a5b6c7d8",
-      "name": "Wait 4 Days (1)",
+      "id": "0000000e-a1b2-c3d4-e5f6-000000007904",
+      "name": "Wait 4 Days (6)",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
-      "position": [260, 2000],
-      "webhookId": "2d3e4f5a-6b7c-8901-d2e3-f4a5b6c7d8e9"
+      "position": [
+        260,
+        2160
+      ],
+      "webhookId": "00000037-a1b2-c3d4-e5f6-000000007945"
     },
     {
       "parameters": {
         "fromEmail": "kevin@gadgetlesstech.com",
         "toEmail": "={{ $json.email }}",
-        "subject": "When you're ready to stop doing this alone",
+        "subject": "When you are ready to stop doing this alone",
         "emailType": "html",
-        "message": "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'></head><body style='margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;'><table width='100%' cellpadding='0' cellspacing='0'><tr><td align='center' style='padding:40px 20px;'><table width='600' cellpadding='0' cellspacing='0' style='max-width:600px;width:100%;'><tr><td style='background:#000000;padding:24px 32px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;'><p style='margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:Arial,sans-serif;'>Gadgetlesstech Ranking System™</p><p style='margin:4px 0 0;color:#ffffff;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-style:italic;font-family:Arial,sans-serif;'>SEO4GEO</p></td></tr><tr><td style='background:#ffffff;padding:36px 32px;font-size:15px;line-height:1.8;color:#333333;font-family:Arial,sans-serif;'><p style='margin:0 0 8px;'>Hey {{ $json.name || 'there' }},</p><p style='margin:0 0 8px;'>You've seen the system.</p><p style='margin:0 0 8px;'>You've seen the gaps.</p><p style='margin:0 0 24px;'>Now let me tell you about the team behind it.</p><p style='margin:0 0 16px;'><strong>Gadgetlesstech</strong> is not a typical SEO agency. We don't do keyword reports. We don't sell monthly blog posts. We don't send dashboards that say &quot;rankings trending positive&quot; with no explanation.</p><p style='margin:0 0 24px;'>We build the full 4-layer Ranking System for your business — engineered for your specific market and competitors. The clients we work with rank for 10x more searches than their competitors — and they stay there.</p><p style='margin:0 0 8px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#000;'>What a Gadgetlesstech engagement includes:</p><table width='100%' cellpadding='0' cellspacing='0' style='margin:0 0 24px;'><tr><td style='padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;'>✓</span> Full keyword gap analysis across your entire market</td></tr><tr><td style='padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;'>✓</span> Custom Ranking System built around your business</td></tr><tr><td style='padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;'>✓</span> Ongoing optimization across all 4 layers</td></tr><tr><td style='padding:10px 0;font-size:14px;'><span style='color:#00b8db;'>✓</span> Transparent reporting tied to actual ranking gains</td></tr></table><p style='margin:0 0 24px;'>Book a free strategy call. We'll run through your SEO4GEO audit results live and build a custom roadmap on the call — no pressure, just clarity.</p><table cellpadding='0' cellspacing='0'><tr><td style='background:#00b8db;border-radius:6px;'><a href='https://gadgetlesstech.com' style='display:inline-block;padding:14px 28px;color:#000000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;'>Book a Free Strategy Call →</a></td></tr></table><p style='margin:24px 0 0;'>— Kevin<br><span style='color:#999999;font-size:13px;'>Gadgetlesstech</span></p></td></tr><tr><td style='background:#f9f9f9;padding:20px 32px;border-top:1px solid #eeeeee;border-radius:0 0 8px 8px;'><p style='margin:0;font-size:11px;color:#999999;font-family:Arial,sans-serif;'>You received this because you signed up via SEO4GEO or the Gadgetlesstech Blueprint. <a href='#' style='color:#00b8db;text-decoration:none;'>Unsubscribe</a></p></td></tr></table></td></tr></table></body></html>"
+        "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:580px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">The Who</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">Query Expansion System&#8482;</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.name || 'there' }},</p><p>You have seen the system. You have seen the gaps. Now let me tell you about the team behind it.</p><p><strong>Gadgetlesstech</strong> is not a typical SEO agency. We do not do keyword reports. We do not sell monthly blog posts. We do not send dashboards that say rankings are trending up with no explanation of why.</p><p>We build the full 4-layer Ranking System for your business &#8212; engineered for your specific market and competitors. Our clients rank for 10x more searches than their competitors, and they stay there.</p><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin:20px 0;\"><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">&#10003;</span> Full keyword gap analysis across your entire market</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">&#10003;</span> Custom Ranking System built around your business</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">&#10003;</span> Ongoing optimization across all 4 layers</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">&#10003;</span> Transparent reporting tied to actual ranking gains</td></tr></table><p>Book a free strategy call. We will run through your SEO4GEO results live and build a custom roadmap on the call &#8212; no pressure, just clarity.</p><table cellpadding=\"0\" cellspacing=\"0\" style=\"margin:24px 0;\"><tr><td style=\"background:#00b8db;border-radius:6px;\"><a href=\"https://gadgetlesstech.com\" style=\"display:inline-block;padding:14px 28px;color:#000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;\">Book a Free Strategy Call &#8594;</a></td></tr></table><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you requested the Gadgetlesstech Blueprint. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
       },
-      "id": "3e4f5a6b-7c8d-9012-e3f4-a5b6c7d8e9f0",
-      "name": "Email 7 — Gadgetlesstech (The Who)",
+      "id": "0000000f-a1b2-c3d4-e5f6-000000007905",
+      "name": "Email 7 — Gadgetlesstech",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [260, 2160],
+      "position": [
+        260,
+        2320
+      ],
       "credentials": {
         "smtp": {
-          "id": "1",
+          "id": "2",
           "name": "Gmail SMTP"
         }
       }
@@ -240,12 +326,15 @@
         "amount": 4,
         "unit": "days"
       },
-      "id": "4f5a6b7c-8d9e-0123-f4a5-b6c7d8e9f0a1",
-      "name": "Wait 4 Days (2)",
+      "id": "00000010-a1b2-c3d4-e5f6-000000007906",
+      "name": "Wait 4 Days (7)",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
-      "position": [260, 2320],
-      "webhookId": "5a6b7c8d-9e0f-1234-a5b6-c7d8e9f0a1b2"
+      "position": [
+        260,
+        2480
+      ],
+      "webhookId": "00000038-a1b2-c3d4-e5f6-000000007946"
     },
     {
       "parameters": {
@@ -253,66 +342,253 @@
         "toEmail": "={{ $json.email }}",
         "subject": "One last thing before I leave you alone",
         "emailType": "html",
-        "message": "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'></head><body style='margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;'><table width='100%' cellpadding='0' cellspacing='0'><tr><td align='center' style='padding:40px 20px;'><table width='600' cellpadding='0' cellspacing='0' style='max-width:600px;width:100%;'><tr><td style='background:#000000;padding:24px 32px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;'><p style='margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-family:Arial,sans-serif;'>Gadgetlesstech Ranking System™</p><p style='margin:4px 0 0;color:#ffffff;font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:-1px;font-style:italic;font-family:Arial,sans-serif;'>SEO4GEO</p></td></tr><tr><td style='background:#ffffff;padding:36px 32px;font-size:15px;line-height:1.8;color:#333333;font-family:Arial,sans-serif;'><p style='margin:0 0 24px;'>Hey {{ $json.name || 'there' }},</p><p style='margin:0 0 24px;'>This is the last email in this sequence — I'll keep it short.</p><p style='margin:0 0 8px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#000;'>Here's what we covered:</p><table width='100%' cellpadding='0' cellspacing='0' style='margin:0 0 24px;'><tr><td style='padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;font-weight:900;'>→</span> <strong>Why</strong> you're losing rankings — Query Expansion</td></tr><tr><td style='padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;font-weight:900;'>→</span> <strong>What</strong> your gaps actually look like — SEO4GEO</td></tr><tr><td style='padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:14px;'><span style='color:#00b8db;font-weight:900;'>→</span> <strong>How</strong> to start closing them — The Free Audit</td></tr><tr><td style='padding:10px 0;font-size:14px;'><span style='color:#00b8db;font-weight:900;'>→</span> <strong>Who</strong> executes the full system — Gadgetlesstech</td></tr></table><p style='margin:0 0 16px;'>Some of you have already run your audit and booked a call — talk soon.</p><p style='margin:0 0 24px;'>Some are still thinking — the gaps are still there whenever you're ready.</p><p style='margin:0 0 8px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#000;'>When you're ready:</p><table width='100%' cellpadding='0' cellspacing='0' style='margin:0 0 24px;'><tr><td style='padding:8px 0;font-size:14px;'>📄 Download the blueprint → <a href='https://queryexpansionsystem.com' style='color:#00b8db;text-decoration:none;font-weight:700;'>queryexpansionsystem.com</a></td></tr><tr><td style='padding:8px 0;font-size:14px;'>🔍 Run your free audit → <a href='https://seo4geo.com' style='color:#00b8db;text-decoration:none;font-weight:700;'>seo4geo.com</a></td></tr><tr><td style='padding:8px 0;font-size:14px;'>📞 Book a strategy call → <a href='https://gadgetlesstech.com' style='color:#00b8db;text-decoration:none;font-weight:700;'>gadgetlesstech.com</a></td></tr></table><p style='margin:0 0 16px;'>The door is always open.</p><p style='margin:0 0 24px;'>— Kevin<br><span style='color:#999999;font-size:13px;'>Gadgetlesstech</span></p><p style='margin:0;font-size:12px;color:#bbbbbb;border-top:1px solid #eeeeee;padding-top:16px;'>P.S. If these emails weren't valuable, no hard feelings — <a href='#' style='color:#00b8db;'>unsubscribe here</a>. We only want to be in your inbox if we're adding value.</p></td></tr><tr><td style='background:#f9f9f9;padding:20px 32px;border-top:1px solid #eeeeee;border-radius:0 0 8px 8px;'><p style='margin:0;font-size:11px;color:#999999;font-family:Arial,sans-serif;'>You received this because you signed up via SEO4GEO or the Gadgetlesstech Blueprint. <a href='#' style='color:#00b8db;text-decoration:none;'>Unsubscribe</a></p></td></tr></table></td></tr></table></body></html>"
+        "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:580px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">The Open Door</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">Query Expansion System&#8482;</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.name || 'there' }},</p><p>This is the last email in this sequence. I will keep it short.</p><p>Here is what we covered:</p><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin:16px 0;\"><tr><td style=\"padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:900;\">&#8594;</span> <strong>Why</strong> you are losing rankings &#8212; Query Expansion</td></tr><tr><td style=\"padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:900;\">&#8594;</span> <strong>What</strong> your gaps look like &#8212; SEO4GEO</td></tr><tr><td style=\"padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:14px;\"><span style=\"color:#00b8db;font-weight:900;\">&#8594;</span> <strong>How</strong> to close them &#8212; The Free Audit</td></tr><tr><td style=\"padding:8px 0;font-size:14px;\"><span style=\"color:#00b8db;font-weight:900;\">&#8594;</span> <strong>Who</strong> executes the full system &#8212; Gadgetlesstech</td></tr></table><p>Whenever you are ready:</p><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin:16px 0;\"><tr><td style=\"padding:6px 0;font-size:14px;\">Download the blueprint &#8212; <a href=\"https://queryexpansionsystem.com\" style=\"color:#00b8db;font-weight:700;\">queryexpansionsystem.com</a></td></tr><tr><td style=\"padding:6px 0;font-size:14px;\">Run your free audit &#8212; <a href=\"https://seo4geo.com\" style=\"color:#00b8db;font-weight:700;\">seo4geo.com</a></td></tr><tr><td style=\"padding:6px 0;font-size:14px;\">Book a strategy call &#8212; <a href=\"https://gadgetlesstech.com\" style=\"color:#00b8db;font-weight:700;\">gadgetlesstech.com</a></td></tr></table><p>The door is always open.</p><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><p style=\"font-size:12px;color:#bbb;margin-top:16px;\">P.S. If these emails were not valuable, no hard feelings &#8212; <a href=\"#\" style=\"color:#00b8db;\">unsubscribe here</a>. We only want to be in your inbox if we are adding value.</p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you requested the Gadgetlesstech Blueprint. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
       },
-      "id": "6b7c8d9e-0f1a-2345-b6c7-d8e9f0a1b2c3",
+      "id": "00000011-a1b2-c3d4-e5f6-000000007907",
       "name": "Email 8 — Final Nudge",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [260, 2480],
+      "position": [
+        260,
+        2640
+      ],
       "credentials": {
         "smtp": {
-          "id": "1",
+          "id": "2",
           "name": "Gmail SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SPREADSHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "QES Leads",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $json.email }}",
+            "Status": "Completed",
+            "Last Email": "Final Nudge"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "00000012-a1b2-c3d4-e5f6-000000007908",
+      "name": "Mark Sequence Completed",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        260,
+        2800
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1",
+          "name": "Google Sheets Account"
         }
       }
     }
   ],
   "connections": {
-    "Lead Signup Webhook": {
-      "main": [[{"node": "Email 1 — Welcome", "type": "main", "index": 0}]]
+    "QES Blueprint Webhook": {
+      "main": [
+        [
+          {
+            "node": "Add Lead to CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Email 1 — Welcome": {
-      "main": [[{"node": "Wait 2 Days", "type": "main", "index": 0}]]
+    "Add Lead to CRM": {
+      "main": [
+        [
+          {
+            "node": "Email 1 — Welcome + Blueprint",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Wait 2 Days": {
-      "main": [[{"node": "Email 2 — Query Expansion (The Why)", "type": "main", "index": 0}]]
+    "Email 1 — Welcome + Blueprint": {
+      "main": [
+        [
+          {
+            "node": "Wait 2 Days (1)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Email 2 — Query Expansion (The Why)": {
-      "main": [[{"node": "Wait 3 Days (1)", "type": "main", "index": 0}]]
+    "Wait 2 Days (1)": {
+      "main": [
+        [
+          {
+            "node": "Email 2 — Query Expansion Deep Dive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Wait 3 Days (1)": {
-      "main": [[{"node": "Email 3 — The Gap Problem", "type": "main", "index": 0}]]
-    },
-    "Email 3 — The Gap Problem": {
-      "main": [[{"node": "Wait 3 Days (2)", "type": "main", "index": 0}]]
+    "Email 2 — Query Expansion Deep Dive": {
+      "main": [
+        [
+          {
+            "node": "Wait 3 Days (2)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Wait 3 Days (2)": {
-      "main": [[{"node": "Email 4 — SEO4GEO (The What)", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Email 3 — The Gap Problem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Email 4 — SEO4GEO (The What)": {
-      "main": [[{"node": "Wait 3 Days (3)", "type": "main", "index": 0}]]
+    "Email 3 — The Gap Problem": {
+      "main": [
+        [
+          {
+            "node": "Wait 3 Days (3)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Wait 3 Days (3)": {
-      "main": [[{"node": "Email 5 — The 4-Layer System", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Email 4 — SEO4GEO Introduction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Email 5 — The 4-Layer System": {
-      "main": [[{"node": "Wait 3 Days (4)", "type": "main", "index": 0}]]
+    "Email 4 — SEO4GEO Introduction": {
+      "main": [
+        [
+          {
+            "node": "Wait 3 Days (4)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Wait 3 Days (4)": {
-      "main": [[{"node": "Email 6 — Free Audit CTA", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Email 5 — The 4-Layer System",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email 5 — The 4-Layer System": {
+      "main": [
+        [
+          {
+            "node": "Wait 3 Days (5)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 3 Days (5)": {
+      "main": [
+        [
+          {
+            "node": "Email 6 — Free Audit CTA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
     "Email 6 — Free Audit CTA": {
-      "main": [[{"node": "Wait 4 Days (1)", "type": "main", "index": 0}]]
+      "main": [
+        [
+          {
+            "node": "Wait 4 Days (6)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Wait 4 Days (1)": {
-      "main": [[{"node": "Email 7 — Gadgetlesstech (The Who)", "type": "main", "index": 0}]]
+    "Wait 4 Days (6)": {
+      "main": [
+        [
+          {
+            "node": "Email 7 — Gadgetlesstech",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Email 7 — Gadgetlesstech (The Who)": {
-      "main": [[{"node": "Wait 4 Days (2)", "type": "main", "index": 0}]]
+    "Email 7 — Gadgetlesstech": {
+      "main": [
+        [
+          {
+            "node": "Wait 4 Days (7)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     },
-    "Wait 4 Days (2)": {
-      "main": [[{"node": "Email 8 — Final Nudge", "type": "main", "index": 0}]]
+    "Wait 4 Days (7)": {
+      "main": [
+        [
+          {
+            "node": "Email 8 — Final Nudge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email 8 — Final Nudge": {
+      "main": [
+        [
+          {
+            "node": "Mark Sequence Completed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -320,6 +596,6 @@
     "executionOrder": "v1"
   },
   "pinData": {},
-  "versionId": "b2c3d4e5-6f7a-8901-b2c3-d4e5f6a7b8c9",
+  "versionId": "f2a3b4c5-d6e7-8901-f2a3-b4c5d6e7f8a9",
   "tags": []
 }
