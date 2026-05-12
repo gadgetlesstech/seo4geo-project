@@ -234,7 +234,7 @@ emails.forEach((email, i) => {
   nodes.push({
     parameters: {
       fromEmail: 'kevin@gadgetlesstech.com',
-      toEmail: '={{ $json.body.email }}',
+      toEmail: '={{ $json.email }}',
       subject: email.subject,
       emailType: 'html',
       message: email.body
@@ -242,6 +242,7 @@ emails.forEach((email, i) => {
     id: uid(nodeIdx++), name: email.name,
     type: 'n8n-nodes-base.emailSend', typeVersion: 2, position: [260, y],
     credentials: { smtp: { id: null, name: 'Gmail SMTP' } }
+
   });
   y += 160;
 
