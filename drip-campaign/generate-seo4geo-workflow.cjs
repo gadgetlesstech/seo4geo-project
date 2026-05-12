@@ -223,7 +223,7 @@ nodes.push({
   },
   id: uid(nodeIdx++), name: 'Add Lead to CRM',
   type: 'n8n-nodes-base.googleSheets', typeVersion: 4, position: [260, y],
-  credentials: { googleSheetsOAuth2Api: { id: '1', name: 'Google Sheets Account' } }
+  credentials: { googleSheetsOAuth2Api: { id: null, name: 'Google Sheets Account' } }
 });
 y += 160;
 
@@ -239,7 +239,7 @@ emails.forEach((email, i) => {
     },
     id: uid(nodeIdx++), name: email.name,
     type: 'n8n-nodes-base.emailSend', typeVersion: 2, position: [260, y],
-    credentials: { smtp: { id: '2', name: 'Gmail SMTP' } }
+    credentials: { smtp: { id: null, name: 'Gmail SMTP' } }
   });
   y += 160;
 
@@ -274,7 +274,7 @@ nodes.push({
   },
   id: uid(nodeIdx++), name: 'Mark Sequence Completed',
   type: 'n8n-nodes-base.googleSheets', typeVersion: 4, position: [260, y],
-  credentials: { googleSheetsOAuth2Api: { id: '1', name: 'Google Sheets Account' } }
+  credentials: { googleSheetsOAuth2Api: { id: null, name: 'Google Sheets Account' } }
 });
 
 // Linear connections
