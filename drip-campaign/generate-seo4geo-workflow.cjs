@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const CYAN = '#00b8db';
-const SHEET_ID = '12YsabR38zT6qglwgE7wqzy18cf1T93JFwG8ghbZGGNc';
+const SHEET_ID = '1jnps_jwQq6MVTaMHPY4HPCkQPSXK4GquIor6wXi7Wk0';
 
 function wrap(brandLine, body) {
   return [
