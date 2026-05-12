@@ -45,7 +45,7 @@ function layer(num, title, desc) {
 }
 
 const sig = '<p style="margin:24px 0 0;">&#8212; Kevin<br><span style="color:#999;font-size:13px;">Gadgetlesstech</span></p>';
-const n = '{{ $json.name || \'there\' }}';
+const n = '{{ $json.body.name || \'there\' }}';
 
 const emails = [
   {
@@ -199,34 +199,27 @@ nodes.push({
 });
 y += 160;
 
-// 2. Set node — flatten webhook body to top-level fields
-nodes.push({
-  parameters: {
-    assignments: {
-      assignments: [
-        { id: 'f1', name: 'name',    value: '={{ $json.body.name || \'\' }}',   type: 'string' },
-        { id: 'f2', name: 'email',   value: '={{ $json.body.email }}',           type: 'string' },
-        { id: 'f3', name: 'website', value: '={{ $json.body.website || \'\' }}', type: 'string' },
-        { id: 'f4', name: 'source',  value: '={{ $json.body.source || \'\' }}',  type: 'string' }
-      ]
-    },
-    options: {}
-  },
-  id: uid(nodeIdx++), name: 'Extract Fields',
-  type: 'n8n-nodes-base.set', typeVersion: 3, position: [260, y]
-});
-y += 160;
-
-// 3. Google Sheets - Add Lead (autoMapInputData — no schema required)
+// 2. Google Sheets - Add Lead (defineBelow with populated schema)
 nodes.push({
   parameters: {
     operation: 'append',
     documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
     sheetName: { __rl: true, value: 'SEO4GEO', mode: 'name' },
     columns: {
-      mappingMode: 'autoMapInputData',
+      mappingMode: 'defineBelow',
+      value: {
+        name:    "={{ $json.body.name || '' }}",
+        email:   '={{ $json.body.email }}',
+        website: "={{ $json.body.website || '' }}",
+        source:  "={{ $json.body.source || '' }}"
+      },
       matchingColumns: [],
-      schema: []
+      schema: [
+        { id: 'name',    displayName: 'name',    required: false, defaultMatch: false, display: true, type: 'string', canBeUsedToMatch: true },
+        { id: 'email',   displayName: 'email',   required: false, defaultMatch: false, display: true, type: 'string', canBeUsedToMatch: true },
+        { id: 'website', displayName: 'website', required: false, defaultMatch: false, display: true, type: 'string', canBeUsedToMatch: true },
+        { id: 'source',  displayName: 'source',  required: false, defaultMatch: false, display: true, type: 'string', canBeUsedToMatch: true }
+      ]
     },
     options: {}
   },
@@ -241,7 +234,7 @@ emails.forEach((email, i) => {
   nodes.push({
     parameters: {
       fromEmail: 'kevin@gadgetlesstech.com',
-      toEmail: '={{ $json.email }}',
+      toEmail: '={{ $json.body.email }}',
       subject: email.subject,
       emailType: 'html',
       message: email.body
