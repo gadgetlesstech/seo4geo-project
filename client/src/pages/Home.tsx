@@ -124,7 +124,7 @@ export default function Home() {
               <Link to="/audit">
                 <Button
                   size="lg"
-                  className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all active:scale-95"
+                  className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all active:scale-95 flex items-center"
                 >
                   Get Your Free Audit <ArrowRight className="ml-3 w-5 h-5" />
                 </Button>
@@ -133,9 +133,16 @@ export default function Home() {
                 onClick={() => window.dispatchEvent(new CustomEvent('open-calendar'))}
                 variant="outline"
                 size="lg"
-                className="border-[#00b8db]/50 text-white hover:bg-[#00b8db]/10 px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest"
+                className="border-[#00b8db]/50 text-white hover:bg-[#00b8db]/10 px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest flex items-center"
               >
-                Book a Strategy Call
+                Book a Strategy Call <ArrowRight className="ml-3 w-5 h-5" />
+              </Button>
+              <Button
+                onClick={() => window.dispatchEvent(new CustomEvent('open-blueprint-popup'))}
+                size="lg"
+                className="bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest transition-all flex items-center"
+              >
+                Download Free Blueprint <ArrowRight className="ml-3 w-5 h-5" />
               </Button>
             </div>
 
