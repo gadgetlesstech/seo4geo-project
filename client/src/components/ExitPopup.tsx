@@ -68,16 +68,6 @@ export function ExitPopup() {
     return () => document.removeEventListener("mouseleave", onMouseLeave);
   }, [open]);
 
-  useEffect(() => {
-    const onBlueprintOpen = () => {
-      if (wasDismissedToday()) {
-        localStorage.removeItem(DISMISSED_KEY);
-      }
-      open();
-    };
-    window.addEventListener("open-blueprint-popup", onBlueprintOpen);
-    return () => window.removeEventListener("open-blueprint-popup", onBlueprintOpen);
-  }, [open]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };

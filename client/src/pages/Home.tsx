@@ -137,13 +137,14 @@ export default function Home() {
               >
                 Book a Strategy Call <ArrowRight className="ml-3 w-5 h-5" />
               </Button>
-              <Button
-                onClick={() => window.dispatchEvent(new CustomEvent('open-blueprint-popup'))}
-                size="lg"
-                className="bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest transition-all flex items-center"
-              >
-                Download Free Blueprint <ArrowRight className="ml-3 w-5 h-5" />
-              </Button>
+              <a href="https://queryexpansionsystem.com/" target="_blank" rel="noopener noreferrer">
+                <Button
+                  size="lg"
+                  className="bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest transition-all flex items-center"
+                >
+                  Download Free Blueprint <ArrowRight className="ml-3 w-5 h-5" />
+                </Button>
+              </a>
             </div>
 
             <div className="mt-16 flex flex-wrap justify-center gap-8 text-[12px] font-black uppercase tracking-[0.2em] text-gray-500">
