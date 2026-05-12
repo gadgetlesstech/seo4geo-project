@@ -204,7 +204,7 @@ nodes.push({
   parameters: {
     operation: 'append',
     documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
-    sheetName: { __rl: true, value: 'Gadgetlesstech CRM', mode: 'name' },
+    sheetName: { __rl: true, value: 'SEO4GEO', mode: 'name' },
     columns: {
       mappingMode: 'defineBelow',
       value: {
@@ -259,7 +259,7 @@ nodes.push({
   parameters: {
     operation: 'update',
     documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
-    sheetName: { __rl: true, value: 'Gadgetlesstech CRM', mode: 'name' },
+    sheetName: { __rl: true, value: 'SEO4GEO', mode: 'name' },
     columns: {
       mappingMode: 'defineBelow',
       value: {
