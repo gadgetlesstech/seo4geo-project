@@ -21,6 +21,47 @@
     },
     {
       "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f1",
+              "name": "name",
+              "value": "={{ $json.body.name || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "f2",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "f3",
+              "name": "website",
+              "value": "={{ $json.body.website || \"\" }}",
+              "type": "string"
+            },
+            {
+              "id": "f4",
+              "name": "source",
+              "value": "={{ $json.body.source || \"\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "00000062-a1b2-c3d4-e5f6-000000007989",
+      "name": "Extract Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [
+        260,
+        240
+      ]
+    },
+    {
+      "parameters": {
         "operation": "append",
         "documentId": {
           "__rl": true,
@@ -33,16 +74,7 @@
           "mode": "name"
         },
         "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "Timestamp": "={{ new Date().toISOString() }}",
-            "Name": "={{ $json.name || '' }}",
-            "Email": "={{ $json.email }}",
-            "Website": "={{ $json.website || '' }}",
-            "Source": "={{ $json.source || 'qes_blueprint' }}",
-            "Status": "Active",
-            "Last Email": "Welcome"
-          },
+          "mappingMode": "autoMapInputData",
           "matchingColumns": [],
           "schema": []
         },
@@ -54,7 +86,7 @@
       "typeVersion": 4,
       "position": [
         260,
-        240
+        400
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -77,7 +109,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        400
+        560
       ],
       "credentials": {
         "smtp": {
@@ -98,7 +130,7 @@
       "typeVersion": 1,
       "position": [
         260,
-        560
+        720
       ],
       "webhookId": "00000032-a1b2-c3d4-e5f6-000000007940"
     },
@@ -116,7 +148,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        720
+        880
       ],
       "credentials": {
         "smtp": {
@@ -137,7 +169,7 @@
       "typeVersion": 1,
       "position": [
         260,
-        880
+        1040
       ],
       "webhookId": "00000033-a1b2-c3d4-e5f6-000000007941"
     },
@@ -155,7 +187,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        1040
+        1200
       ],
       "credentials": {
         "smtp": {
@@ -176,7 +208,7 @@
       "typeVersion": 1,
       "position": [
         260,
-        1200
+        1360
       ],
       "webhookId": "00000034-a1b2-c3d4-e5f6-000000007942"
     },
@@ -194,7 +226,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        1360
+        1520
       ],
       "credentials": {
         "smtp": {
@@ -215,7 +247,7 @@
       "typeVersion": 1,
       "position": [
         260,
-        1520
+        1680
       ],
       "webhookId": "00000035-a1b2-c3d4-e5f6-000000007943"
     },
@@ -233,7 +265,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        1680
+        1840
       ],
       "credentials": {
         "smtp": {
@@ -254,7 +286,7 @@
       "typeVersion": 1,
       "position": [
         260,
-        1840
+        2000
       ],
       "webhookId": "00000036-a1b2-c3d4-e5f6-000000007944"
     },
@@ -272,7 +304,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        2000
+        2160
       ],
       "credentials": {
         "smtp": {
@@ -293,7 +325,7 @@
       "typeVersion": 1,
       "position": [
         260,
-        2160
+        2320
       ],
       "webhookId": "00000037-a1b2-c3d4-e5f6-000000007945"
     },
@@ -311,7 +343,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        2320
+        2480
       ],
       "credentials": {
         "smtp": {
@@ -332,7 +364,7 @@
       "typeVersion": 1,
       "position": [
         260,
-        2480
+        2640
       ],
       "webhookId": "00000038-a1b2-c3d4-e5f6-000000007946"
     },
@@ -350,7 +382,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        2640
+        2800
       ],
       "credentials": {
         "smtp": {
@@ -358,52 +390,21 @@
           "name": "Gmail SMTP"
         }
       }
-    },
-    {
-      "parameters": {
-        "operation": "update",
-        "documentId": {
-          "__rl": true,
-          "value": "1jnps_jwQq6MVTaMHPY4HPCkQPSXK4GquIor6wXi7Wk0",
-          "mode": "id"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "QES",
-          "mode": "name"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "Email": "={{ $json.email }}",
-            "Status": "Completed",
-            "Last Email": "Final Nudge"
-          },
-          "matchingColumns": [
-            "Email"
-          ],
-          "schema": []
-        },
-        "options": {}
-      },
-      "id": "00000012-a1b2-c3d4-e5f6-000000007908",
-      "name": "Mark Sequence Completed",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4,
-      "position": [
-        260,
-        2800
-      ],
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": null,
-          "name": "Google Sheets Account"
-        }
-      }
     }
   ],
   "connections": {
     "QES Blueprint Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Fields": {
       "main": [
         [
           {
@@ -573,17 +574,6 @@
         [
           {
             "node": "Email 8 — Final Nudge",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Email 8 — Final Nudge": {
-      "main": [
-        [
-          {
-            "node": "Mark Sequence Completed",
             "type": "main",
             "index": 0
           }

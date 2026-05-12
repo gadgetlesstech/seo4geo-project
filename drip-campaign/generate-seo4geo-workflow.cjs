@@ -199,23 +199,32 @@ nodes.push({
 });
 y += 160;
 
-// 2. Google Sheets - Add Lead
+// 2. Set node — flatten webhook body to top-level fields
+nodes.push({
+  parameters: {
+    assignments: {
+      assignments: [
+        { id: 'f1', name: 'name',    value: '={{ $json.body.name || \'\' }}',   type: 'string' },
+        { id: 'f2', name: 'email',   value: '={{ $json.body.email }}',           type: 'string' },
+        { id: 'f3', name: 'website', value: '={{ $json.body.website || \'\' }}', type: 'string' },
+        { id: 'f4', name: 'source',  value: '={{ $json.body.source || \'\' }}',  type: 'string' }
+      ]
+    },
+    options: {}
+  },
+  id: uid(nodeIdx++), name: 'Extract Fields',
+  type: 'n8n-nodes-base.set', typeVersion: 3, position: [260, y]
+});
+y += 160;
+
+// 3. Google Sheets - Add Lead (autoMapInputData — no schema required)
 nodes.push({
   parameters: {
     operation: 'append',
     documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
     sheetName: { __rl: true, value: 'SEO4GEO', mode: 'name' },
     columns: {
-      mappingMode: 'defineBelow',
-      value: {
-        Timestamp: '={{ new Date().toISOString() }}',
-        Name: '={{ $json.name || \'\' }}',
-        Email: '={{ $json.email }}',
-        Website: '={{ $json.website || \'\' }}',
-        Source: '={{ $json.source || \'seo4geo_exit_popup\' }}',
-        Status: 'Active',
-        'Last Email': 'Welcome'
-      },
+      mappingMode: 'autoMapInputData',
       matchingColumns: [],
       schema: []
     },
@@ -254,28 +263,6 @@ emails.forEach((email, i) => {
   }
 });
 
-// Final: Mark Completed
-nodes.push({
-  parameters: {
-    operation: 'update',
-    documentId: { __rl: true, value: SHEET_ID, mode: 'id' },
-    sheetName: { __rl: true, value: 'SEO4GEO', mode: 'name' },
-    columns: {
-      mappingMode: 'defineBelow',
-      value: {
-        Email: '={{ $json.email }}',
-        Status: 'Completed',
-        'Last Email': 'Final Nudge'
-      },
-      matchingColumns: ['Email'],
-      schema: []
-    },
-    options: {}
-  },
-  id: uid(nodeIdx++), name: 'Mark Sequence Completed',
-  type: 'n8n-nodes-base.googleSheets', typeVersion: 4, position: [260, y],
-  credentials: { googleSheetsOAuth2Api: { id: null, name: 'Google Sheets Account' } }
-});
 
 // Linear connections
 const connections = {};
