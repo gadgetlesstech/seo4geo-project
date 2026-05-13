@@ -377,7 +377,7 @@ export default function Home() {
                   onClick={() => window.dispatchEvent(new CustomEvent('open-voice-chat'))}
                   className="w-full bg-cyan-500 text-black hover:bg-white py-8 rounded-xl font-black uppercase tracking-widest text-sm shadow-[0_0_30px_rgba(6,182,212,0.3)] transition-all"
                 >
-                  Start Voice Session
+                  Chat Live with AI
                 </Button>
                 <div className="absolute -bottom-10 left-0 right-0 h-40 bg-gradient-to-t from-cyan-500/10 to-transparent pointer-events-none" />
               </div>

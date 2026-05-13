@@ -4,6 +4,44 @@ import { getLocalPackCompetitors } from './maps.js';
 
 const router = Router();
 
+const STOP_WORDS = new Set([
+  'a','an','the','and','or','for','in','on','at','to','of','by','with',
+  'near','best','top','local','free','cheap','affordable','how','what',
+  'when','where','why','who','is','are','was','were','be','been','do',
+  'does','did','get','find','your','my','our','their','this','that',
+  'these','those','not','no','vs','like','just','about','near','me',
+]);
+
+// Generic brand/platform terms that will never be relevant to a local business niche
+const BRAND_BLOCKLIST = new Set([
+  'youtube','amazon','google','facebook','instagram','twitter','reddit',
+  'netflix','tiktok','porn','pornhub','xxx','sex','ebay','walmart',
+  'target','apple','microsoft','chatgpt','openai','weather','news',
+  'gmail','yahoo','bing','espn','cnn','fox','nfl','nba','mlb','nhl',
+  'spotify','linkedin','pinterest','snapchat','twitch','discord','zoom',
+  'paypal','venmo','cashapp','uber','lyft','doordash','airbnb',
+]);
+
+// Max search volume — filters out mega-generic keywords (youtube, amazon, etc.)
+const MAX_VOLUME = 500_000;
+
+function getTargetTokens(keyword) {
+  return keyword.toLowerCase().split(/\W+/).filter(t => t.length > 2 && !STOP_WORDS.has(t));
+}
+
+function isRelevant(gapKeyword, targetTokens, city) {
+  const kw = gapKeyword.toLowerCase();
+  const words = kw.split(/\W+/);
+
+  if (words.some(w => BRAND_BLOCKLIST.has(w))) return false;
+
+  // Accept if contains city name
+  if (city && kw.includes(city.toLowerCase())) return true;
+
+  // Accept if shares at least one meaningful token with the target keyword
+  return targetTokens.some(token => kw.includes(token));
+}
+
 async function getRankedKeywords(domain) {
   const payload = [{ target: domain, language_name: 'English', limit: 500 }];
   const data = await dataForSEORequest('/dataforseo_labs/google/ranked_keywords/live', payload);
@@ -49,11 +87,15 @@ router.get('/', async (req, res) => {
       r.status === 'fulfilled' ? r.value : new Map()
     );
 
+    const targetTokens = getTargetTokens(keyword);
+
     // Build gap: keywords any competitor ranks for that the user does not
     const gapMap = new Map();
     for (let i = 0; i < competitorDomains.length; i++) {
       for (const [kw, meta] of compKeywordMaps[i]) {
         if (userKeywords.has(kw)) continue;
+        if ((meta.searchVolume ?? 0) > MAX_VOLUME) continue;
+        if (!isRelevant(kw, targetTokens, city)) continue;
         if (!gapMap.has(kw)) {
           gapMap.set(kw, { keyword: kw, searchVolume: meta.searchVolume, rankedBy: [] });
         }

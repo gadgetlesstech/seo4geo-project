@@ -237,9 +237,16 @@ export default function VoiceChat() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(p => !p)}
-        className="fixed bottom-8 right-8 w-18 h-18 bg-cyan-500 text-black rounded-full shadow-[0_0_30px_rgba(6,182,212,0.6)] flex items-center justify-center z-50 hover:bg-white transition-all active:scale-90"
+        className="fixed bottom-8 right-8 bg-cyan-500 text-black rounded-full shadow-[0_0_30px_rgba(6,182,212,0.6)] flex items-center justify-center z-50 hover:bg-white transition-all active:scale-90 px-5 py-4 gap-2"
       >
-        {isOpen ? <X className="w-8 h-8" /> : <MessageSquare className="w-8 h-8 font-black" />}
+        {isOpen ? (
+          <X className="w-6 h-6" />
+        ) : (
+          <>
+            <MessageSquare className="w-6 h-6 shrink-0" />
+            <span className="text-xs font-black uppercase tracking-widest whitespace-nowrap">Chat Live with AI</span>
+          </>
+        )}
       </motion.button>
 
       <AnimatePresence>
