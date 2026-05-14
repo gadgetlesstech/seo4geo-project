@@ -18,6 +18,8 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           source: "server/,client/src/,client/components/,client/lib/,client/public/,client/index.html,client/vite.config.js,client/package.json,client/package-lock.json,client/tsconfig.json,package.json,package-lock.json,Dockerfile,docker-compose.yml,.dockerignore"
           target: /var/www/seo4geo
+          timeout: 120s
+          command_timeout: 20m
 
       - name: Write .env on VPS
         uses: appleboy/ssh-action@v1.0.3
