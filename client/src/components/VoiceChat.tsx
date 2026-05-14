@@ -80,7 +80,7 @@ export default function VoiceChat() {
       const { token, error: tokenErr } = await tokenRes.json();
       if (!token) throw new Error(tokenErr || "Could not get voice session token");
 
-      const ai = new GoogleGenAI({ apiKey: token });
+      const ai = new GoogleGenAI({ apiKey: token, httpOptions: { apiVersion: "v1alpha" } });
       audioQueueRef.current = new AudioQueue(24000);
 
       const session = await ai.live.connect({

@@ -29,7 +29,7 @@ router.post('/message', async (req, res) => {
 router.get('/token', async (req, res) => {
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-    const token = await ai.authTokens.create({
+    const token = await ai.tokens.create({
       config: {
         uses: 1,
         expireTime: new Date(Date.now() + 60_000).toISOString(),
