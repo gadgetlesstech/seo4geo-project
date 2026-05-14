@@ -5,5 +5,7 @@ client/dist/
 .claude/
 *.json.bak
 SEOFORGEO_client_secret_*.json
+*client_secret_*.json
+*-credentials.txt
 push-env.sh
 server-setup.sh

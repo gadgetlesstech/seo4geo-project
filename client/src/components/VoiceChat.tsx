@@ -1,12 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { GoogleGenAI, Modality, LiveServerMessage } from "@google/genai";
+import { GoogleGenAI, Modality, LiveServerMessage } from "@google/genai"; // used only for voice live session with ephemeral token
 import { motion, AnimatePresence } from "motion/react";
 import { Mic, MicOff, X, MessageSquare, Loader2, Calendar as CalendarIcon, Search, Send } from "lucide-react";
 import CalendarWidget from "./CalendarWidget";
 import { float32ToInt16, base64ToFloat32, AudioQueue, arrayBufferToBase64 } from "@/src/lib/audio-utils";
 
-const SYSTEM_INSTRUCTION =
-  "You are the Gadgetlesstech SEO Assistant. You help users understand the Gadgetlesstech Ranking System™, which includes Keyword Compression, Topical Authority, Page Authority, and Query Expansion. Be professional, authoritative, and concise — keep spoken answers under 3 sentences. If the user wants to book a call or schedule a meeting, let them know they can click the calendar icon in this chat.";
 
 const GREETING =
   "Hey! I'm your Gadgetlesstech SEO Assistant. Ask me anything about ranking, keywords, or local SEO — or click the calendar icon to book a strategy call.";
@@ -22,7 +20,6 @@ export default function VoiceChat() {
   const [isListening, setIsListening] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
 
-  const chatRef = useRef<any>(null);
   const liveSessionRef = useRef<any>(null);
   const audioQueueRef = useRef<AudioQueue | null>(null);
   const micStreamRef = useRef<MediaStream | null>(null);
@@ -79,10 +76,11 @@ export default function VoiceChat() {
     try {
       setIsLoading(true);
 
-      const apiKey = process.env.GEMINI_API_KEY || "";
-      if (!apiKey) throw new Error("GEMINI_API_KEY is not set");
+      const tokenRes = await fetch("/api/chat/token");
+      const { token, error: tokenErr } = await tokenRes.json();
+      if (!token) throw new Error(tokenErr || "Could not get voice session token");
 
-      const ai = new GoogleGenAI({ apiKey });
+      const ai = new GoogleGenAI({ apiKey: token });
       audioQueueRef.current = new AudioQueue(24000);
 
       const session = await ai.live.connect({
@@ -208,16 +206,15 @@ export default function VoiceChat() {
     setIsLoading(true);
 
     try {
-      const apiKey = process.env.GEMINI_API_KEY || "";
-      const ai = new GoogleGenAI({ apiKey });
-      if (!chatRef.current) {
-        chatRef.current = ai.chats.create({
-          model: "gemini-2.0-flash",
-          config: { systemInstruction: SYSTEM_INSTRUCTION },
-        });
-      }
-      const response = await chatRef.current.sendMessage({ message: userMessage });
-      const text = response.text || "I couldn't process that. Please try again.";
+      // Pass history (excluding the static greeting) so the model has conversation context
+      const history = messages.filter(m => m.text !== GREETING);
+      const res = await fetch("/api/chat/message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ history, message: userMessage }),
+      });
+      const data = await res.json();
+      const text = data.text || "I couldn't process that. Please try again.";
       setMessages(prev => [...prev, { role: "model", text }]);
 
       if (text.toLowerCase().includes("calendar") || text.toLowerCase().includes("schedule")) {

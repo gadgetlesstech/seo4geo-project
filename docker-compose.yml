@@ -3,8 +3,7 @@ services:
     build:
       context: .
       args:
-        GEMINI_API_KEY: ${GEMINI_API_KEY}
-        VITE_GEMINI_API_KEY: ${GEMINI_API_KEY}
+        VITE_N8N_WEBHOOK_URL: ${VITE_N8N_WEBHOOK_URL}
     container_name: seo4geo
     restart: unless-stopped
     expose:
