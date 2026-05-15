@@ -22,8 +22,8 @@ const BRAND_BLOCKLIST = new Set([
   'paypal','venmo','cashapp','uber','lyft','doordash','airbnb',
 ]);
 
-// Max search volume — filters out mega-generic keywords (youtube, amazon, etc.)
-const MAX_VOLUME = 500_000;
+// Max monthly search volume — local opportunity keywords rarely exceed 10k/mo nationally
+const MAX_VOLUME = 10_000;
 
 // Generic business words that are too broad to use as the sole matching signal.
 // e.g. "roofing contractor" → only "roofing" is specific; "contractor" alone
