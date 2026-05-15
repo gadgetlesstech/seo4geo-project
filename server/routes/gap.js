@@ -25,8 +25,40 @@ const BRAND_BLOCKLIST = new Set([
 // Max search volume — filters out mega-generic keywords (youtube, amazon, etc.)
 const MAX_VOLUME = 500_000;
 
+// Generic business words that are too broad to use as the sole matching signal.
+// e.g. "roofing contractor" → only "roofing" is specific; "contractor" alone
+// would match painting contractors, landscapers, etc.
+const GENERIC_BUSINESS_TOKENS = new Set([
+  'contractor','contractors','contracting',
+  'company','companies','co',
+  'service','services','servicing',
+  'professional','professionals',
+  'business','businesses',
+  'provider','providers',
+  'specialist','specialists',
+  'expert','experts',
+  'agency','agencies',
+  'firm','firms',
+  'group','groups',
+  'solutions','solution',
+  'licensed','certified','insured',
+  'commercial','residential','industrial',
+]);
+
+// Strip common suffixes to get root so "roofing" → "roof" matches
+// "roofer", "roofers", "roof replacement", etc.
+function stemToken(token) {
+  return token
+    .replace(/(?:ing|ers?|tions?|ed|ists?|ment)$/, '')
+    .replace(/ies$/, 'y')
+    .replace(/s$/, '');
+}
+
 function getTargetTokens(keyword) {
-  return keyword.toLowerCase().split(/\W+/).filter(t => t.length > 2 && !STOP_WORDS.has(t));
+  const all = keyword.toLowerCase().split(/\W+/).filter(t => t.length > 2 && !STOP_WORDS.has(t));
+  // Prefer specific tokens; fall back to all tokens if everything is generic
+  const specific = all.filter(t => !GENERIC_BUSINESS_TOKENS.has(t));
+  return specific.length > 0 ? specific : all;
 }
 
 function isRelevant(gapKeyword, targetTokens, city) {
@@ -38,8 +70,11 @@ function isRelevant(gapKeyword, targetTokens, city) {
   // Accept if contains city name
   if (city && kw.includes(city.toLowerCase())) return true;
 
-  // Accept if shares at least one meaningful token with the target keyword
-  return targetTokens.some(token => kw.includes(token));
+  // Accept if the gap keyword contains a specific target token or its stem
+  return targetTokens.some(token => {
+    const root = stemToken(token);
+    return kw.includes(token) || (root.length > 2 && kw.includes(root));
+  });
 }
 
 async function getRankedKeywords(domain) {
