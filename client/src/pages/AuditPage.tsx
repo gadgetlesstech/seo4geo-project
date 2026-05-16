@@ -784,6 +784,7 @@ export default function AuditPage() {
                         <p className="text-white/20 text-xs text-center mt-5">No spam. Unsubscribe anytime.</p>
                       </>
                     )}
+                  </motion.div>
                 </div>
               )}
             </div>{/* end gated wrapper */}
