@@ -78,13 +78,63 @@ router.post('/', async (req, res) => {
     // Phase 3: Content gap from top 3 organic competitors
     const topCompetitorDomains = seoCompetitors.slice(0, 3).map(c => c.domain);
     const gapResults = await Promise.allSettled(
-      topCompetitorDomains.map(c => getContentGap(userDomain, c, 30))
+      topCompetitorDomains.map(c => getContentGap(userDomain, c, 200))
     );
+
+    const _GAP_BRAND_BLOCKLIST = new Set([
+      'youtube','amazon','google','facebook','instagram','twitter','reddit',
+      'netflix','tiktok','porn','pornhub','xxx','sex','ebay','walmart',
+      'target','apple','microsoft','chatgpt','openai','weather','news',
+      'gmail','yahoo','bing','espn','cnn','fox','nfl','nba','mlb','nhl',
+      'spotify','linkedin','pinterest','snapchat','twitch','discord','zoom',
+      'paypal','venmo','cashapp','uber','lyft','doordash','airbnb',
+      'blookets','boblox','roblox','minecraft','calculator','craigslist',
+    ]);
+    const _GAP_GENERIC_TOKENS = new Set([
+      'contractor','contractors','contracting','company','companies','co',
+      'service','services','servicing','professional','professionals',
+      'business','businesses','provider','providers','specialist','specialists',
+      'expert','experts','agency','agencies','firm','firms','group','groups',
+      'solutions','solution','licensed','certified','insured',
+      'commercial','residential','industrial',
+    ]);
+    const _GAP_STOP_WORDS = new Set([
+      'a','an','the','and','or','for','in','on','at','to','of','by','with',
+      'near','best','top','local','free','cheap','affordable','how','what',
+      'when','where','why','who','is','are','was','were','be','been','do',
+      'does','did','get','find','your','my','our','their','this','that',
+      'these','those','not','no','vs','like','just','about','me',
+    ]);
+    const _GAP_MAX_VOLUME = 10_000;
+
+    function _gapStemToken(t) {
+      return t.replace(/(?:ing|ers?|tions?|ed|ists?|ment)$/, '').replace(/ies$/, 'y').replace(/s$/, '');
+    }
+    const _kwTokens = keyword.toLowerCase().split(/\W+/)
+      .filter(t => t.length > 2 && !_GAP_STOP_WORDS.has(t));
+    const _specificTokens = _kwTokens.filter(t => !_GAP_GENERIC_TOKENS.has(t));
+    const _targetTokens = _specificTokens.length > 0 ? _specificTokens : _kwTokens;
+    const _cityLower = city.toLowerCase();
+
     const contentGap = gapResults
       .flatMap(r => r.status === 'fulfilled' ? r.value : [])
       .filter((item, i, arr) => {
-        const kw = item.keyword_data?.keyword ?? '';
-        return kw && arr.findIndex(x => x.keyword_data?.keyword === kw) === i;
+        const kw = (item.keyword_data?.keyword ?? '').toLowerCase();
+        if (!kw) return false;
+        // deduplicate
+        if (arr.findIndex(x => (x.keyword_data?.keyword ?? '').toLowerCase() === kw) !== i) return false;
+        // volume cap
+        const vol = item.keyword_data?.keyword_info?.search_volume ?? 0;
+        if (vol > _GAP_MAX_VOLUME) return false;
+        // brand blocklist
+        const words = kw.split(/\W+/);
+        if (words.some(w => _GAP_BRAND_BLOCKLIST.has(w))) return false;
+        // relevance: city or niche token match
+        if (_cityLower && kw.includes(_cityLower)) return true;
+        return _targetTokens.some(token => {
+          const root = _gapStemToken(token);
+          return kw.includes(token) || (root.length > 2 && kw.includes(root));
+        });
       })
       .slice(0, 50);
 
