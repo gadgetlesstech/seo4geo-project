@@ -162,7 +162,6 @@ const inputClass =
 
 // ── Main component ─────────────────────────────────────────────────────────────
 
-const N8N_WEBHOOK = import.meta.env.VITE_N8N_WEBHOOK_URL || "";
 const UNLOCK_KEY = "seo4geo_audit_unlocked";
 
 export default function AuditPage() {
@@ -216,18 +215,16 @@ export default function AuditPage() {
         setGateLimitReached(true);
         return;
       }
-      if (N8N_WEBHOOK) {
-        await fetch(N8N_WEBHOOK, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: gateName,
-            email: gateEmail,
-            website: result?.auditData?.url || "",
-            source: "seo4geo_audit_gate",
-          }),
-        });
-      }
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: gateName,
+          email: gateEmail,
+          website: result?.auditData?.url || "",
+          source: "seo4geo_audit_gate",
+        }),
+      });
     } catch (_) {}
     setGateLoading(false);
     setUnlocked(true);

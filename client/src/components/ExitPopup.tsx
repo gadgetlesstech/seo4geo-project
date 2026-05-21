@@ -4,7 +4,6 @@ import { X, CheckCircle2, ArrowRight, Search, BarChart3, Target, Zap } from "luc
 
 const STORAGE_KEY = "seo4geo_visitor_type";
 const DISMISSED_KEY = "seo4geo_popup_dismissed";
-const N8N_WEBHOOK = import.meta.env.VITE_N8N_WEBHOOK_URL || "";
 
 function isReturning(): boolean {
   return localStorage.getItem(STORAGE_KEY) === "returning";
@@ -80,13 +79,11 @@ export function ExitPopup() {
     if (!email) return;
     setLoading(true);
     try {
-      if (N8N_WEBHOOK) {
-        await fetch(N8N_WEBHOOK, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, website, source: "seo4geo_exit_popup" }),
-        });
-      }
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, website, source: "seo4geo_exit_popup" }),
+      });
     } catch (_) {}
     setLoading(false);
     setSubmitted(true);

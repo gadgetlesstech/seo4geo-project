@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { GoogleGenAI, Modality, LiveServerMessage } from "@google/genai"; // used only for voice live session with ephemeral token
 import { motion, AnimatePresence } from "motion/react";
 import { Mic, MicOff, X, MessageSquare, Loader2, Calendar as CalendarIcon, Search, Send } from "lucide-react";
 import CalendarWidget from "./CalendarWidget";
 import { float32ToInt16, base64ToFloat32, AudioQueue, arrayBufferToBase64 } from "@/src/lib/audio-utils";
-
 
 const GREETING =
   "Hey! I'm your Gadgetlesstech SEO Assistant. Ask me anything about ranking, keywords, or local SEO — or click the calendar icon to book a strategy call.";
@@ -20,7 +18,7 @@ export default function VoiceChat() {
   const [isListening, setIsListening] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
 
-  const liveSessionRef = useRef<any>(null);
+  const wsRef = useRef<WebSocket | null>(null);
   const audioQueueRef = useRef<AudioQueue | null>(null);
   const micStreamRef = useRef<MediaStream | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -44,9 +42,12 @@ export default function VoiceChat() {
 
   // ── stop voice ─────────────────────────────────────────────────────────────
   const stopVoiceChat = useCallback(() => {
-    if (liveSessionRef.current) {
-      liveSessionRef.current.close();
-      liveSessionRef.current = null;
+    const ws = wsRef.current;
+    wsRef.current = null;
+    if (ws) {
+      ws.onclose = null;
+      ws.onerror = null;
+      ws.close();
     }
     if (audioQueueRef.current) {
       audioQueueRef.current.stop();
@@ -64,6 +65,7 @@ export default function VoiceChat() {
       processorRef.current.disconnect();
       processorRef.current = null;
     }
+    setIsLoading(false);
     setIsListening(false);
     setIsVoiceMode(false);
   }, []);
@@ -76,20 +78,19 @@ export default function VoiceChat() {
     try {
       setIsLoading(true);
 
-      const tokenRes = await fetch("/api/chat/token");
-      const { token, error: tokenErr } = await tokenRes.json();
-      if (!token) throw new Error(tokenErr || "Could not get voice session token");
-
-      const ai = new GoogleGenAI({ apiKey: token, httpOptions: { apiVersion: "v1alpha" } });
+      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const ws = new WebSocket(`${protocol}//${window.location.host}/api/chat/live`);
+      wsRef.current = ws;
       audioQueueRef.current = new AudioQueue(24000);
 
-      const session = await ai.live.connect({
-        model: "gemini-2.0-flash-live-001",
-        callbacks: {
-          onopen: async () => {
-            console.log("Live session opened");
+      ws.onmessage = async (event) => {
+        try {
+          const msg = JSON.parse(event.data as string);
+
+          if (msg.type === "ready") {
             setIsListening(true);
             setIsLoading(false);
+            setIsVoiceMode(true);
 
             try {
               const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -111,10 +112,8 @@ export default function VoiceChat() {
                 const inputData = e.inputBuffer.getChannelData(0);
                 const pcmData = float32ToInt16(inputData);
                 const base64Data = arrayBufferToBase64(pcmData.buffer);
-                if (liveSessionRef.current) {
-                  liveSessionRef.current.sendRealtimeInput({
-                    audio: { data: base64Data, mimeType: "audio/pcm;rate=16000" },
-                  });
+                if (wsRef.current?.readyState === WebSocket.OPEN) {
+                  wsRef.current.send(JSON.stringify({ type: "audio", data: base64Data }));
                 }
               };
             } catch (micError: any) {
@@ -125,68 +124,44 @@ export default function VoiceChat() {
               setMessages(prev => [...prev, { role: "model", text }]);
               stopVoiceChat();
             }
-          },
 
-          onmessage: async (message: LiveServerMessage) => {
-            // audio output
-            const base64Audio = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
-            if (base64Audio && audioQueueRef.current) {
-              audioQueueRef.current.enqueue(base64ToFloat32(base64Audio));
-            }
+          } else if (msg.type === "audio" && audioQueueRef.current) {
+            audioQueueRef.current.enqueue(base64ToFloat32(msg.data));
 
-            // model transcript
-            const transcript = message.serverContent?.modelTurn?.parts?.[0]?.text;
-            if (transcript) {
-              setMessages(prev => {
-                const last = prev[prev.length - 1];
-                if (last?.role === "model" && last.text.startsWith("...")) {
-                  return [...prev.slice(0, -1), { role: "model", text: transcript }];
-                }
-                return [...prev, { role: "model", text: transcript }];
-              });
-            }
-
-            // user voice transcript
-            const inputTranscript = (message.serverContent as any)?.userTurn?.parts?.[0]?.text;
-            if (inputTranscript) {
-              setMessages(prev => [...prev, { role: "user", text: inputTranscript }]);
-            }
-
-            // interruption — clear queued audio
-            if (message.serverContent?.interrupted) {
-              if (audioQueueRef.current) {
-                audioQueueRef.current.stop();
-                audioQueueRef.current = new AudioQueue(24000);
+          } else if (msg.type === "model_transcript" && msg.text) {
+            setMessages(prev => {
+              const last = prev[prev.length - 1];
+              if (last?.role === "model" && last.text.startsWith("...")) {
+                return [...prev.slice(0, -1), { role: "model", text: msg.text }];
               }
+              return [...prev, { role: "model", text: msg.text }];
+            });
+
+          } else if (msg.type === "user_transcript" && msg.text) {
+            setMessages(prev => [...prev, { role: "user", text: msg.text }]);
+
+          } else if (msg.type === "interrupted") {
+            if (audioQueueRef.current) {
+              audioQueueRef.current.stop();
+              audioQueueRef.current = new AudioQueue(24000);
             }
-          },
 
-          onerror: (err: any) => {
-            console.error("Live session error:", err);
+          } else if (msg.type === "error") {
+            setMessages(prev => [...prev, { role: "model", text: `Voice error: ${msg.message}` }]);
             stopVoiceChat();
-          },
+          }
+        } catch (_) {}
+      };
 
-          onclose: () => {
-            console.log("Live session closed");
-            stopVoiceChat();
-          },
-        },
-        config: {
-          responseModalities: [Modality.AUDIO],
-          speechConfig: {
-            voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } },
-          },
-          systemInstruction: "You are the Gadgetlesstech SEO Assistant. You help users understand the Gadgetlesstech Ranking System™, which includes Keyword Compression, Topical Authority, Page Authority, and Query Expansion. Be professional, authoritative, and concise — keep spoken answers under 3 sentences. If the user wants to book a call or schedule a meeting, let them know they can click the calendar icon in this chat.",
-          outputAudioTranscription: {},
-          inputAudioTranscription: {},
-        },
-      });
+      ws.onerror = () => {
+        setMessages(prev => [...prev, { role: "model", text: "Voice connection failed. Please try again." }]);
+        stopVoiceChat();
+      };
 
-      liveSessionRef.current = session;
-      setIsVoiceMode(true);
+      ws.onclose = () => stopVoiceChat();
+
     } catch (error: any) {
       console.error("Failed to start voice chat:", error);
-      setIsLoading(false);
       stopVoiceChat();
       setMessages(prev => [...prev, { role: "model", text: `Connection error: ${error?.message ?? "Unknown error"}` }]);
     }
@@ -206,7 +181,6 @@ export default function VoiceChat() {
     setIsLoading(true);
 
     try {
-      // Pass history (excluding the static greeting) so the model has conversation context
       const history = messages.filter(m => m.text !== GREETING);
       const res = await fetch("/api/chat/message", {
         method: "POST",
