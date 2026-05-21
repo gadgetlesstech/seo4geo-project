@@ -84,7 +84,7 @@ export default function VoiceChat() {
       audioQueueRef.current = new AudioQueue(24000);
 
       const session = await ai.live.connect({
-        model: "gemini-3.1-flash-live-preview",
+        model: "gemini-2.0-flash-live-001",
         callbacks: {
           onopen: async () => {
             console.log("Live session opened");
