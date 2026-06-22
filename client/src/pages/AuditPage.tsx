@@ -223,6 +223,7 @@ export default function AuditPage() {
           email: gateEmail,
           website: result?.auditData?.url || "",
           source: "seo4geo_audit_gate",
+          report: result?.report || "",
         }),
       });
     } catch (_) {}

@@ -101,6 +101,29 @@
       "parameters": {
         "fromEmail": "kevin@gadgetlesstech.com",
         "toEmail": "={{ $json.email }}",
+        "subject": "Your SEO4GEO Audit Report",
+        "emailType": "html",
+        "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:620px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">Gadgetlesstech Ranking System&#8482;</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">SEO4GEO — Your Audit Report</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.body.name || 'there' }},</p><p>Here is the full SEO audit report for <strong>{{ $('SEO4GEO Signup Webhook').first().json.body.website || $('SEO4GEO Signup Webhook').first().json.body.url || 'your site' }}</strong>. Bookmark this email &#8212; your action plan is inside.</p><pre style=\"white-space:pre-wrap;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7;color:#333;background:#f9f9f9;padding:24px;border-radius:6px;border-left:4px solid #00b8db;margin:24px 0;\">{{ $('SEO4GEO Signup Webhook').first().json.body.report }}</pre><table cellpadding=\"0\" cellspacing=\"0\" style=\"margin:24px 0;\"><tr><td style=\"background:#00b8db;border-radius:6px;\"><a href=\"https://seo4geo.com/audit\" style=\"display:inline-block;padding:14px 28px;color:#000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;\">Run Another Audit &#8594;</a></td></tr></table><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you requested a free SEO4GEO audit. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
+      },
+      "id": "00000012-b2c3-d4e5-f6a7-000000008919",
+      "name": "Email 0 — Audit Report Delivery",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        260,
+        400
+      ],
+      "credentials": {
+        "smtp": {
+          "id": null,
+          "name": "Gmail SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "kevin@gadgetlesstech.com",
+        "toEmail": "={{ $json.email }}",
         "subject": "You found the tool. Here's the full picture.",
         "emailType": "html",
         "message": "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body style=\"margin:0;padding:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif;\"><div style=\"max-width:580px;margin:40px auto;padding:0 20px;\"><div style=\"background:#000;padding:20px 28px;border-bottom:3px solid #00b8db;border-radius:8px 8px 0 0;\"><p style=\"margin:0;color:#00b8db;font-size:10px;letter-spacing:3px;text-transform:uppercase;\">Gadgetlesstech Ranking System&#8482;</p><p style=\"margin:4px 0 0;color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:-1px;\">SEO4GEO</p></div><div style=\"background:#fff;padding:32px 28px;font-size:15px;line-height:1.8;color:#333;border-radius:0 0 8px 8px;\"><p>Hey {{ $json.body.name || 'there' }},</p><p>Most people find Gadgetlesstech through the theory. You found it through the proof &#8212; and that tells me you are serious about understanding where your rankings actually stand.</p><p>SEO4GEO is the tool that makes keyword gaps impossible to ignore. But it is one piece of a larger system. Over the next few weeks I will show you the full picture:</p><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"margin:16px 0;\"><tr><td style=\"padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">01 &#8212;</span> <strong>Your SEO4GEO audit</strong> &#8212; what the data is telling you</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">02 &#8212;</span> <strong>Why the gap exists</strong> &#8212; the Query Expansion System explained</td></tr><tr><td style=\"padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">03 &#8212;</span> <strong>How to close it</strong> &#8212; the 4-layer Ranking System</td></tr><tr><td style=\"padding:10px 0;font-size:14px;\"><span style=\"color:#00b8db;font-weight:700;\">04 &#8212;</span> <strong>Who executes it</strong> &#8212; Gadgetlesstech, if you want the full build</td></tr></table><p>If you have not run your free audit yet, start there. It takes 60 seconds and shows you exactly where you stand.</p><table cellpadding=\"0\" cellspacing=\"0\" style=\"margin:24px 0;\"><tr><td style=\"background:#00b8db;border-radius:6px;\"><a href=\"https://seo4geo.com/audit\" style=\"display:inline-block;padding:14px 28px;color:#000;font-size:13px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:1px;\">Run Your Free Audit &#8594;</a></td></tr></table><p style=\"margin:24px 0 0;\">&#8212; Kevin<br><span style=\"color:#999;font-size:13px;\">Gadgetlesstech</span></p><hr style=\"border:none;border-top:1px solid #eee;margin:28px 0;\"><p style=\"font-size:11px;color:#999;\">You received this because you signed up via SEO4GEO or the Gadgetlesstech Blueprint. <a href=\"#\" style=\"color:#00b8db;\">Unsubscribe</a></p></div></div></body></html>"
@@ -111,7 +134,7 @@
       "typeVersion": 2,
       "position": [
         260,
-        400
+        560
       ],
       "credentials": {
         "smtp": {
@@ -407,6 +430,17 @@
       ]
     },
     "Add Lead to CRM": {
+      "main": [
+        [
+          {
+            "node": "Email 0 — Audit Report Delivery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email 0 — Audit Report Delivery": {
       "main": [
         [
           {
