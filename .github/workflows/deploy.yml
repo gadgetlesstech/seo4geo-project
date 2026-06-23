@@ -41,3 +41,11 @@ jobs:
             cd /var/www/seo4geo
             docker compose build --no-cache
             docker compose up -d
+
+      - name: Push SEO4GEO drip workflow to n8n
+        run: |
+          curl -s -X PUT \
+            "https://n8n.srv1133278.hstgr.cloud/api/v1/workflows/LnAb4VvKICqy7WZA" \
+            -H "X-N8N-API-KEY: ${{ secrets.N8N_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d @drip-campaign/seo4geo-drip-workflow.json
