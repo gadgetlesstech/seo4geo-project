@@ -92,8 +92,8 @@
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": null,
-          "name": "Google Sheets Account"
+          "id": "jx90RO1U9TJ7dNM7",
+          "name": "Google Sheets account 3"
         }
       }
     },
@@ -115,8 +115,8 @@
       ],
       "credentials": {
         "smtp": {
-          "id": null,
-          "name": "Gmail SMTP"
+          "id": "na4Fu10Yy3CPhffe",
+          "name": "SMTP account"
         }
       }
     },
@@ -138,8 +138,8 @@
       ],
       "credentials": {
         "smtp": {
-          "id": null,
-          "name": "Gmail SMTP"
+          "id": "na4Fu10Yy3CPhffe",
+          "name": "SMTP account"
         }
       }
     },
@@ -177,8 +177,8 @@
       ],
       "credentials": {
         "smtp": {
-          "id": null,
-          "name": "Gmail SMTP"
+          "id": "na4Fu10Yy3CPhffe",
+          "name": "SMTP account"
         }
       }
     },
@@ -216,8 +216,8 @@
       ],
       "credentials": {
         "smtp": {
-          "id": null,
-          "name": "Gmail SMTP"
+          "id": "na4Fu10Yy3CPhffe",
+          "name": "SMTP account"
         }
       }
     },
@@ -255,8 +255,8 @@
       ],
       "credentials": {
         "smtp": {
-          "id": null,
-          "name": "Gmail SMTP"
+          "id": "na4Fu10Yy3CPhffe",
+          "name": "SMTP account"
         }
       }
     },
@@ -294,8 +294,8 @@
       ],
       "credentials": {
         "smtp": {
-          "id": null,
-          "name": "Gmail SMTP"
+          "id": "na4Fu10Yy3CPhffe",
+          "name": "SMTP account"
         }
       }
     },
@@ -333,8 +333,8 @@
       ],
       "credentials": {
         "smtp": {
-          "id": null,
-          "name": "Gmail SMTP"
+          "id": "na4Fu10Yy3CPhffe",
+          "name": "SMTP account"
         }
       }
     },
@@ -372,8 +372,8 @@
       ],
       "credentials": {
         "smtp": {
-          "id": null,
-          "name": "Gmail SMTP"
+          "id": "na4Fu10Yy3CPhffe",
+          "name": "SMTP account"
         }
       }
     },
@@ -411,8 +411,8 @@
       ],
       "credentials": {
         "smtp": {
-          "id": null,
-          "name": "Gmail SMTP"
+          "id": "na4Fu10Yy3CPhffe",
+          "name": "SMTP account"
         }
       }
     }
