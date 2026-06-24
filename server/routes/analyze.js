@@ -186,10 +186,6 @@ router.post('/', async (req, res) => {
 
     const report = await generateGapAnalysis(auditData);
 
-    await sendLeadToN8n({ url, keyword, city, report }).catch(err =>
-      console.error('n8n webhook failed (non-fatal):', err.message)
-    );
-
     res.json({ success: true, report, auditData });
   } catch (err) {
     console.error('Analyze error:', err);
