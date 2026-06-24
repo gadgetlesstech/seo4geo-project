@@ -43,6 +43,7 @@ jobs:
             docker compose up -d
 
       - name: Push SEO4GEO drip workflow to n8n
+        if: always()
         run: |
           curl -s -X PUT \
             "https://n8n.srv1133278.hstgr.cloud/api/v1/workflows/LnAb4VvKICqy7WZA" \
