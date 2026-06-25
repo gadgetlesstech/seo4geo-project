@@ -42,8 +42,12 @@ jobs:
             docker compose build --no-cache
             docker compose up -d
             apt-get install -y jq -qq 2>/dev/null || true
-            jq '{name: .name, nodes: .nodes, connections: .connections, settings: .settings, staticData: null}' /var/www/seo4geo/drip-campaign/seo4geo-drip-workflow.json | \
-            curl -s -X PUT \
+            echo "--- Checking drip-campaign path ---"
+            find /var/www/seo4geo -name "seo4geo-drip-workflow.json" 2>/dev/null || echo "File not found"
+            WORKFLOW_FILE=$(find /var/www/seo4geo -name "seo4geo-drip-workflow.json" | head -1)
+            echo "Using file: $WORKFLOW_FILE"
+            jq '{name: .name, nodes: .nodes, connections: .connections, settings: .settings, staticData: null}' "$WORKFLOW_FILE" | \
+            curl -X PUT \
               "https://n8n.srv1133278.hstgr.cloud/api/v1/workflows/LnAb4VvKICqy7WZA" \
               -H "X-N8N-API-KEY: ${{ secrets.N8N_API_KEY }}" \
               -H "Content-Type: application/json" \
