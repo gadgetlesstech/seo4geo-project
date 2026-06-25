@@ -14,7 +14,7 @@ SEO4GEO runs a free local SEO audit showing a business their scores across 7 dim
 
 The Gadgetlesstech Ranking System™ has 4 layers: Keyword Compression, Topical Authority, Page Authority, and Query Expansion. Together they close the gaps the audit exposes.
 
-Always guide users toward booking a free strategy call with Kevin at Gadgetlesstech — tell them to click the calendar icon in this chat. The audit shows the gap. The call maps the path to close it.`;
+Your primary goal is a two-step conversion: first, get the visitor to run the free audit at seo4geo.com/audit — then, once they have results, encourage them to book a 1-on-1 strategy call to review the audit together. Always push the audit first. Use the calendar icon in this chat to book the call. Never refer to any team member by name.`;
 
 
 type Msg = { role: "user" | "model"; text: string };
@@ -33,6 +33,7 @@ export default function VoiceChat() {
   const micStreamRef = useRef<MediaStream | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const processorRef = useRef<ScriptProcessorNode | null>(null);
+  const modelTurnActiveRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -71,6 +72,7 @@ export default function VoiceChat() {
       processorRef.current.disconnect();
       processorRef.current = null;
     }
+    modelTurnActiveRef.current = false;
     setIsLoading(false);
     setIsListening(false);
     setIsVoiceMode(false);
@@ -141,13 +143,22 @@ export default function VoiceChat() {
 
             const modelText = message.serverContent?.outputTranscription?.text;
             if (modelText) {
-              setMessages(prev => {
-                const last = prev[prev.length - 1];
-                if (last?.role === "model" && last.text.startsWith("...")) {
-                  return [...prev.slice(0, -1), { role: "model", text: modelText }];
-                }
-                return [...prev, { role: "model", text: modelText }];
-              });
+              if (!modelTurnActiveRef.current) {
+                modelTurnActiveRef.current = true;
+                setMessages(prev => [...prev, { role: "model", text: modelText }]);
+              } else {
+                setMessages(prev => {
+                  const last = prev[prev.length - 1];
+                  if (last?.role === "model") {
+                    return [...prev.slice(0, -1), { role: "model", text: last.text + modelText }];
+                  }
+                  return [...prev, { role: "model", text: modelText }];
+                });
+              }
+            }
+
+            if (message.serverContent?.turnComplete) {
+              modelTurnActiveRef.current = false;
             }
 
             const userText = message.serverContent?.inputTranscription?.text;
@@ -155,9 +166,12 @@ export default function VoiceChat() {
               setMessages(prev => [...prev, { role: "user", text: userText }]);
             }
 
-            if (message.serverContent?.interrupted && audioQueueRef.current) {
-              audioQueueRef.current.stop();
-              audioQueueRef.current = new AudioQueue(24000);
+            if (message.serverContent?.interrupted) {
+              modelTurnActiveRef.current = false;
+              if (audioQueueRef.current) {
+                audioQueueRef.current.stop();
+                audioQueueRef.current = new AudioQueue(24000);
+              }
             }
           },
 
