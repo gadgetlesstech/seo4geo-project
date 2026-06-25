@@ -36,7 +36,7 @@ export function setupLiveProxy(httpServer) {
 
     try {
       geminiSession = await ai.live.connect({
-        model: 'gemini-2.0-flash-live-preview-04-09',
+        model: 'gemini-2.0-flash-live-001',
         callbacks: {
           onopen: () => send({ type: 'ready' }),
 
