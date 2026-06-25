@@ -18,7 +18,7 @@ export function setupLiveProxy(httpServer) {
   });
 
   wss.on('connection', async (clientWs) => {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY, httpOptions: { apiVersion: 'v1alpha' } });
     let geminiSession = null;
 
     const send = (obj) => {
