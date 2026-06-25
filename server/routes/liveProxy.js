@@ -54,12 +54,13 @@ export function setupLiveProxy(httpServer) {
           },
 
           onerror: (err) => {
-            console.error('Gemini Live error:', err);
+            console.error('[live] Gemini error:', err);
             send({ type: 'error', message: String(err) });
             clientWs.close();
           },
 
-          onclose: () => {
+          onclose: (e) => {
+            console.log('[live] Gemini session closed', e?.code, e?.reason);
             if (clientWs.readyState === WebSocket.OPEN) clientWs.close();
           },
         },
