@@ -147,7 +147,28 @@ export default function Home() {
               </a>
             </div>
 
-            <div className="mt-16 flex flex-wrap justify-center gap-8 text-[12px] font-black uppercase tracking-[0.2em] text-gray-500">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="mt-12 flex items-center justify-center"
+            >
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent('open-voice-chat'))}
+                className="group flex items-center gap-3 bg-white/5 border border-white/10 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all rounded-full px-6 py-3"
+              >
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400" />
+                </span>
+                <span className="text-[12px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white transition-colors">
+                  AI SEO Assistant is live — ask anything
+                </span>
+                <MessageSquare className="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            </motion.div>
+
+            <div className="mt-10 flex flex-wrap justify-center gap-8 text-[12px] font-black uppercase tracking-[0.2em] text-gray-500">
               <span className="flex items-center"><div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 shadow-[0_0_8px_rgba(6,182,212,0.8)]"/> See your keyword gaps instantly</span>
               <span className="flex items-center"><div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 shadow-[0_0_8px_rgba(6,182,212,0.8)]"/> Compare against local competitors</span>
               <span className="flex items-center"><div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 shadow-[0_0_8px_rgba(6,182,212,0.8)]"/> Get an AI-powered action plan</span>
