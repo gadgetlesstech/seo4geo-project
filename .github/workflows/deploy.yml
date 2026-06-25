@@ -45,11 +45,10 @@ jobs:
       - name: Push SEO4GEO drip workflow to n8n
         if: always()
         run: |
-          jq 'del(.versionId) | del(.id)' drip-campaign/seo4geo-drip-workflow.json | \
+          jq '{name: .name, nodes: .nodes, connections: .connections, settings: .settings, staticData: null}' drip-campaign/seo4geo-drip-workflow.json | \
           curl -X PUT \
             "https://n8n.srv1133278.hstgr.cloud/api/v1/workflows/LnAb4VvKICqy7WZA" \
             -H "X-N8N-API-KEY: ${{ secrets.N8N_API_KEY }}" \
             -H "Content-Type: application/json" \
             --data @- \
-            --fail \
-            --show-error
+            -w "\nHTTP %{http_code}\n"
