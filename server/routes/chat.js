@@ -21,6 +21,7 @@ router.post('/message', async (req, res) => {
     const response = await chat.sendMessage({ message });
     res.json({ text: response.text });
   } catch (err) {
+    console.error('[chat] error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
