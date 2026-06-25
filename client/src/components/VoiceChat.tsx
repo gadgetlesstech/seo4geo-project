@@ -84,7 +84,7 @@ export default function VoiceChat() {
       audioQueueRef.current = new AudioQueue(24000);
 
       const session = await ai.live.connect({
-        model: "gemini-live-2.5-flash-preview",
+        model: "gemini-2.0-flash-live-001",
         callbacks: {
           onopen: async () => {
             setIsListening(true);
@@ -128,6 +128,7 @@ export default function VoiceChat() {
           },
 
           onmessage: (message: any) => {
+            console.log('[live] message:', JSON.stringify(message));
             const audioData = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
             if (audioData && audioQueueRef.current) {
               audioQueueRef.current.enqueue(base64ToFloat32(audioData));
@@ -160,7 +161,8 @@ export default function VoiceChat() {
             stopVoiceChat();
           },
 
-          onclose: () => {
+          onclose: (e: any) => {
+            console.log('[live] closed:', e?.code, e?.reason);
             stopVoiceChat();
           },
         },
