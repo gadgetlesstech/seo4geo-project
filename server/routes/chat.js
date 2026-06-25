@@ -14,7 +14,7 @@ router.post('/message', async (req, res) => {
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     const chat = ai.chats.create({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       config: { systemInstruction: SYSTEM_INSTRUCTION },
       history: history.map(m => ({ role: m.role, parts: [{ text: m.text }] })),
     });
