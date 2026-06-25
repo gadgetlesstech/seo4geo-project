@@ -128,7 +128,6 @@ export default function VoiceChat() {
           },
 
           onmessage: (message: any) => {
-            console.log('[live] message:', JSON.stringify(message));
             const audioData = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
             if (audioData && audioQueueRef.current) {
               audioQueueRef.current.enqueue(base64ToFloat32(audioData));
@@ -161,8 +160,7 @@ export default function VoiceChat() {
             stopVoiceChat();
           },
 
-          onclose: (e: any) => {
-            console.log('[live] closed:', e?.code, e?.reason);
+          onclose: () => {
             stopVoiceChat();
           },
         },
