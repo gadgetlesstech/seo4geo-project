@@ -16,12 +16,12 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: root
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "server/,client/src/,client/components/,client/lib/,client/public/,client/index.html,client/vite.config.js,client/package.json,client/package-lock.json,client/tsconfig.json,package.json,package-lock.json,Dockerfile,docker-compose.yml,.dockerignore"
+          source: "server/,client/src/,client/components/,client/lib/,client/public/,client/index.html,client/vite.config.js,client/package.json,client/package-lock.json,client/tsconfig.json,package.json,package-lock.json,Dockerfile,docker-compose.yml,.dockerignore,drip-campaign/"
           target: /var/www/seo4geo
           timeout: 120s
           command_timeout: 20m
 
-      - name: Write .env on VPS
+      - name: Write .env and deploy on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -41,14 +41,11 @@ jobs:
             cd /var/www/seo4geo
             docker compose build --no-cache
             docker compose up -d
-
-      - name: Push SEO4GEO drip workflow to n8n
-        if: always()
-        run: |
-          jq '{name: .name, nodes: .nodes, connections: .connections, settings: .settings, staticData: null}' drip-campaign/seo4geo-drip-workflow.json | \
-          curl -X PUT \
-            "https://n8n.srv1133278.hstgr.cloud/api/v1/workflows/LnAb4VvKICqy7WZA" \
-            -H "X-N8N-API-KEY: ${{ secrets.N8N_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            --data @- \
-            -w "\nHTTP %{http_code}\n"
+            apt-get install -y jq -qq 2>/dev/null || true
+            jq '{name: .name, nodes: .nodes, connections: .connections, settings: .settings, staticData: null}' /var/www/seo4geo/drip-campaign/seo4geo-drip-workflow.json | \
+            curl -s -X PUT \
+              "https://n8n.srv1133278.hstgr.cloud/api/v1/workflows/LnAb4VvKICqy7WZA" \
+              -H "X-N8N-API-KEY: ${{ secrets.N8N_API_KEY }}" \
+              -H "Content-Type: application/json" \
+              --data @- \
+              -w "\nHTTP %{http_code}\n"
