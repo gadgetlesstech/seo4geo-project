@@ -10,7 +10,6 @@ import calendarRouter from './routes/calendar.js';
 import auditLimitRouter from './routes/auditLimit.js';
 import chatRouter from './routes/chat.js';
 import leadsRouter from './routes/leads.js';
-import { setupLiveProxy } from './routes/liveProxy.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -37,4 +36,3 @@ app.get('*', (req, res) => {
 const httpServer = app.listen(PORT, () => {
   console.log(`seo4geo server running on port ${PORT}`);
 });
-setupLiveProxy(httpServer);

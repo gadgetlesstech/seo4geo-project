@@ -1,11 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Mic, MicOff, X, MessageSquare, Loader2, Calendar as CalendarIcon, Search, Send } from "lucide-react";
+import { GoogleGenAI, Modality } from "@google/genai";
 import CalendarWidget from "./CalendarWidget";
 import { float32ToInt16, base64ToFloat32, AudioQueue, arrayBufferToBase64 } from "@/src/lib/audio-utils";
 
 const GREETING =
   "Hey! I'm your Gadgetlesstech SEO Assistant. Ask me anything about ranking, keywords, or local SEO — or click the calendar icon to book a strategy call.";
+
+const SYSTEM_INSTRUCTION =
+  "You are the Gadgetlesstech SEO Assistant. You help users understand the Gadgetlesstech Ranking System™, which includes Keyword Compression, Topical Authority, Page Authority, and Query Expansion. Be professional, authoritative, and concise — keep spoken answers under 3 sentences. If the user wants to book a call or schedule a meeting, let them know they can click the calendar icon in this chat.";
 
 type Msg = { role: "user" | "model"; text: string };
 
@@ -18,7 +22,7 @@ export default function VoiceChat() {
   const [isListening, setIsListening] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
 
-  const wsRef = useRef<WebSocket | null>(null);
+  const liveSessionRef = useRef<any>(null);
   const audioQueueRef = useRef<AudioQueue | null>(null);
   const micStreamRef = useRef<MediaStream | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -40,14 +44,10 @@ export default function VoiceChat() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // ── stop voice ─────────────────────────────────────────────────────────────
   const stopVoiceChat = useCallback(() => {
-    const ws = wsRef.current;
-    wsRef.current = null;
-    if (ws) {
-      ws.onclose = null;
-      ws.onerror = null;
-      ws.close();
+    if (liveSessionRef.current) {
+      try { liveSessionRef.current.close(); } catch (_) {}
+      liveSessionRef.current = null;
     }
     if (audioQueueRef.current) {
       audioQueueRef.current.stop();
@@ -70,24 +70,23 @@ export default function VoiceChat() {
     setIsVoiceMode(false);
   }, []);
 
-  // cleanup on unmount
   useEffect(() => { return () => stopVoiceChat(); }, [stopVoiceChat]);
 
-  // ── start voice ─────────────────────────────────────────────────────────────
   const startVoiceChat = async () => {
     try {
       setIsLoading(true);
 
-      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const ws = new WebSocket(`${protocol}//${window.location.host}/api/chat/live`);
-      wsRef.current = ws;
+      const tokenRes = await fetch("/api/chat/token");
+      const { token, error: tokenErr } = await tokenRes.json();
+      if (!token) throw new Error(tokenErr || "Could not get voice session token");
+
+      const ai = new GoogleGenAI({ apiKey: token, httpOptions: { apiVersion: "v1alpha" } });
       audioQueueRef.current = new AudioQueue(24000);
 
-      ws.onmessage = async (event) => {
-        try {
-          const msg = JSON.parse(event.data as string);
-
-          if (msg.type === "ready") {
+      const session = await ai.live.connect({
+        model: "gemini-live-2.5-flash-preview",
+        callbacks: {
+          onopen: async () => {
             setIsListening(true);
             setIsLoading(false);
             setIsVoiceMode(true);
@@ -112,8 +111,10 @@ export default function VoiceChat() {
                 const inputData = e.inputBuffer.getChannelData(0);
                 const pcmData = float32ToInt16(inputData);
                 const base64Data = arrayBufferToBase64(pcmData.buffer);
-                if (wsRef.current?.readyState === WebSocket.OPEN) {
-                  wsRef.current.send(JSON.stringify({ type: "audio", data: base64Data }));
+                if (liveSessionRef.current) {
+                  liveSessionRef.current.sendRealtimeInput({
+                    audio: { data: base64Data, mimeType: "audio/pcm;rate=16000" },
+                  });
                 }
               };
             } catch (micError: any) {
@@ -124,46 +125,59 @@ export default function VoiceChat() {
               setMessages(prev => [...prev, { role: "model", text }]);
               stopVoiceChat();
             }
+          },
 
-          } else if (msg.type === "audio" && audioQueueRef.current) {
-            audioQueueRef.current.enqueue(base64ToFloat32(msg.data));
+          onmessage: (message: any) => {
+            const audioData = message.serverContent?.modelTurn?.parts?.[0]?.inlineData?.data;
+            if (audioData && audioQueueRef.current) {
+              audioQueueRef.current.enqueue(base64ToFloat32(audioData));
+            }
 
-          } else if (msg.type === "model_transcript" && msg.text) {
-            setMessages(prev => {
-              const last = prev[prev.length - 1];
-              if (last?.role === "model" && last.text.startsWith("...")) {
-                return [...prev.slice(0, -1), { role: "model", text: msg.text }];
-              }
-              return [...prev, { role: "model", text: msg.text }];
-            });
+            const modelText = message.serverContent?.outputTranscription?.text;
+            if (modelText) {
+              setMessages(prev => {
+                const last = prev[prev.length - 1];
+                if (last?.role === "model" && last.text.startsWith("...")) {
+                  return [...prev.slice(0, -1), { role: "model", text: modelText }];
+                }
+                return [...prev, { role: "model", text: modelText }];
+              });
+            }
 
-          } else if (msg.type === "user_transcript" && msg.text) {
-            setMessages(prev => [...prev, { role: "user", text: msg.text }]);
+            const userText = message.serverContent?.inputTranscription?.text;
+            if (userText) {
+              setMessages(prev => [...prev, { role: "user", text: userText }]);
+            }
 
-          } else if (msg.type === "interrupted") {
-            if (audioQueueRef.current) {
+            if (message.serverContent?.interrupted && audioQueueRef.current) {
               audioQueueRef.current.stop();
               audioQueueRef.current = new AudioQueue(24000);
             }
+          },
 
-          } else if (msg.type === "error") {
-            setMessages(prev => [...prev, { role: "model", text: `Voice error: ${msg.message}` }]);
+          onerror: (err: any) => {
+            setMessages(prev => [...prev, { role: "model", text: `Voice error: ${String(err)}` }]);
             stopVoiceChat();
-          }
-        } catch (_) {}
-      };
+          },
 
-      ws.onerror = () => {
-        setMessages(prev => [...prev, { role: "model", text: "Voice connection failed. Please try again." }]);
-        stopVoiceChat();
-      };
+          onclose: () => {
+            stopVoiceChat();
+          },
+        },
+        config: {
+          responseModalities: [Modality.AUDIO],
+          speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } } },
+          systemInstruction: SYSTEM_INSTRUCTION,
+          outputAudioTranscription: {},
+          inputAudioTranscription: {},
+        },
+      });
 
-      ws.onclose = () => stopVoiceChat();
-
+      liveSessionRef.current = session;
     } catch (error: any) {
       console.error("Failed to start voice chat:", error);
-      stopVoiceChat();
       setMessages(prev => [...prev, { role: "model", text: `Connection error: ${error?.message ?? "Unknown error"}` }]);
+      stopVoiceChat();
     }
   };
 
@@ -172,7 +186,6 @@ export default function VoiceChat() {
     else startVoiceChat();
   };
 
-  // ── text chat ──────────────────────────────────────────────────────────────
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
     const userMessage = input.trim();
@@ -201,7 +214,6 @@ export default function VoiceChat() {
     }
   };
 
-  // ─── UI ────────────────────────────────────────────────────────────────────
   return (
     <>
       <motion.button
@@ -228,7 +240,6 @@ export default function VoiceChat() {
             exit={{ opacity: 0, y: 100, scale: 0.9 }}
             className="fixed bottom-28 right-8 w-[400px] h-[600px] bg-black rounded-[32px] shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-white/10 flex flex-col overflow-hidden z-50 backdrop-blur-xl"
           >
-            {/* Header */}
             <div className="p-6 bg-black text-white flex items-center justify-between border-b border-white/10">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-cyan-500 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.4)]">
@@ -258,7 +269,6 @@ export default function VoiceChat() {
               </div>
             </div>
 
-            {/* Messages */}
             <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-black/95 scrollbar-hide">
               {showCalendar ? (
                 <div className="h-full"><CalendarWidget onClose={() => setShowCalendar(false)} /></div>
@@ -290,7 +300,6 @@ export default function VoiceChat() {
               )}
             </div>
 
-            {/* Input */}
             {!showCalendar && (
               <div className="p-6 bg-black border-t border-white/10">
                 {isVoiceMode ? (

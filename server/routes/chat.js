@@ -26,4 +26,22 @@ router.post('/message', async (req, res) => {
   }
 });
 
+// Ephemeral token for Gemini Live voice sessions
+router.get('/token', async (_req, res) => {
+  try {
+    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY, httpOptions: { apiVersion: 'v1alpha' } });
+    const token = await ai.authTokens.create({
+      config: {
+        uses: 1,
+        expireTime: new Date(Date.now() + 60_000).toISOString(),
+        newSessionExpireTime: new Date(Date.now() + 300_000).toISOString(),
+      },
+    });
+    res.json({ token: token.name });
+  } catch (err) {
+    console.error('[chat/token] error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default router;
