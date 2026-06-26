@@ -147,11 +147,17 @@ export default function Home() {
               </a>
             </div>
 
+            <div className="mt-16 flex flex-wrap justify-center gap-8 text-[12px] font-black uppercase tracking-[0.2em] text-gray-500">
+              <span className="flex items-center"><div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 shadow-[0_0_8px_rgba(6,182,212,0.8)]"/> See your keyword gaps instantly</span>
+              <span className="flex items-center"><div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 shadow-[0_0_8px_rgba(6,182,212,0.8)]"/> Compare against local competitors</span>
+              <span className="flex items-center"><div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 shadow-[0_0_8px_rgba(6,182,212,0.8)]"/> Get an AI-powered action plan</span>
+            </div>
+
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="mt-12 flex items-center justify-center"
+              className="mt-10 flex items-center justify-center"
             >
               <button
                 onClick={() => window.dispatchEvent(new CustomEvent('open-voice-chat'))}
@@ -161,18 +167,13 @@ export default function Home() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400" />
                 </span>
-                <span className="text-[12px] font-black uppercase tracking-widest text-gray-300 group-hover:text-white transition-colors">
+                <span className="text-[12px] font-black uppercase tracking-widest text-cyan-400">
                   AI SEO Assistant is live — ask anything
                 </span>
-                <MessageSquare className="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-transform" />
+                <MessageSquare className="w-4 h-4 text-white" />
               </button>
             </motion.div>
 
-            <div className="mt-10 flex flex-wrap justify-center gap-8 text-[12px] font-black uppercase tracking-[0.2em] text-gray-500">
-              <span className="flex items-center"><div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 shadow-[0_0_8px_rgba(6,182,212,0.8)]"/> See your keyword gaps instantly</span>
-              <span className="flex items-center"><div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 shadow-[0_0_8px_rgba(6,182,212,0.8)]"/> Compare against local competitors</span>
-              <span className="flex items-center"><div className="w-2 h-2 bg-cyan-400 rounded-full mr-2 shadow-[0_0_8px_rgba(6,182,212,0.8)]"/> Get an AI-powered action plan</span>
-            </div>
           </div>
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.1),transparent_70%)] pointer-events-none" />
