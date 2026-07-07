@@ -103,7 +103,7 @@
         "toEmail": "={{ $('SEO4GEO Signup Webhook').first().json.body.email }}",
         "subject": "Your SEO4GEO Audit Report",
         "emailType": "text",
-        "text": "={{ 'Hey ' + ($('SEO4GEO Signup Webhook').first().json.body.name || 'there') + ',\\n\\nHere is your full SEO audit report for ' + ($('SEO4GEO Signup Webhook').first().json.body.website || 'your site') + '. Bookmark this email — your action plan is inside.\\n\\n---\\n\\n' + $('SEO4GEO Signup Webhook').first().json.body.report + '\\n\\n---\\n\\nRun another audit: https://seo4geo.com/audit\\n\\n— Kevin\\nGadgetlesstech' }}"
+        "text": "={{ 'Hey ' + ($('SEO4GEO Signup Webhook').first().json.body.name || 'there') + ',\\n\\nHere is your full SEO audit report for ' + ($('SEO4GEO Signup Webhook').first().json.body.website || 'your site') + '. Bookmark this email — your action plan is inside.\\n\\n---\\n\\n' + ($('SEO4GEO Signup Webhook').first().json.body.report || \"Looks like you haven't run your free audit yet — grab it here to see your full keyword gap report: https://seo4geo.com/audit\") + '\\n\\n---\\n\\nRun another audit: https://seo4geo.com/audit\\n\\n— Kevin\\nGadgetlesstech' }}"
       },
       "id": "00000012-b2c3-d4e5-f6a7-000000008919",
       "name": "Email 0 — Audit Report Delivery",
