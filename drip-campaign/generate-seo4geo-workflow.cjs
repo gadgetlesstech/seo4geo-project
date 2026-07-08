@@ -52,7 +52,7 @@ const emails = [
     name: 'Email 1 — Welcome to SEO4GEO',
     subject: "You found the tool. Here's the full picture.",
     body: wrap('Gadgetlesstech Ranking System&#8482;',
-      '<p>Hey ' + n + ',</p>' +
+      '<p>Hey, ' + n + ',</p>' +
       '<p>Most people find Gadgetlesstech through the theory. You found it through the proof &#8212; and that tells me you are serious about understanding where your rankings actually stand.</p>' +
       '<p>SEO4GEO is the tool that makes keyword gaps impossible to ignore. But it is one piece of a larger system. Over the next few weeks I will show you the full picture:</p>' +
       '<table width="100%" cellpadding="0" cellspacing="0" style="margin:16px 0;">' +
@@ -68,7 +68,7 @@ const emails = [
     name: 'Email 2 — What Your Audit Shows',
     subject: "What your keyword gap report is actually telling you",
     body: wrap('Reading the Data',
-      '<p>Hey ' + n + ',</p>' +
+      '<p>Hey, ' + n + ',</p>' +
       '<p>When you run an SEO4GEO audit, you are not just getting a list of keywords. You are getting a map of every search your competitors are winning that you are not even showing up for.</p>' +
       '<p>Here is how to read what you see:</p>' +
       '<table width="100%" cellpadding="0" cellspacing="0" style="margin:20px 0;">' +
@@ -86,7 +86,7 @@ const emails = [
     name: 'Email 3 — Why the Gap Exists (QES)',
     subject: "Why your competitors rank for searches you never thought to target",
     body: wrap('The Why',
-      '<p>Hey ' + n + ',</p>' +
+      '<p>Hey, ' + n + ',</p>' +
       '<p>Your SEO4GEO audit showed you the gap. Now let me explain why it exists.</p>' +
       '<p>Most businesses build their SEO around a fixed list of keywords &#8212; the obvious ones. Their top competitor is doing something different. They are capturing every variation, every phrasing, every related question a potential customer might search.</p>' +
       '<p>This is called <strong>Query Expansion</strong> &#8212; and it is the single biggest lever in modern local SEO.</p>' +
@@ -102,7 +102,7 @@ const emails = [
     name: 'Email 4 — The 4-Layer System',
     subject: "The 4-layer system that closes the gap",
     body: wrap('The Methodology',
-      '<p>Hey ' + n + ',</p>' +
+      '<p>Hey, ' + n + ',</p>' +
       '<p>Now that you understand the gap, let me show you how we close it.</p>' +
       '<p>The Gadgetlesstech Ranking System runs four layers simultaneously. Most agencies touch one &#8212; if they touch any at all.</p>' +
       layer('01', 'Keyword Compression', 'Cover thousands of search variations through phrase stacking. Maximum visibility, zero content bloat.') +
@@ -116,7 +116,7 @@ const emails = [
     name: 'Email 5 — How to Close the Gaps',
     subject: "The fastest way to start closing your keyword gaps",
     body: wrap('The Action Plan',
-      '<p>Hey ' + n + ',</p>' +
+      '<p>Hey, ' + n + ',</p>' +
       '<p>Your SEO4GEO audit gives you an AI-generated action plan. Here is how to prioritize it.</p>' +
       '<p><strong>Start with Layer 04 &#8212; Query Expansion.</strong> This is where most businesses have the largest gaps and the fastest wins. You are not competing on these searches at all, which means even modest content improvements will produce visible ranking movement.</p>' +
       '<p>Then move to <strong>Layer 02 &#8212; Topical Authority.</strong> This is the long game. Google and AI search engines reward businesses that comprehensively cover a subject area. Each piece of content you add compounds the authority signal.</p>' +
@@ -133,7 +133,7 @@ const emails = [
     name: 'Email 6 — Audit Push',
     subject: "Have you run your free audit yet?",
     body: wrap('The Proof',
-      '<p>Hey ' + n + ',</p>' +
+      '<p>Hey, ' + n + ',</p>' +
       '<p>Quick check-in. Have you run your free SEO4GEO audit yet?</p>' +
       '<p>If not &#8212; this is the single most valuable thing you can do in the next 60 seconds. It shows you:</p>' +
       '<table width="100%" cellpadding="0" cellspacing="0" style="margin:20px 0;">' +
@@ -150,7 +150,7 @@ const emails = [
     name: 'Email 7 — Gadgetlesstech',
     subject: "When you are ready to stop doing this alone",
     body: wrap('The Who',
-      '<p>Hey ' + n + ',</p>' +
+      '<p>Hey, ' + n + ',</p>' +
       '<p>You have seen the gap. You understand the system. Now let me tell you about the team that executes it.</p>' +
       '<p><strong>Gadgetlesstech</strong> is not a typical SEO agency. We do not do keyword reports. We do not sell monthly blog posts. We do not send dashboards that say rankings are trending up with no explanation of why.</p>' +
       '<p>We build the full 4-layer Ranking System for your business &#8212; engineered for your specific market and competitors. Our clients rank for 10x more searches than their competitors, and they stay there.</p>' +
@@ -167,7 +167,7 @@ const emails = [
     name: 'Email 8 — Final Nudge',
     subject: "One last thing before I leave you alone",
     body: wrap('The Open Door',
-      '<p>Hey ' + n + ',</p>' +
+      '<p>Hey, ' + n + ',</p>' +
       '<p>Last email. I will keep it short.</p>' +
       '<table width="100%" cellpadding="0" cellspacing="0" style="margin:16px 0;">' +
       '<tr><td style="padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:14px;"><span style="color:' + CYAN + ';font-weight:900;">&#8594;</span> <strong>See your gaps</strong> &#8212; <a href="https://seo4geo.com/audit" style="color:' + CYAN + ';font-weight:700;">seo4geo.com/audit</a></td></tr>' +

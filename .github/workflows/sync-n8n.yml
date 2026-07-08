@@ -29,3 +29,9 @@ jobs:
             docker cp /var/www/seo4geo/drip-campaign/seo4geo-drip-workflow.json root-n8n-1:/tmp/seo4geo-drip.json
             docker exec root-n8n-1 n8n import:workflow --input=/tmp/seo4geo-drip.json --overwrite
             echo "n8n import done — this OVERWRITES any changes made directly in the n8n UI since the last sync."
+
+      - name: Reactivate workflow (CLI import always deactivates it)
+        run: |
+          curl -sS -X POST "https://n8n.srv1133278.hstgr.cloud/api/v1/workflows/LnAb4VvKICqy7WZA/activate" \
+            -H "X-N8N-API-KEY: ${{ secrets.N8N_API_KEY }}" \
+            -w "\nHTTP %{http_code}\n"
