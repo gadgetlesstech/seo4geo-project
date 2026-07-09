@@ -236,8 +236,8 @@ emails.forEach((email, i) => {
       fromEmail: 'kevin@gadgetlesstech.com',
       toEmail: '={{ $json.email }}',
       subject: email.subject,
-      emailType: 'html',
-      message: email.body
+      emailFormat: 'html',
+      html: email.body
     },
     id: uid(nodeIdx++), name: email.name,
     type: 'n8n-nodes-base.emailSend', typeVersion: 2, position: [260, y],
