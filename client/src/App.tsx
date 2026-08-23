@@ -7,6 +7,7 @@ import AuditPage from "./pages/AuditPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AboutUs from "./pages/AboutUs";
 import ContactPage from "./pages/ContactPage";
+import RoofingRankingGap from "./pages/RoofingRankingGap";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import VoiceChat from "./components/VoiceChat";
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/roofing-ranking-gap" element={<RoofingRankingGap />} />
           </Routes>
         </main>
         <Footer />
