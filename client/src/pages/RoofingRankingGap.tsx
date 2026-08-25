@@ -121,10 +121,26 @@ const systemLayers = [
 ];
 
 const ecosystemFlow = [
-  { verb: "Diagnose", brand: "SEO4GEO", description: "Finds the gaps." },
-  { verb: "Expand", brand: "Query Expansion System", description: "Maps the missing search opportunities." },
-  { verb: "Build", brand: "The Ranking System", description: "Turns opportunities into an execution plan." },
-  { verb: "Grow", brand: "Gadgetlesstech", description: "Implements and measures the strategy." },
+  {
+    verb: "Diagnose",
+    brand: "SEO4GEO",
+    description: "Find the searches, competitors and opportunities you're missing.",
+  },
+  {
+    verb: "Expand",
+    brand: "Query Expansion System",
+    description: "Map the larger search universe surrounding your most valuable services.",
+  },
+  {
+    verb: "Build",
+    brand: "AI Suite + Ranking System",
+    description: "Turn opportunities into content, authority and optimization actions.",
+  },
+  {
+    verb: "Implement",
+    brand: "Gadgetlesstech",
+    description: "Execute the strategy and measure the growth.",
+  },
 ];
 
 const campaignMetrics = [
@@ -856,7 +872,7 @@ export default function RoofingRankingGap() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="font-display text-4xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase italic">
-              We Don't Stop At <span className="text-cyan-400">Finding The Problem.</span>
+              From <span className="text-cyan-400">Ranking Gap</span> To Ranking Plan
             </h2>
             <p className="text-gray-500 max-w-2xl mx-auto font-medium text-lg">
               Finding opportunities is only step one. Here's how we carry it through to results.
@@ -874,12 +890,12 @@ export default function RoofingRankingGap() {
                 className="w-full"
               >
                 <div className="w-full rounded-2xl border border-white/5 bg-white/[0.02] p-8 text-center hover:border-cyan-500/40 hover:bg-cyan-500/5 transition-all">
-                  <span className="text-cyan-500/60 font-black uppercase tracking-[0.2em] text-[11px] mb-2 block">
+                  <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-tighter text-white mb-2 italic">
+                    <span className="text-cyan-400">{idx + 1} &mdash;</span> {step.verb}
+                  </h3>
+                  <span className="text-cyan-500/60 font-black uppercase tracking-[0.2em] text-[11px] mb-3 block">
                     {step.brand}
                   </span>
-                  <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-tighter text-white mb-2 italic">
-                    {step.verb}
-                  </h3>
                   <p className="text-gray-500 text-sm font-medium">{step.description}</p>
                 </div>
                 {idx < ecosystemFlow.length - 1 && (
