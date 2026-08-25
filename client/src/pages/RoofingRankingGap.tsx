@@ -340,7 +340,7 @@ export default function RoofingRankingGap() {
       <section className="relative py-32 bg-black border-t border-white/5 overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <Eyebrow>Sample Roofing Search Coverage Comparison</Eyebrow>
+            <Eyebrow>Average Roofing Coverage Comparison</Eyebrow>
           </div>
 
           <div className="relative mb-6">
