@@ -5,11 +5,13 @@ import Strategy from "./pages/Strategy";
 import ClusterPage from "./pages/ClusterPage";
 import AuditPage from "./pages/AuditPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import AboutUs from "./pages/AboutUs";
 import ContactPage from "./pages/ContactPage";
 import RoofingRankingGap from "./pages/RoofingRankingGap";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import MinimalFooter from "./components/MinimalFooter";
 import VoiceChat from "./components/VoiceChat";
 import { ExitPopup } from "./components/ExitPopup";
 
@@ -42,12 +44,13 @@ function Layout() {
           <Route path="/cluster/:slug" element={<ClusterPage />} />
           <Route path="/audit" element={<AuditPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/roofing-ranking-gap" element={<RoofingRankingGap />} />
         </Routes>
       </main>
-      <Footer />
+      {isSqueezePage ? <MinimalFooter /> : <Footer />}
       {!isSqueezePage && <VoiceChat />}
       {!isSqueezePage && <ExitPopup />}
     </div>

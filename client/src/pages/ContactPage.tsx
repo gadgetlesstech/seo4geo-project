@@ -6,7 +6,7 @@ const contactDetails = [
   {
     icon: MapPin,
     label: "Address",
-    value: "20 Summer Street, 4th Floor\nStamford, CT 06901",
+    value: "20 Summer Street, Fourth Floor\nStamford, CT 06901",
   },
   {
     icon: Phone,

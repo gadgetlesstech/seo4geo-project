@@ -954,7 +954,7 @@ export default function RoofingRankingGap() {
           </Button>
 
           <p className="text-gray-500 text-sm font-medium max-w-xl mx-auto">
-            No generic sales presentation. We'll use your website, your market and your competitors.
+            No generic SEO scores. Your website. Your market. Your competitors. Your Ranking Gaps.
           </p>
         </div>
       </section>
