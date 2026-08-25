@@ -15,6 +15,13 @@ import {
   BookOpen,
   MapPin,
   Bot,
+  Users,
+  Phone,
+  BarChart3,
+  TrendingUp,
+  Calendar,
+  Quote,
+  Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -107,6 +114,44 @@ const ecosystemFlow = [
   { name: "Query Expansion System", description: "Map the larger search opportunity." },
   { name: "Gadgetlesstech AI Suite", description: "Create assets around identified opportunities." },
   { name: "Gadgetlesstech", description: "Implement the complete Ranking System." },
+];
+
+const campaignMetrics = [
+  {
+    label: "Ranking Search Queries",
+    sub: "Total relevant searches ranking",
+    before: "186",
+    after: "1,247",
+    icon: <Search className="w-4 h-4 text-cyan-400" />,
+  },
+  {
+    label: "Organic Visitors / Month",
+    sub: "From search engines",
+    before: "742",
+    after: "2,436",
+    icon: <Users className="w-4 h-4 text-cyan-400" />,
+  },
+  {
+    label: "Organic Calls & Leads / Month",
+    sub: "From organic search",
+    before: "14",
+    after: "47",
+    icon: <Phone className="w-4 h-4 text-cyan-400" />,
+  },
+  {
+    label: "Top 10 Rankings",
+    sub: "Across all relevant searches",
+    before: "38",
+    after: "214",
+    icon: <BarChart3 className="w-4 h-4 text-cyan-400" />,
+  },
+];
+
+const campaignStats = [
+  { value: "+570%", label: "More Ranking Queries", icon: <TrendingUp className="w-5 h-5 text-cyan-400" /> },
+  { value: "+228%", label: "Organic Traffic", icon: <Users className="w-5 h-5 text-cyan-400" /> },
+  { value: "+236%", label: "Organic Leads", icon: <Phone className="w-5 h-5 text-cyan-400" /> },
+  { value: "6 Months", label: "To Achieve Results", icon: <Calendar className="w-5 h-5 text-cyan-400" /> },
 ];
 
 const blueprintExamines = [
@@ -553,6 +598,157 @@ export default function RoofingRankingGap() {
           <h3 className="text-center font-display text-2xl md:text-4xl font-black tracking-tighter text-white uppercase italic leading-tight">
             How Much Of The Search Market Are You <span className="text-cyan-400">Actually Competing For?</span>
           </h3>
+        </div>
+      </section>
+
+      {/* ── Sample Campaign Results (proof) ── */}
+      <section className="py-32 bg-black border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <Eyebrow>Built From Real SEO Campaign Strategy</Eyebrow>
+            <h2 className="font-display text-4xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase italic">
+              What Happens When You <span className="text-cyan-400">Expand Search Coverage?</span>
+            </h2>
+            <p className="text-gray-500 max-w-2xl mx-auto font-medium text-lg">
+              Ranking for a handful of roofing keywords is one thing. Building visibility across the entire search
+              universe surrounding your roofing services can create a very different result.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-6">
+            <div className="lg:col-span-3 rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden">
+              <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+                <span className="inline-flex items-center px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-black uppercase tracking-widest">
+                  Sample Roofing Campaign Results
+                </span>
+                <span className="text-gray-500 text-[11px] font-black uppercase tracking-widest hidden sm:block">6 Month Campaign</span>
+              </div>
+              <div className="divide-y divide-white/5">
+                {campaignMetrics.map((m) => (
+                  <div key={m.label} className="flex items-center justify-between px-6 py-5 gap-4">
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                        {m.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-white font-bold text-sm">{m.label}</p>
+                        <p className="text-gray-600 text-xs font-medium">{m.sub}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                      <span className="font-display text-xl sm:text-2xl font-black text-gray-500">{m.before}</span>
+                      <ArrowRight className="w-4 h-4 text-gray-700" />
+                      <span className="font-display text-xl sm:text-2xl font-black text-cyan-400">{m.after}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-2 grid grid-cols-2 gap-4">
+              {campaignStats.map((s) => (
+                <div
+                  key={s.label}
+                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-center flex flex-col items-center justify-center"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mb-4">
+                    {s.icon}
+                  </div>
+                  <span className="font-display text-2xl font-black text-cyan-400 block mb-1">{s.value}</span>
+                  <p className="text-gray-500 text-[10px] font-black uppercase tracking-widest leading-tight">{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 md:p-10 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+              <div>
+                <p className="text-gray-500 font-black uppercase tracking-widest text-xs mb-3">Before</p>
+                <p className="text-white font-bold text-sm mb-4">186 ranking queries</p>
+                <div className="flex gap-1.5">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i} className={`h-3 flex-1 rounded-sm ${i < 2 ? "bg-cyan-500/50" : "bg-white/5"}`} />
+                  ))}
+                </div>
+              </div>
+              <div className="text-center">
+                <p className="text-cyan-400 font-black uppercase tracking-widest text-xs mb-1">Query Expansion</p>
+                <p className="text-gray-600 font-black uppercase tracking-widest text-[10px] mb-4">+ Search Coverage</p>
+                <ArrowRight className="w-8 h-8 text-cyan-400/40 mx-auto hidden md:block" />
+                <ArrowDown className="w-8 h-8 text-cyan-400/40 mx-auto md:hidden" />
+              </div>
+              <div>
+                <p className="text-gray-500 font-black uppercase tracking-widest text-xs mb-3">After</p>
+                <p className="text-white font-bold text-sm mb-4">1,247 ranking queries</p>
+                <div className="flex gap-1.5">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i} className="h-3 flex-1 rounded-sm bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+            <div className="lg:col-span-1">
+              <h3 className="font-display text-2xl font-black uppercase tracking-tighter text-white italic mb-6 leading-tight">
+                More Search Coverage Creates More Opportunities To Be Found.
+              </h3>
+              <p className="text-gray-500 text-sm font-medium leading-relaxed mb-4">
+                The campaign didn't simply move a handful of existing keywords higher. It expanded the number of
+                relevant searches the roofing company could compete for &mdash; from high-intent service searches to
+                costs, problems, materials, comparisons, locations, questions and related homeowner searches.
+              </p>
+              <p className="text-gray-500 text-sm font-medium leading-relaxed">
+                That increased the number of opportunities for potential customers to discover the business before
+                they ever reached a competitor.
+              </p>
+            </div>
+
+            <div className="lg:col-span-1 rounded-2xl border border-white/10 bg-white/[0.02] p-8 flex flex-col">
+              <Quote className="w-6 h-6 text-cyan-400/40 mb-4" />
+              <p className="text-gray-300 text-sm font-medium leading-relaxed mb-6 flex-1">
+                "We stopped looking at SEO as a list of 20 or 30 keywords. Once we expanded the topics and searches
+                surrounding our core services, our visibility &mdash; and the number of roofing leads coming through
+                organic search &mdash; grew dramatically."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-600 text-xs font-black shrink-0">
+                  RO
+                </div>
+                <div>
+                  <p className="text-white font-black uppercase tracking-widest text-xs">Roofing Company Owner</p>
+                  <p className="text-gray-600 text-[11px] font-medium">Sample testimonial &mdash; replace with verified client quote</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-1 rounded-2xl border border-cyan-500/30 bg-cyan-500/[0.04] p-8 flex flex-col justify-center text-center">
+              <h3 className="font-display text-xl font-black uppercase tracking-tighter text-white italic mb-4">
+                How Much Search Coverage Are You <span className="text-cyan-400">Missing?</span>
+              </h3>
+              <p className="text-gray-400 text-sm font-medium mb-6">
+                Your competitors may already be visible across searches your roofing company hasn't targeted yet.
+              </p>
+              <Link to="/audit">
+                <Button
+                  size="lg"
+                  className="w-full bg-[#00b8db] text-black hover:bg-white px-6 py-7 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center justify-center mb-4"
+                >
+                  Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+                </Button>
+              </Link>
+              <p className="text-gray-600 text-[10px] font-black uppercase tracking-widest">
+                Free Roofing Ranking Gap Analysis &bull; No Credit Card Required
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-2 text-gray-600 text-[11px] font-medium">
+            <Shield className="w-3.5 h-3.5 shrink-0" />
+            Sample data for illustrative purposes. Replace with verified client results.
+          </div>
         </div>
       </section>
 
