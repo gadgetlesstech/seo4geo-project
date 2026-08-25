@@ -478,6 +478,34 @@ export default function RoofingRankingGap() {
         </div>
       </section>
 
+      {/* ── See it on your own site ── */}
+      <section className="py-32 bg-black border-t border-white/5">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-12 uppercase italic">
+            See It On <span className="text-cyan-400">Your Own Website</span>
+          </h2>
+
+          <div className="space-y-4 text-gray-400 text-lg font-medium mb-16">
+            <p>No generic SEO checklist.</p>
+            <p>No 50-page automated PDF filled with meaningless errors.</p>
+            <p>No guessing.</p>
+          </div>
+
+          <p className="text-gray-400 text-lg font-medium mb-12">
+            Enter your roofing website and let SEO4GEO identify where opportunities may exist.
+          </p>
+
+          <Link to="/audit">
+            <Button
+              size="lg"
+              className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
+            >
+              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+            </Button>
+          </Link>
+        </div>
+      </section>
+
       {/* ── Framework ── */}
       <section className="py-32 bg-black border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -525,34 +553,6 @@ export default function RoofingRankingGap() {
           <h3 className="text-center font-display text-2xl md:text-4xl font-black tracking-tighter text-white uppercase italic leading-tight">
             How Much Of The Search Market Are You <span className="text-cyan-400">Actually Competing For?</span>
           </h3>
-        </div>
-      </section>
-
-      {/* ── See it on your own site ── */}
-      <section className="py-32 bg-black border-t border-white/5">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-12 uppercase italic">
-            See It On <span className="text-cyan-400">Your Own Website</span>
-          </h2>
-
-          <div className="space-y-4 text-gray-400 text-lg font-medium mb-16">
-            <p>No generic SEO checklist.</p>
-            <p>No 50-page automated PDF filled with meaningless errors.</p>
-            <p>No guessing.</p>
-          </div>
-
-          <p className="text-gray-400 text-lg font-medium mb-12">
-            Enter your roofing website and let SEO4GEO identify where opportunities may exist.
-          </p>
-
-          <Link to="/audit">
-            <Button
-              size="lg"
-              className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
-            >
-              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
-            </Button>
-          </Link>
         </div>
       </section>
 
