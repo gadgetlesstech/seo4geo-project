@@ -19,10 +19,12 @@ import {
   Bot,
   Users,
   Phone,
+  BarChart2,
   BarChart3,
   TrendingUp,
   Calendar,
   Shield,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -73,14 +75,22 @@ const opportunityCards = [
   },
 ];
 
-const exampleSearches = [
-  "roof replacement near me",
-  "how much does a new roof cost?",
-  "roof replacement financing",
-  "best shingles for Connecticut weather",
-  "does insurance pay for storm damaged roof?",
-  "how long does roof replacement take?",
-  "GAF roofing contractor near me",
+const receiveCards = [
+  {
+    title: "Keyword Gap Report",
+    description: "Keywords, Technical, Competitive, Content, and Authority — each scored 0–100 with a composite overall score.",
+    icon: <BarChart2 className="w-6 h-6 text-cyan-400" />,
+  },
+  {
+    title: "Local Pack Analysis",
+    description: "Who's dominating Google Maps and organic results for your service — and how many keywords they have vs. you.",
+    icon: <MapPin className="w-6 h-6 text-cyan-400" />,
+  },
+  {
+    title: "AI Strategy Report",
+    description: "An 8-section report with critical issues, quick wins, keyword opportunities, and a 30-day action plan.",
+    icon: <Sparkles className="w-6 h-6 text-cyan-400" />,
+  },
 ];
 
 const systemLayers = [
@@ -111,37 +121,33 @@ const systemLayers = [
 ];
 
 const ecosystemFlow = [
-  { name: "SEO4GEO", description: "Find what's missing." },
-  { name: "Query Expansion System", description: "Map the larger search opportunity." },
-  { name: "Gadgetlesstech AI Suite", description: "Create assets around identified opportunities." },
-  { name: "Gadgetlesstech", description: "Implement the complete Ranking System." },
+  { verb: "Diagnose", brand: "SEO4GEO", description: "Finds the gaps." },
+  { verb: "Expand", brand: "Query Expansion System", description: "Maps the missing search opportunities." },
+  { verb: "Build", brand: "The Ranking System", description: "Turns opportunities into an execution plan." },
+  { verb: "Grow", brand: "Gadgetlesstech", description: "Implements and measures the strategy." },
 ];
 
 const campaignMetrics = [
   {
     label: "Ranking Search Queries",
-    sub: "Total relevant searches ranking",
     before: "186",
     after: "1,247",
     icon: <Search className="w-4 h-4 text-cyan-400" />,
   },
   {
     label: "Organic Visitors / Month",
-    sub: "From search engines",
     before: "742",
     after: "2,436",
     icon: <Users className="w-4 h-4 text-cyan-400" />,
   },
   {
     label: "Organic Calls & Leads / Month",
-    sub: "From organic search",
     before: "14",
     after: "47",
     icon: <Phone className="w-4 h-4 text-cyan-400" />,
   },
   {
     label: "Top 10 Rankings",
-    sub: "Across all relevant searches",
     before: "38",
     after: "214",
     icon: <BarChart3 className="w-4 h-4 text-cyan-400" />,
@@ -153,15 +159,6 @@ const campaignStats = [
   { value: "+228%", label: "Organic Traffic", icon: <Users className="w-5 h-5 text-cyan-400" /> },
   { value: "+236%", label: "Organic Leads", icon: <Phone className="w-5 h-5 text-cyan-400" /> },
   { value: "6 Months", label: "To Achieve Results", icon: <Calendar className="w-5 h-5 text-cyan-400" /> },
-];
-
-const qualifiers = [
-  "Already have a website",
-  "Serve a defined local or regional market",
-  "Want more organic roofing opportunities",
-  "Compete against established local roofers",
-  "Want to understand search and AI visibility",
-  "Are tired of SEO reports that track the same handful of keywords",
 ];
 
 const faqItems = [
@@ -223,6 +220,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 export default function RoofingRankingGap() {
   const [heroUrl, setHeroUrl] = useState("");
+  const [conversionUrl, setConversionUrl] = useState("");
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showStickyCta, setShowStickyCta] = useState(false);
@@ -232,6 +230,12 @@ export default function RoofingRankingGap() {
   const handleHeroSubmit = (e: { preventDefault(): void }) => {
     e.preventDefault();
     const trimmed = heroUrl.trim();
+    navigate(trimmed ? `/audit?url=${encodeURIComponent(trimmed)}` : "/audit");
+  };
+
+  const handleConversionSubmit = (e: { preventDefault(): void }) => {
+    e.preventDefault();
+    const trimmed = conversionUrl.trim();
     navigate(trimmed ? `/audit?url=${encodeURIComponent(trimmed)}` : "/audit");
   };
 
@@ -568,108 +572,90 @@ export default function RoofingRankingGap() {
         </div>
       </section>
 
-      {/* ── One service, hundreds of searches ── */}
-      <section className="py-32 bg-black border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-16 uppercase italic leading-tight">
-            One Roofing Service Can Represent <span className="text-cyan-400">Hundreds Of Searches</span>
+      {/* ── Primary Conversion Block ── */}
+      <section className="relative py-32 md:py-40 bg-gradient-to-b from-cyan-500/[0.07] via-black to-black border-y-2 border-cyan-500/20 overflow-hidden">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <span className="text-gray-500 font-black uppercase tracking-[0.3em] text-[12px] mb-6 block">
+            Enough About The Example.
+          </span>
+          <h2 className="font-display text-4xl md:text-6xl font-black tracking-tight text-white mb-12 uppercase italic leading-[1.05]">
+            What's <span className="text-cyan-400">Your</span> Ranking Gap?
           </h2>
 
-          <p className="text-gray-400 text-lg font-medium mb-10">
-            Take roof replacement.
-            <br />A homeowner might search "roof replacement near me" &mdash; but other homeowners search:
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-16 text-left">
-            {exampleSearches.map((q) => (
-              <div
-                key={q}
-                className="px-5 py-4 bg-white/[0.02] border border-white/5 rounded-xl text-gray-300 font-medium text-sm italic"
+          <form onSubmit={handleConversionSubmit} className="text-left mb-8">
+            <label htmlFor="conversion-url" className="block text-[11px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3">
+              Enter your roofing website
+            </label>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                id="conversion-url"
+                type="url"
+                value={conversionUrl}
+                onChange={(e) => setConversionUrl(e.target.value)}
+                placeholder="https://yourroofingcompany.com"
+                required
+                className="flex-1 bg-black border border-white/15 rounded-lg px-5 py-6 text-white text-lg font-medium placeholder:text-gray-700 focus:outline-none focus:border-cyan-500/60 transition-colors"
+              />
+              <Button
+                type="submit"
+                size="lg"
+                className="bg-[#00b8db] text-black hover:bg-white px-10 py-9 rounded-lg text-base font-black uppercase tracking-widest shadow-[0_0_40px_rgba(0,184,219,0.4)] transition-all active:scale-95 inline-flex items-center justify-center whitespace-nowrap"
               >
-                "{q}"
-              </div>
-            ))}
+                Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+              </Button>
+            </div>
+          </form>
+
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] font-black uppercase tracking-widest text-gray-500 mb-10">
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Free Analysis
+            </span>
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> No Credit Card
+            </span>
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Your Website. Your Competitors. Your Gaps.
+            </span>
           </div>
 
-          <p className="text-gray-400 text-lg font-medium mb-6">
-            They can all represent opportunities surrounding the same core service.
+          <p className="text-gray-600 text-xs font-medium max-w-md mx-auto">
+            Built for roofing companies that already have a website, serve a defined local market, and want more
+            than another generic keyword report.
           </p>
-          <p className="text-gray-400 text-lg font-medium mb-16">
-            If your strategy only targets the obvious keyword, you may be competing for a fraction of the available
-            search demand.
-          </p>
-
-          <h3 className="font-display text-3xl md:text-4xl font-black tracking-tighter text-cyan-400 mb-12 uppercase italic">
-            That's the Ranking Gap.
-          </h3>
-
-          <Link to="/audit">
-            <Button
-              size="lg"
-              className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
-            >
-              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
-            </Button>
-          </Link>
         </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.12),transparent_70%)] pointer-events-none" />
       </section>
 
-      {/* ── See it on your own site ── */}
+      {/* ── What You'll Receive ── */}
       <section className="py-32 bg-black border-t border-white/5">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-12 uppercase italic">
-            See It On <span className="text-cyan-400">Your Own Website</span>
-          </h2>
-
-          <div className="space-y-4 text-gray-400 text-lg font-medium mb-16">
-            <p>No generic SEO checklist.</p>
-            <p>No 50-page automated PDF filled with meaningless errors.</p>
-            <p>No guessing.</p>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <Eyebrow>What You'll Receive</Eyebrow>
+            <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white uppercase italic">
+              Imagine Your Own <span className="text-cyan-400">Website Analysis</span>
+            </h2>
           </div>
 
-          <p className="text-gray-400 text-lg font-medium mb-12">
-            Enter your roofing website and let SEO4GEO identify where opportunities may exist.
-          </p>
-
-          <Link to="/audit">
-            <Button
-              size="lg"
-              className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
-            >
-              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* ── Who This Is For ── */}
-      <section className="py-32 bg-black border-t border-white/5">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Eyebrow>Who This Is For</Eyebrow>
-          <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-12 uppercase italic leading-tight">
-            This Analysis Is Built For Roofing Companies That:
-          </h2>
-
-          <div className="space-y-3 mb-12 text-left">
-            {qualifiers.map((item) => (
-              <div
-                key={item}
-                className="flex items-start gap-3 px-5 py-4 bg-white/[0.02] border border-white/5 rounded-xl"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {receiveCards.map((item, idx) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                viewport={{ once: true }}
+                className="p-6 bg-white/5 border border-white/5 rounded-2xl hover:border-cyan-500/30 transition-all"
               >
-                <Check className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
-                <span className="text-gray-300 font-medium text-sm sm:text-base">{item}</span>
-              </div>
+                <div className="w-12 h-12 bg-cyan-500/10 border border-cyan-500/30 rounded-xl flex items-center justify-center mb-5">
+                  {item.icon}
+                </div>
+                <h3 className="font-display font-black text-white uppercase tracking-tighter text-base mb-2 italic">
+                  {item.title}
+                </h3>
+                <p className="text-gray-500 text-sm font-medium leading-relaxed">{item.description}</p>
+              </motion.div>
             ))}
           </div>
-
-          <Link to="/audit">
-            <Button
-              size="lg"
-              className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
-            >
-              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
-            </Button>
-          </Link>
         </div>
       </section>
 
@@ -753,10 +739,7 @@ export default function RoofingRankingGap() {
                       <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
                         {m.icon}
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-white font-bold text-sm">{m.label}</p>
-                        <p className="text-gray-600 text-xs font-medium">{m.sub}</p>
-                      </div>
+                      <p className="text-white font-bold text-sm">{m.label}</p>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                       <span className="font-display text-xl sm:text-2xl font-black text-gray-500">{m.before}</span>
@@ -837,22 +820,44 @@ export default function RoofingRankingGap() {
         </div>
       </section>
 
+      {/* ── Human Credibility ── */}
+      <section className="py-24 bg-black border-t border-white/5">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h3 className="font-display text-2xl md:text-3xl font-black tracking-tighter text-white uppercase italic mb-6 leading-tight">
+            Built By SEO Practitioners, <span className="text-cyan-400">Not Just Another Audit Tool</span>
+          </h3>
+          <p className="text-gray-400 text-base font-medium leading-relaxed mb-10 max-w-xl mx-auto">
+            The Gadgetlesstech Ranking System combines more than a decade of search marketing experience with modern
+            search intelligence to identify and close visibility gaps.
+          </p>
+          <div className="flex items-center justify-center gap-4">
+            <div className="w-14 h-14 rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-display font-black text-lg shrink-0">
+              KR
+            </div>
+            <div className="text-left">
+              <p className="text-white font-black uppercase tracking-widest text-sm">Kevin Rhodes</p>
+              <p className="text-gray-600 text-xs font-medium uppercase tracking-widest">Founder, Gadgetlesstech</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Ranking Gap to Ranking Plan ── */}
       <section className="py-32 bg-black border-t border-white/5">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="font-display text-4xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase italic">
-              From <span className="text-cyan-400">Ranking Gap</span> To Ranking Plan
+              We Don't Stop At <span className="text-cyan-400">Finding The Problem.</span>
             </h2>
             <p className="text-gray-500 max-w-2xl mx-auto font-medium text-lg">
-              Finding opportunities is only step one. The Gadgetlesstech ecosystem connects diagnosis with execution.
+              Finding opportunities is only step one. Here's how we carry it through to results.
             </p>
           </div>
 
           <div className="flex flex-col items-center gap-4">
             {ecosystemFlow.map((step, idx) => (
               <motion.div
-                key={step.name}
+                key={step.verb}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
@@ -860,8 +865,11 @@ export default function RoofingRankingGap() {
                 className="w-full"
               >
                 <div className="w-full rounded-2xl border border-white/5 bg-white/[0.02] p-8 text-center hover:border-cyan-500/40 hover:bg-cyan-500/5 transition-all">
-                  <h3 className="font-display text-xl md:text-2xl font-black uppercase tracking-tighter text-white mb-2">
-                    {step.name}
+                  <span className="text-cyan-500/60 font-black uppercase tracking-[0.2em] text-[11px] mb-2 block">
+                    {step.brand}
+                  </span>
+                  <h3 className="font-display text-2xl md:text-3xl font-black uppercase tracking-tighter text-white mb-2 italic">
+                    {step.verb}
                   </h3>
                   <p className="text-gray-500 text-sm font-medium">{step.description}</p>
                 </div>
@@ -873,6 +881,46 @@ export default function RoofingRankingGap() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── 90-Day Blueprint ── */}
+      <section className="py-32 bg-black border-t border-white/5">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase italic leading-tight">
+            Found Your Gaps? <span className="text-cyan-400">Now Let's Build The Plan To Close Them.</span>
+          </h2>
+          <p className="text-gray-400 text-lg font-medium mb-4 max-w-2xl mx-auto">
+            Once you've identified your ranking gaps, Gadgetlesstech can map the opportunities we'd prioritize during
+            your first 90 days.
+          </p>
+          <h3 className="font-display text-2xl md:text-3xl font-black tracking-tighter text-white mb-12 uppercase italic">
+            Get Your 90-Day Roofing Ranking Blueprint
+          </h3>
+
+          <div className="bg-white/5 rounded-[32px] border border-white/10 p-10 md:p-16 mb-12">
+            <p className="text-cyan-400 font-black uppercase tracking-[0.2em] text-[12px] mb-8">We'll examine</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 text-left max-w-2xl mx-auto">
+              {blueprintExamines.map((item) => (
+                <div key={item} className="flex items-center text-gray-300 font-medium text-sm">
+                  <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-4 shrink-0 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Button
+            onClick={() => window.dispatchEvent(new CustomEvent("open-calendar"))}
+            size="lg"
+            className="bg-white text-black hover:bg-cyan-400 px-16 py-10 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_40px_rgba(255,255,255,0.15)] transition-all inline-flex items-center mb-10"
+          >
+            Get My 90-Day Ranking Blueprint <ArrowRight className="ml-4 w-6 h-6" />
+          </Button>
+
+          <p className="text-gray-500 text-sm font-medium max-w-xl mx-auto">
+            No generic sales presentation. We'll use your website, your market and your competitors.
+          </p>
         </div>
       </section>
 
@@ -914,43 +962,21 @@ export default function RoofingRankingGap() {
         </div>
       </section>
 
-      {/* ── Final CTA: 90-Day Blueprint ── */}
-      <section className="py-32 bg-black border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase italic">
-            Want Us To <span className="text-cyan-400">Build It For You?</span>
+      {/* ── Final CTA ── */}
+      <section className="py-24 bg-black border-t border-white/5">
+        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-display text-2xl md:text-3xl font-black tracking-tighter text-white uppercase italic mb-4">
+            Still Deciding?
           </h2>
-          <p className="text-gray-400 text-lg font-medium mb-4 max-w-2xl mx-auto">
-            Once you've identified your ranking gaps, Gadgetlesstech can map the opportunities we'd prioritize during
-            your first 90 days.
-          </p>
-          <h3 className="font-display text-2xl md:text-3xl font-black tracking-tighter text-white mb-12 uppercase italic">
-            Get Your 90-Day Roofing Ranking Blueprint
-          </h3>
-
-          <div className="bg-white/5 rounded-[32px] border border-white/10 p-10 md:p-16 mb-12">
-            <p className="text-cyan-400 font-black uppercase tracking-[0.2em] text-[12px] mb-8">We'll examine</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 text-left max-w-2xl mx-auto">
-              {blueprintExamines.map((item) => (
-                <div key={item} className="flex items-center text-gray-300 font-medium text-sm">
-                  <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mr-4 shrink-0 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <Button
-            onClick={() => window.dispatchEvent(new CustomEvent("open-calendar"))}
-            size="lg"
-            className="bg-[#00b8db] text-black hover:bg-white px-16 py-10 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_40px_rgba(0,184,219,0.4)] transition-all inline-flex items-center mb-10"
-          >
-            Get My 90-Day Ranking Blueprint <ArrowRight className="ml-4 w-6 h-6" />
-          </Button>
-
-          <p className="text-gray-500 text-sm font-medium max-w-xl mx-auto">
-            No generic sales presentation. We'll use your website, your market and your competitors.
-          </p>
+          <p className="text-gray-500 text-sm font-medium mb-8">You don't have to book a call to see your gaps.</p>
+          <Link to="/audit">
+            <Button
+              size="lg"
+              className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
+            >
+              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+            </Button>
+          </Link>
         </div>
       </section>
 
