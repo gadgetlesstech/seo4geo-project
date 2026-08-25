@@ -315,11 +315,18 @@ export default function RoofingRankingGap() {
       <section className="py-32 bg-black border-t border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-4 uppercase italic leading-tight">
-            Your Competitors Aren't Just Ranking Higher.
+            Your Competitors Aren't Just Outranking You.
           </h2>
-          <h3 className="font-display text-2xl md:text-4xl font-black tracking-tighter text-cyan-400 mb-12 uppercase italic leading-tight">
-            They May Be Ranking Where You Don't Exist.
+          <h3 className="font-display text-2xl md:text-4xl font-black tracking-tighter text-cyan-400 mb-10 uppercase italic leading-tight">
+            They May Be Out-Covering You.
           </h3>
+
+          <div className="inline-block text-left rounded-xl border border-white/10 bg-white/[0.03] px-6 py-5 mb-16 max-w-xl">
+            <p className="text-gray-300 text-sm font-medium leading-relaxed">
+              <span className="text-cyan-400 font-black uppercase tracking-widest text-xs">Out-covering:</span>{" "}
+              appearing across relevant searches, topics and customer questions your website doesn't currently reach.
+            </p>
+          </div>
 
           <p className="text-gray-400 text-lg font-medium mb-8">
             Most roofing companies watch a handful of obvious keywords:
