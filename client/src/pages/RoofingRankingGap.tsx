@@ -201,6 +201,71 @@ export default function RoofingRankingGap() {
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
       </section>
 
+      {/* ── Example Roofing Market Analysis (scoreboard) ── */}
+      <section className="relative py-32 bg-black border-t border-white/5 overflow-hidden">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16">
+            <Eyebrow>Example Roofing Market Analysis</Eyebrow>
+          </div>
+
+          <div className="relative mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-0">
+              <div className="relative rounded-2xl md:rounded-r-none border border-cyan-500/40 bg-cyan-500/[0.04] p-8 md:p-10 text-center md:text-left">
+                <h3 className="text-white font-black uppercase tracking-widest text-xs mb-6">Your Roofing Company</h3>
+                <span className="font-display text-6xl md:text-7xl font-black text-cyan-400 block leading-none">137</span>
+                <p className="text-gray-400 font-black uppercase tracking-widest text-[11px] mt-4 mb-6">Relevant Searches</p>
+                <div className="h-2.5 rounded-full bg-white/5 overflow-hidden">
+                  <div className="h-full rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.6)]" style={{ width: "22%" }} />
+                </div>
+              </div>
+
+              <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-16 h-16 rounded-full bg-black border-2 border-white/20 items-center justify-center">
+                <span className="font-display font-black text-white text-sm">VS</span>
+              </div>
+
+              <div className="relative rounded-2xl md:rounded-l-none border border-orange-500/40 bg-orange-500/[0.04] p-8 md:p-10 text-center md:text-right">
+                <h3 className="text-white font-black uppercase tracking-widest text-xs mb-6">Top Competitor</h3>
+                <span className="font-display text-6xl md:text-7xl font-black text-orange-400 block leading-none">624</span>
+                <p className="text-gray-400 font-black uppercase tracking-widest text-[11px] mt-4 mb-6">Relevant Searches</p>
+                <div className="h-2.5 rounded-full bg-white/5 overflow-hidden">
+                  <div className="h-full rounded-full bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,0.6)] ml-auto" style={{ width: "90%" }} />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center -mt-1 relative z-10">
+              <div className="rounded-2xl border border-yellow-500/40 bg-yellow-500/[0.06] px-10 py-6 text-center max-w-xs mt-6">
+                <span className="font-display text-4xl font-black text-yellow-400 block leading-none">487</span>
+                <p className="text-yellow-400 font-black uppercase tracking-widest text-[11px] mt-2">Search Gap</p>
+                <p className="text-gray-400 text-xs font-medium mt-2">Searches they may appear for that you don't.</p>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-center text-gray-600 text-[11px] font-black uppercase tracking-widest mb-16">
+            Illustrative example only &mdash; not an actual measurement of any specific business.
+          </p>
+
+          <div className="text-center max-w-2xl mx-auto">
+            <h3 className="font-display text-3xl md:text-4xl font-black tracking-tighter text-cyan-400 mb-8 uppercase italic">
+              That's the Ranking Gap.
+            </h3>
+            <p className="text-gray-400 text-lg font-medium mb-12" style={{ lineHeight: "1.9" }}>
+              Your competitor doesn't necessarily have to beat you for the searches you're already tracking. They can
+              win by appearing across hundreds of additional searches you're not competing for at all.
+            </p>
+            <Link to="/audit">
+              <Button
+                size="lg"
+                className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
+              >
+                Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── Ranking Gap Explained (video) ── */}
       <section className="relative py-40 bg-[#050505] border-t border-white/5 overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
@@ -208,13 +273,9 @@ export default function RoofingRankingGap() {
           <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-10 uppercase italic leading-tight">
             See How The <span className="text-cyan-400">Ranking Gap</span> Works
           </h2>
-          <p className="text-gray-400 text-lg font-medium mb-4 max-w-2xl mx-auto" style={{ lineHeight: "1.9" }}>
-            Your roofing competitors may not simply be ranking higher than you. They may be visible across hundreds
-            of relevant searches your website isn't competing for at all.
-          </p>
           <p className="text-gray-400 text-lg font-medium mb-16 max-w-2xl mx-auto" style={{ lineHeight: "1.9" }}>
-            Watch this short video to see how search coverage, competitor gaps, and Query Expansion can reveal
-            opportunities traditional keyword tracking may miss.
+            Ranking position tells you where you appear for a search. Search coverage tells you how many relevant
+            searches you're competing for in the first place.
           </p>
 
           <div className="relative max-w-3xl mx-auto mb-20">
@@ -230,11 +291,8 @@ export default function RoofingRankingGap() {
             </div>
           </div>
 
-          <h3 className="font-display text-2xl md:text-3xl font-black tracking-tighter text-white mb-6 uppercase italic">
-            Now Find Your Own Ranking Gaps
-          </h3>
           <p className="text-gray-400 text-lg font-medium mb-10 max-w-xl mx-auto">
-            You've seen how the Ranking Gap works. Now let's see what may be happening with your roofing website.
+            You've seen how the Ranking Gap works. Now find yours.
           </p>
 
           <Link to="/audit">
@@ -310,7 +368,7 @@ export default function RoofingRankingGap() {
               size="lg"
               className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
             >
-              Analyze My Roofing Website <ArrowRight className="ml-3 w-5 h-5" />
+              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
             </Button>
           </Link>
         </div>
@@ -360,7 +418,7 @@ export default function RoofingRankingGap() {
                 size="lg"
                 className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
               >
-                Find My Gaps <ArrowRight className="ml-3 w-5 h-5" />
+                Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
               </Button>
             </Link>
           </div>
@@ -407,7 +465,7 @@ export default function RoofingRankingGap() {
               size="lg"
               className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
             >
-              Show Me What I'm Missing <ArrowRight className="ml-3 w-5 h-5" />
+              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
             </Button>
           </Link>
         </div>
@@ -485,7 +543,7 @@ export default function RoofingRankingGap() {
               size="lg"
               className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
             >
-              Run My Free Roofing Analysis <ArrowRight className="ml-3 w-5 h-5" />
+              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
             </Button>
           </Link>
         </div>
