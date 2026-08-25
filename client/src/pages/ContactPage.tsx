@@ -30,28 +30,16 @@ const socials = [
   { icon: Youtube, label: "YouTube", href: "https://youtube.com/@gadgetlesstech" },
 ];
 
-const interests = [
-  "Branding",
-  "Creative Web Design",
-  "Development",
-  "SEO",
-  "SEM",
-  "Content Marketing",
-  "Local Marketing",
-  "Free Online Visibility Audit",
-];
-
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
-  const [interest, setInterest] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const body = `Name: ${name}%0AInterest: ${interest}%0A%0A${message}`;
+    const body = `Name: ${name}%0A%0A${message}`;
     window.location.href = `mailto:support@gadgetlesstech.com?subject=${encodeURIComponent(subject)}&body=${body}`;
     setSent(true);
   };
@@ -171,20 +159,6 @@ export default function ContactPage() {
                       className={inputClass}
                     />
                   </div>
-                </div>
-
-                <div>
-                  <label className="text-[11px] font-black uppercase tracking-widest text-gray-600 mb-2 block">I'm Interested In</label>
-                  <select
-                    value={interest}
-                    onChange={(e) => setInterest(e.target.value)}
-                    className={`${inputClass} appearance-none`}
-                  >
-                    <option value="" disabled>Select a service...</option>
-                    {interests.map((opt) => (
-                      <option key={opt} value={opt}>{opt}</option>
-                    ))}
-                  </select>
                 </div>
 
                 <div>
