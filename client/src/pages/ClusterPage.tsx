@@ -14,10 +14,10 @@ const clusterContent: Record<string, { title: string; content: string[]; focus: 
   "compact-keyword-strategy": {
     title: "The Compact Keyword Strategy: How to Cover Thousands of Search Variations",
     content: [
-      "Keyword compression is the art of stacking phrases so that a single piece of content can rank for hundreds of long-tail variations. Instead of creating separate pages for every keyword, we embed them naturally within a high-authority structure.",
+      "Keyword mapping is the art of stacking phrases so that a single piece of content can rank for hundreds of long-tail variations. Instead of creating separate pages for every keyword, we embed them naturally within a high-authority structure.",
       "This approach reduces content bloat and concentrates ranking power, allowing individual pages to punch far above their weight class."
     ],
-    focus: ["Keyword Compression", "Phrase Stacking", "Natural Embedding"]
+    focus: ["Keyword Mapping", "Phrase Stacking", "Natural Embedding"]
   },
   "page-level-seo-signals": {
     title: "Page-Level SEO Signals: How Individual Pages Gain Ranking Power",

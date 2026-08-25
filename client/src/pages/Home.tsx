@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const frameworkLayers = [
   {
     id: "01",
-    title: "Keyword Compression Layer",
+    title: "Keyword Mapping Layer",
     description: "Cover thousands of search variations through phrase stacking and natural embedding. Maximize visibility with minimal content bloat.",
     icon: <Layers className="w-6 h-6 text-cyan-400" />,
     color: "bg-cyan-500/10 border-cyan-500/40"
@@ -358,7 +358,7 @@ export default function Home() {
                 EXPERIENCE THE <span className="text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.3)]">G-RS LIVE</span> VOICE EXPANSION
               </h2>
               <p className="text-gray-400 text-lg mb-12 leading-relaxed font-medium">
-                Interact with our query expansion system in real-time using voice. Ask about topical authority, keyword compression, or schedule a strategy session directly through our Google Calendar integration.
+                Interact with our query expansion system in real-time using voice. Ask about topical authority, keyword mapping, or schedule a strategy session directly through our Google Calendar integration.
               </p>
               <div className="space-y-8">
                 <div className="flex items-start space-x-6">

@@ -27,7 +27,7 @@ export default function Strategy() {
                 <Cpu className="text-cyan-400 w-8 h-8" />
               </div>
               <div>
-                <h3 className="font-display text-3xl font-black mb-4 uppercase tracking-tighter italic text-white">01. Keyword Compression Layer</h3>
+                <h3 className="font-display text-3xl font-black mb-4 uppercase tracking-tighter italic text-white">01. Keyword Mapping Layer</h3>
                 <p className="text-gray-400 leading-relaxed font-medium">
                   Covers thousands of search variations through advanced phrase stacking and natural embedding. We don't just target keywords; we target search intent clusters.
                 </p>
