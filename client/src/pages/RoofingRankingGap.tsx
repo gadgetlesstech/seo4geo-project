@@ -605,11 +605,11 @@ export default function RoofingRankingGap() {
         </div>
       </section>
 
-      {/* ── Sample Campaign Results (proof) ── */}
+      {/* ── Real Campaign Results (proof, anonymized client) ── */}
       <section className="py-32 bg-black border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <Eyebrow>Results</Eyebrow>
+            <Eyebrow>Real Roofing SEO Campaign</Eyebrow>
             <h2 className="font-display text-4xl md:text-5xl font-black tracking-tighter text-white uppercase italic">
               What Happens When You <span className="text-cyan-400">Expand Search Coverage?</span>
             </h2>
@@ -619,7 +619,7 @@ export default function RoofingRankingGap() {
             <div className="lg:col-span-3 rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden">
               <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
                 <span className="inline-flex items-center px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-[11px] font-black uppercase tracking-widest">
-                  Sample Roofing Campaign Results
+                  Fairfield County Roofing Campaign
                 </span>
                 <span className="text-gray-500 text-[11px] font-black uppercase tracking-widest hidden sm:block">6 Month Campaign</span>
               </div>
@@ -692,7 +692,8 @@ export default function RoofingRankingGap() {
 
           <div className="flex items-center justify-center gap-2 text-gray-600 text-[11px] font-medium mb-12">
             <Shield className="w-3.5 h-3.5 shrink-0" />
-            Sample data for illustrative purposes. Replace with verified client results.
+            Client identity anonymized to protect privacy. Results reflect this specific campaign; individual
+            results vary.
           </div>
 
           <div className="text-center">
