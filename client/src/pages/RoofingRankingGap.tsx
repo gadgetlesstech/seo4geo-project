@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   ArrowDown,
   Check,
+  ChevronDown,
+  Play,
   Layers,
   Zap,
   Target,
@@ -153,6 +155,50 @@ const campaignStats = [
   { value: "6 Months", label: "To Achieve Results", icon: <Calendar className="w-5 h-5 text-cyan-400" /> },
 ];
 
+const qualifiers = [
+  "Already have a website",
+  "Serve a defined local or regional market",
+  "Want more organic roofing opportunities",
+  "Compete against established local roofers",
+  "Want to understand search and AI visibility",
+  "Are tired of SEO reports that track the same handful of keywords",
+];
+
+const faqItems = [
+  {
+    q: "Is the analysis really free?",
+    a: "Yes. There's no cost and no obligation to run your roofing search visibility analysis.",
+  },
+  {
+    q: "Do I need to enter a credit card?",
+    a: "No. We never ask for payment information to run your analysis.",
+  },
+  {
+    q: "How long does it take?",
+    a: "Most site owners see their initial results in under a minute after entering their website, service, and city.",
+  },
+  {
+    q: "What does SEO4GEO analyze?",
+    a: "Your keyword rankings, competitor gaps, topical coverage, backlink profile, and visibility inside AI-powered search results — specific to your market.",
+  },
+  {
+    q: "Do I need to be a Gadgetlesstech client?",
+    a: "No. The analysis is free for any roofing company, whether or not you ever work with Gadgetlesstech.",
+  },
+  {
+    q: "Will someone call me after I run the analysis?",
+    a: "No sales calls. If you unlock full results with your email, you may receive a few relevant follow-up emails — nothing more.",
+  },
+  {
+    q: "Does this work for roofing companies anywhere in the U.S.?",
+    a: "Yes. The analysis works for any roofing company with a website, in any U.S. market.",
+  },
+  {
+    q: "What happens after I get my results?",
+    a: "You'll see exactly where competitors are outranking and out-covering you. Act on it yourself, or ask us to map a 90-Day Ranking Blueprint.",
+  },
+];
+
 const blueprintExamines = [
   "Your largest ranking gaps",
   "Your strongest competitors",
@@ -177,6 +223,10 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 export default function RoofingRankingGap() {
   const [heroUrl, setHeroUrl] = useState("");
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [showStickyCta, setShowStickyCta] = useState(false);
+  const heroFormRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
 
   const handleHeroSubmit = (e: { preventDefault(): void }) => {
@@ -184,6 +234,21 @@ export default function RoofingRankingGap() {
     const trimmed = heroUrl.trim();
     navigate(trimmed ? `/audit?url=${encodeURIComponent(trimmed)}` : "/audit");
   };
+
+  const scrollToHeroInput = () => {
+    document.getElementById("hero-url")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    window.setTimeout(() => document.getElementById("hero-url")?.focus(), 400);
+  };
+
+  useEffect(() => {
+    const el = heroFormRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => setShowStickyCta(!entry.isIntersecting), {
+      rootMargin: "-80px 0px 0px 0px",
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="overflow-hidden bg-black">
@@ -201,7 +266,7 @@ export default function RoofingRankingGap() {
             </p>
           </motion.div>
 
-          <form onSubmit={handleHeroSubmit} className="text-left mb-8">
+          <form ref={heroFormRef} onSubmit={handleHeroSubmit} className="text-left mb-8">
             <label htmlFor="hero-url" className="block text-[11px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3">
               Enter your roofing website
             </label>
@@ -225,16 +290,14 @@ export default function RoofingRankingGap() {
             </div>
           </form>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] font-black uppercase tracking-widest text-gray-500 mb-10">
-            <span className="flex items-center">
-              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Free Analysis
-            </span>
-            <span className="flex items-center">
-              <Check className="w-4 h-4 text-cyan-400 mr-2" /> No Credit Card
-            </span>
-            <span className="flex items-center">
-              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Results In Under 60 Seconds
-            </span>
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] font-black uppercase tracking-widest text-gray-500 mb-10">
+            <span>Free Analysis</span>
+            <span className="text-cyan-500/40">&bull;</span>
+            <span>No Credit Card</span>
+            <span className="text-cyan-500/40">&bull;</span>
+            <span>Your Website + Competitors</span>
+            <span className="text-cyan-500/40">&bull;</span>
+            <span>Results In Under 60 Seconds</span>
           </div>
 
           <p className="text-[11px] font-black uppercase tracking-[0.2em] text-gray-600">
@@ -323,15 +386,35 @@ export default function RoofingRankingGap() {
           </p>
 
           <div className="relative max-w-3xl mx-auto mb-20">
-            <div className="aspect-video w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(6,182,212,0.15)]">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/N4z4ntrDiHM"
-                title="See How The Ranking Gap Works"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                loading="lazy"
-              />
+            <div className="aspect-video w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(6,182,212,0.15)] relative bg-black">
+              {videoLoaded ? (
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/N4z4ntrDiHM?autoplay=1"
+                  title="See How The Ranking Gap Works"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setVideoLoaded(true)}
+                  className="absolute inset-0 w-full h-full group"
+                  aria-label="Play video: See How The Ranking Gap Works"
+                >
+                  <img
+                    src="https://img.youtube.com/vi/N4z4ntrDiHM/hqdefault.jpg"
+                    alt="See How The Ranking Gap Works"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                    <div className="w-20 h-20 rounded-full bg-cyan-500 flex items-center justify-center shadow-[0_0_40px_rgba(6,182,212,0.6)] group-hover:scale-110 transition-transform">
+                      <Play className="w-8 h-8 text-black ml-1" fill="black" />
+                    </div>
+                  </div>
+                </button>
+              )}
             </div>
           </div>
 
@@ -550,6 +633,37 @@ export default function RoofingRankingGap() {
         </div>
       </section>
 
+      {/* ── Who This Is For ── */}
+      <section className="py-32 bg-black border-t border-white/5">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Eyebrow>Who This Is For</Eyebrow>
+          <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-12 uppercase italic leading-tight">
+            This Analysis Is Built For Roofing Companies That:
+          </h2>
+
+          <div className="space-y-3 mb-12 text-left">
+            {qualifiers.map((item) => (
+              <div
+                key={item}
+                className="flex items-start gap-3 px-5 py-4 bg-white/[0.02] border border-white/5 rounded-xl"
+              >
+                <Check className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
+                <span className="text-gray-300 font-medium text-sm sm:text-base">{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <Link to="/audit">
+            <Button
+              size="lg"
+              className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
+            >
+              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+            </Button>
+          </Link>
+        </div>
+      </section>
+
       {/* ── Framework ── */}
       <section className="py-32 bg-black border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -753,6 +867,44 @@ export default function RoofingRankingGap() {
         </div>
       </section>
 
+      {/* ── FAQ ── */}
+      <section className="py-32 bg-black border-t border-white/5">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <Eyebrow>Common Questions</Eyebrow>
+            <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white uppercase italic">
+              Before You Run Your <span className="text-cyan-400">Free Analysis</span>
+            </h2>
+          </div>
+
+          <div className="space-y-3">
+            {faqItems.map((item, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div key={item.q} className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(isOpen ? null : idx)}
+                    className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-white font-bold text-sm sm:text-base">{item.q}</span>
+                    <ChevronDown
+                      className={`w-5 h-5 text-cyan-400 shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {isOpen && (
+                    <div className="px-6 pb-5">
+                      <p className="text-gray-400 text-sm font-medium leading-relaxed">{item.a}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* ── Final CTA: 90-Day Blueprint ── */}
       <section className="py-32 bg-black border-t border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -792,6 +944,22 @@ export default function RoofingRankingGap() {
           </p>
         </div>
       </section>
+
+      {/* ── Sticky mobile CTA ── */}
+      {showStickyCta && (
+        <div
+          className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-black/95 backdrop-blur-md border-t border-white/10 px-4 py-2.5"
+          style={{ paddingBottom: "max(0.625rem, env(safe-area-inset-bottom))" }}
+        >
+          <button
+            type="button"
+            onClick={scrollToHeroInput}
+            className="w-full h-12 flex items-center justify-center gap-2 bg-[#00b8db] text-black text-sm font-black uppercase tracking-widest rounded-lg shadow-[0_0_20px_rgba(0,184,219,0.4)] active:scale-95 transition-all"
+          >
+            Find My Ranking Gaps <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

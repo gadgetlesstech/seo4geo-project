@@ -30,11 +30,11 @@ function ScrollToTop() {
 
 function Layout() {
   const { pathname } = useLocation();
-  const hideNavbar = pathname === "/roofing-ranking-gap";
+  const isSqueezePage = pathname === "/roofing-ranking-gap";
 
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
-      {!hideNavbar && <Navbar />}
+      {!isSqueezePage && <Navbar />}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -48,8 +48,8 @@ function Layout() {
         </Routes>
       </main>
       <Footer />
-      <VoiceChat />
-      <ExitPopup />
+      {!isSqueezePage && <VoiceChat />}
+      {!isSqueezePage && <ExitPopup />}
     </div>
   );
 }
