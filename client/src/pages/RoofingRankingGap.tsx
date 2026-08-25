@@ -20,7 +20,6 @@ import {
   BarChart3,
   TrendingUp,
   Calendar,
-  Quote,
   Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -595,9 +594,14 @@ export default function RoofingRankingGap() {
           <p className="text-center text-gray-500 text-lg font-medium mb-6 max-w-3xl mx-auto">
             Together, these reveal something keyword tracking alone cannot:
           </p>
-          <h3 className="text-center font-display text-2xl md:text-4xl font-black tracking-tighter text-white uppercase italic leading-tight">
+          <h3 className="text-center font-display text-2xl md:text-4xl font-black tracking-tighter text-white uppercase italic leading-tight mb-16">
             How Much Of The Search Market Are You <span className="text-cyan-400">Actually Competing For?</span>
           </h3>
+
+          <p className="text-center text-gray-400 text-lg font-medium max-w-2xl mx-auto" style={{ lineHeight: "1.9" }}>
+            The goal isn't more content for the sake of content. It's greater search coverage across the queries
+            that can actually produce business.
+          </p>
         </div>
       </section>
 
@@ -605,14 +609,10 @@ export default function RoofingRankingGap() {
       <section className="py-32 bg-black border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <Eyebrow>Built From Real SEO Campaign Strategy</Eyebrow>
-            <h2 className="font-display text-4xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase italic">
+            <Eyebrow>Results</Eyebrow>
+            <h2 className="font-display text-4xl md:text-5xl font-black tracking-tighter text-white uppercase italic">
               What Happens When You <span className="text-cyan-400">Expand Search Coverage?</span>
             </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto font-medium text-lg">
-              Ranking for a handful of roofing keywords is one thing. Building visibility across the entire search
-              universe surrounding your roofing services can create a very different result.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-6">
@@ -690,64 +690,25 @@ export default function RoofingRankingGap() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
-            <div className="lg:col-span-1">
-              <h3 className="font-display text-2xl font-black uppercase tracking-tighter text-white italic mb-6 leading-tight">
-                More Search Coverage Creates More Opportunities To Be Found.
-              </h3>
-              <p className="text-gray-500 text-sm font-medium leading-relaxed mb-4">
-                The campaign didn't simply move a handful of existing keywords higher. It expanded the number of
-                relevant searches the roofing company could compete for &mdash; from high-intent service searches to
-                costs, problems, materials, comparisons, locations, questions and related homeowner searches.
-              </p>
-              <p className="text-gray-500 text-sm font-medium leading-relaxed">
-                That increased the number of opportunities for potential customers to discover the business before
-                they ever reached a competitor.
-              </p>
-            </div>
-
-            <div className="lg:col-span-1 rounded-2xl border border-white/10 bg-white/[0.02] p-8 flex flex-col">
-              <Quote className="w-6 h-6 text-cyan-400/40 mb-4" />
-              <p className="text-gray-300 text-sm font-medium leading-relaxed mb-6 flex-1">
-                "We stopped looking at SEO as a list of 20 or 30 keywords. Once we expanded the topics and searches
-                surrounding our core services, our visibility &mdash; and the number of roofing leads coming through
-                organic search &mdash; grew dramatically."
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-600 text-xs font-black shrink-0">
-                  RO
-                </div>
-                <div>
-                  <p className="text-white font-black uppercase tracking-widest text-xs">Roofing Company Owner</p>
-                  <p className="text-gray-600 text-[11px] font-medium">Sample testimonial &mdash; replace with verified client quote</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-1 rounded-2xl border border-cyan-500/30 bg-cyan-500/[0.04] p-8 flex flex-col justify-center text-center">
-              <h3 className="font-display text-xl font-black uppercase tracking-tighter text-white italic mb-4">
-                How Much Search Coverage Are You <span className="text-cyan-400">Missing?</span>
-              </h3>
-              <p className="text-gray-400 text-sm font-medium mb-6">
-                Your competitors may already be visible across searches your roofing company hasn't targeted yet.
-              </p>
-              <Link to="/audit">
-                <Button
-                  size="lg"
-                  className="w-full bg-[#00b8db] text-black hover:bg-white px-6 py-7 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center justify-center mb-4"
-                >
-                  Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
-                </Button>
-              </Link>
-              <p className="text-gray-600 text-[10px] font-black uppercase tracking-widest">
-                Free Roofing Ranking Gap Analysis &bull; No Credit Card Required
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-2 text-gray-600 text-[11px] font-medium">
+          <div className="flex items-center justify-center gap-2 text-gray-600 text-[11px] font-medium mb-12">
             <Shield className="w-3.5 h-3.5 shrink-0" />
             Sample data for illustrative purposes. Replace with verified client results.
+          </div>
+
+          <div className="text-center">
+            <p className="font-display text-lg md:text-xl font-black uppercase tracking-tight text-gray-400 mb-10">
+              More Search Coverage <span className="text-cyan-400/50 mx-2">→</span> More Visibility{" "}
+              <span className="text-cyan-400/50 mx-2">→</span> More Traffic{" "}
+              <span className="text-cyan-400/50 mx-2">→</span> <span className="text-cyan-400">More Opportunities</span>
+            </p>
+            <Link to="/audit">
+              <Button
+                size="lg"
+                className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all inline-flex items-center"
+              >
+                Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
