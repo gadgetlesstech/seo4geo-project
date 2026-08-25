@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { motion } from "motion/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   ArrowDown,
+  Check,
   Layers,
   Zap,
   Target,
@@ -130,35 +132,70 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 }
 
 export default function RoofingRankingGap() {
+  const [heroUrl, setHeroUrl] = useState("");
+  const navigate = useNavigate();
+
+  const handleHeroSubmit = (e: { preventDefault(): void }) => {
+    e.preventDefault();
+    const trimmed = heroUrl.trim();
+    navigate(trimmed ? `/audit?url=${encodeURIComponent(trimmed)}` : "/audit");
+  };
+
   return (
     <div className="overflow-hidden bg-black">
       {/* ── Hero ── */}
-      <section className="relative pt-40 pb-32 overflow-hidden bg-black">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <section className="relative pt-24 pb-32 overflow-hidden bg-black">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-            <h1 className="font-display text-4xl md:text-7xl font-black tracking-tight text-white mb-8 leading-[0.95] uppercase italic">
-              How Much <span className="text-cyan-400">Roofing Search Demand</span> Are You Missing?
+            <Eyebrow>Free Roofing Search Visibility Analysis</Eyebrow>
+            <h1 className="font-display text-3xl md:text-5xl font-black tracking-tight text-white mb-8 leading-[1.05] uppercase italic">
+              How Much Of The <span className="text-cyan-400">Roofing Search Market</span> Are You Missing?
             </h1>
-            <p className="text-lg md:text-xl text-gray-400 mb-4 max-w-3xl mx-auto font-medium" style={{ lineHeight: "1.9" }}>
-              Your competitors may be showing up for hundreds of roofing searches your website never reaches.
-            </p>
-            <p className="text-xl md:text-2xl text-white font-black mb-12 max-w-3xl mx-auto uppercase tracking-tight">
-              Find the gaps in less than 60 seconds.
+            <p className="text-lg text-gray-400 mb-12 max-w-xl mx-auto font-medium" style={{ lineHeight: "1.8" }}>
+              Your competitors may be appearing across hundreds of searches your roofing company isn't competing for.
+              Find the gaps in under 60 seconds.
             </p>
           </motion.div>
 
-          <Link to="/audit">
-            <Button
-              size="lg"
-              className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all active:scale-95 inline-flex items-center"
-            >
-              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
-            </Button>
-          </Link>
+          <form onSubmit={handleHeroSubmit} className="text-left mb-8">
+            <label htmlFor="hero-url" className="block text-[11px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3">
+              Enter your roofing website
+            </label>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                id="hero-url"
+                type="url"
+                value={heroUrl}
+                onChange={(e) => setHeroUrl(e.target.value)}
+                placeholder="https://yourroofingcompany.com"
+                required
+                className="flex-1 bg-black border border-white/15 rounded-lg px-5 py-5 text-white text-base font-medium placeholder:text-gray-700 focus:outline-none focus:border-cyan-500/60 transition-colors"
+              />
+              <Button
+                type="submit"
+                size="lg"
+                className="bg-[#00b8db] text-black hover:bg-white px-8 py-8 rounded-lg text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all active:scale-95 inline-flex items-center justify-center whitespace-nowrap"
+              >
+                Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+              </Button>
+            </div>
+          </form>
 
-          <div className="mt-8 text-[12px] font-black uppercase tracking-[0.2em] text-gray-500">
-            Free Analysis &bull; No Credit Card Required
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] font-black uppercase tracking-widest text-gray-500 mb-10">
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Free Analysis
+            </span>
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> No Credit Card
+            </span>
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Results In Under 60 Seconds
+            </span>
           </div>
+
+          <p className="text-[11px] font-black uppercase tracking-[0.2em] text-gray-600">
+            SEO4GEO &mdash; Powered By The Gadgetlesstech Ranking System&trade;
+          </p>
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.1),transparent_70%)] pointer-events-none" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "motion/react";
 import { ArrowRight, Loader2, TrendingUp, Users, Globe, Star, CheckCircle2, MapPin, BarChart2, Sparkles, Shield, Link2, AlertTriangle, Search, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -165,7 +166,8 @@ const inputClass =
 const UNLOCK_KEY = "seo4geo_audit_unlocked";
 
 export default function AuditPage() {
-  const [url, setUrl] = useState("");
+  const [searchParams] = useSearchParams();
+  const [url, setUrl] = useState(() => searchParams.get("url") || "");
   const [keyword, setKeyword] = useState("");
   const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
