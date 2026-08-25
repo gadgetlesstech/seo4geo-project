@@ -573,55 +573,64 @@ export default function RoofingRankingGap() {
       </section>
 
       {/* ── Primary Conversion Block ── */}
-      <section className="relative py-32 md:py-40 bg-gradient-to-b from-cyan-500/[0.07] via-black to-black border-y-2 border-cyan-500/20 overflow-hidden">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="text-gray-500 font-black uppercase tracking-[0.3em] text-[12px] mb-6 block">
-            Enough About The Example.
-          </span>
-          <h2 className="font-display text-4xl md:text-6xl font-black tracking-tight text-white mb-12 uppercase italic leading-[1.05]">
-            What's <span className="text-cyan-400">Your</span> Ranking Gap?
-          </h2>
+      <section className="relative py-32 md:py-40 bg-black border-y border-white/5 overflow-hidden">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="rounded-[40px] border-2 border-cyan-500/40 bg-gradient-to-b from-cyan-500/[0.08] to-black/60 backdrop-blur-xl p-10 md:p-16 shadow-[0_0_80px_rgba(6,182,212,0.15)] text-center">
+            <span className="text-gray-400 font-black uppercase tracking-[0.3em] text-[12px] mb-6 block">
+              Enough About The Example.
+            </span>
+            <h2 className="font-display text-4xl md:text-6xl font-black tracking-tight text-white mb-6 uppercase italic leading-[1.05]">
+              What's{" "}
+              <span className="text-cyan-400 underline decoration-4 decoration-cyan-500/40 underline-offset-8">
+                Your
+              </span>{" "}
+              Ranking Gap?
+            </h2>
+            <p className="text-gray-400 text-lg font-medium mb-10 max-w-xl mx-auto" style={{ lineHeight: "1.8" }}>
+              Enter your roofing website and see where your search visibility may be falling behind competitors.
+            </p>
 
-          <form onSubmit={handleConversionSubmit} className="text-left mb-8">
-            <label htmlFor="conversion-url" className="block text-[11px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3">
-              Enter your roofing website
-            </label>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input
-                id="conversion-url"
-                type="url"
-                value={conversionUrl}
-                onChange={(e) => setConversionUrl(e.target.value)}
-                placeholder="https://yourroofingcompany.com"
-                required
-                className="flex-1 bg-black border border-white/15 rounded-lg px-5 py-6 text-white text-lg font-medium placeholder:text-gray-700 focus:outline-none focus:border-cyan-500/60 transition-colors"
-              />
-              <Button
-                type="submit"
-                size="lg"
-                className="bg-[#00b8db] text-black hover:bg-white px-10 py-9 rounded-lg text-base font-black uppercase tracking-widest shadow-[0_0_40px_rgba(0,184,219,0.4)] transition-all active:scale-95 inline-flex items-center justify-center whitespace-nowrap"
-              >
-                Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
-              </Button>
+            <form onSubmit={handleConversionSubmit} className="text-left mb-8">
+              <label htmlFor="conversion-url" className="block text-[11px] font-black uppercase tracking-[0.2em] text-gray-500 mb-3">
+                Enter your roofing website
+              </label>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  id="conversion-url"
+                  type="url"
+                  value={conversionUrl}
+                  onChange={(e) => setConversionUrl(e.target.value)}
+                  placeholder="https://yourroofingcompany.com"
+                  required
+                  className="flex-1 bg-black border border-white/15 rounded-lg px-5 py-6 text-white text-lg font-medium placeholder:text-gray-700 focus:outline-none focus:border-cyan-500/60 transition-colors"
+                />
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="bg-[#00b8db] text-black hover:bg-white px-10 py-9 rounded-lg text-base font-black uppercase tracking-widest shadow-[0_0_40px_rgba(0,184,219,0.4)] transition-all active:scale-95 inline-flex items-center justify-center whitespace-nowrap"
+                >
+                  Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+                </Button>
+              </div>
+            </form>
+
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] font-black uppercase tracking-widest text-gray-500 mb-10">
+              <span className="flex items-center">
+                <Check className="w-4 h-4 text-cyan-400 mr-2" /> Free Analysis
+              </span>
+              <span className="flex items-center">
+                <Check className="w-4 h-4 text-cyan-400 mr-2" /> No Credit Card
+              </span>
+              <span className="flex items-center">
+                <Check className="w-4 h-4 text-cyan-400 mr-2" /> Your Website. Your Competitors. Your Gaps.
+              </span>
             </div>
-          </form>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] font-black uppercase tracking-widest text-gray-500 mb-10">
-            <span className="flex items-center">
-              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Free Analysis
-            </span>
-            <span className="flex items-center">
-              <Check className="w-4 h-4 text-cyan-400 mr-2" /> No Credit Card
-            </span>
-            <span className="flex items-center">
-              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Your Website. Your Competitors. Your Gaps.
-            </span>
+            <p className="text-gray-600 text-xs font-medium max-w-md mx-auto">
+              Built for roofing companies that already have a website, serve a defined local market, and want more
+              than another generic keyword report.
+            </p>
           </div>
-
-          <p className="text-gray-600 text-xs font-medium max-w-md mx-auto">
-            Built for roofing companies that already have a website, serve a defined local market, and want more
-            than another generic keyword report.
-          </p>
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.12),transparent_70%)] pointer-events-none" />
       </section>
