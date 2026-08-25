@@ -161,6 +161,21 @@ function ScoreGauge({ label, score, icon }: { label: string; score: number; icon
 const inputClass =
   "w-full bg-black border border-white/10 rounded-lg px-4 py-4 text-white text-sm font-medium placeholder:text-gray-700 focus:outline-none focus:border-cyan-500/50 transition-colors";
 
+const loadingSteps = [
+  "Finding your search visibility...",
+  "Identifying competing businesses...",
+  "Comparing ranking queries...",
+  "Finding search coverage gaps...",
+  "Prioritizing opportunities...",
+];
+
+const loadingTips = [
+  "Did you know? One service can represent hundreds of different customer searches.",
+  "We're comparing those opportunities against your current visibility.",
+  "Search coverage matters more than ranking for just a handful of keywords.",
+  "Competitors can win by appearing across searches you're not even tracking.",
+];
+
 // ── Main component ─────────────────────────────────────────────────────────────
 
 const UNLOCK_KEY = "seo4geo_audit_unlocked";
@@ -178,6 +193,8 @@ export default function AuditPage() {
   const [gateEmail, setGateEmail] = useState("");
   const [gateLoading, setGateLoading] = useState(false);
   const [gateLimitReached, setGateLimitReached] = useState(false);
+  const [loadingStepIndex, setLoadingStepIndex] = useState(0);
+  const [loadingTipIndex, setLoadingTipIndex] = useState(0);
 
   const handleSubmit = async (e: { preventDefault(): void }) => {
     e.preventDefault();
@@ -185,6 +202,15 @@ export default function AuditPage() {
     setError(null);
     setResult(null);
     setUnlocked(false);
+    setLoadingStepIndex(0);
+    setLoadingTipIndex(0);
+
+    const stepInterval = window.setInterval(() => {
+      setLoadingStepIndex((i) => Math.min(i + 1, loadingSteps.length - 1));
+    }, 4000);
+    const tipInterval = window.setInterval(() => {
+      setLoadingTipIndex((i) => (i + 1) % loadingTips.length);
+    }, 5000);
 
     try {
       const res = await fetch("/api/analyze", {
@@ -198,6 +224,8 @@ export default function AuditPage() {
     } catch (err: any) {
       setError(err.message);
     } finally {
+      window.clearInterval(stepInterval);
+      window.clearInterval(tipInterval);
       setLoading(false);
     }
   };
@@ -284,12 +312,47 @@ export default function AuditPage() {
             className="w-full bg-[#00b8db] text-black hover:bg-white py-8 rounded-xl font-black uppercase tracking-widest text-sm shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all disabled:opacity-60"
           >
             {loading ? (
-              <><Loader2 className="mr-3 w-5 h-5 animate-spin" /> Running Full Audit — ~45s...</>
+              <><Loader2 className="mr-3 w-5 h-5 animate-spin" /> Analyzing Your Website...</>
             ) : (
               <>Run My Free Audit <ArrowRight className="ml-3 w-5 h-5" /></>
             )}
           </Button>
         </motion.form>
+
+        {/* Progressive loading panel */}
+        {loading && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white/5 border border-white/10 rounded-[32px] p-8 md:p-12 mb-16 text-center"
+          >
+            <p className="text-cyan-400 font-black uppercase tracking-[0.3em] text-[12px] mb-8">Analyzing Your Website</p>
+            <div className="max-w-md mx-auto space-y-3 mb-10 text-left">
+              {loadingSteps.map((step, idx) => {
+                const done = idx < loadingStepIndex;
+                const active = idx === loadingStepIndex;
+                return (
+                  <div
+                    key={step}
+                    className={`flex items-center gap-3 text-sm font-bold transition-colors ${
+                      done ? "text-gray-500" : active ? "text-white" : "text-gray-700"
+                    }`}
+                  >
+                    {done ? (
+                      <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
+                    ) : active ? (
+                      <Loader2 className="w-4 h-4 text-cyan-400 shrink-0 animate-spin" />
+                    ) : (
+                      <div className="w-4 h-4 rounded-full border border-gray-800 shrink-0" />
+                    )}
+                    {step}
+                  </div>
+                );
+              })}
+            </div>
+            <p className="text-gray-500 text-xs font-medium max-w-sm mx-auto italic">{loadingTips[loadingTipIndex]}</p>
+          </motion.div>
+        )}
 
         {/* Pre-result feature cards */}
         {!result && !loading && (

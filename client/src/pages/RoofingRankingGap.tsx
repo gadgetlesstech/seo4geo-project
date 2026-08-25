@@ -175,7 +175,7 @@ const faqItems = [
   },
   {
     q: "How long does it take?",
-    a: "Most site owners see their initial results in under a minute after entering their website, service, and city.",
+    a: "Just enter your website, service, and city to get started — the analysis runs automatically from there.",
   },
   {
     q: "What does SEO4GEO analyze?",
@@ -261,8 +261,7 @@ export default function RoofingRankingGap() {
               How Much Of The <span className="text-cyan-400">Roofing Search Market</span> Are You Missing?
             </h1>
             <p className="text-lg text-gray-400 mb-12 max-w-xl mx-auto font-medium" style={{ lineHeight: "1.8" }}>
-              Your competitors may be appearing across hundreds of searches your roofing company isn't competing for.
-              Find the gaps in under 60 seconds.
+              Enter your website to uncover search opportunities your competitors may be capturing that you're missing.
             </p>
           </motion.div>
 
@@ -290,14 +289,16 @@ export default function RoofingRankingGap() {
             </div>
           </form>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] font-black uppercase tracking-widest text-gray-500 mb-10">
-            <span>Free Analysis</span>
-            <span className="text-cyan-500/40">&bull;</span>
-            <span>No Credit Card</span>
-            <span className="text-cyan-500/40">&bull;</span>
-            <span>Your Website + Competitors</span>
-            <span className="text-cyan-500/40">&bull;</span>
-            <span>Results In Under 60 Seconds</span>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] font-black uppercase tracking-widest text-gray-500 mb-10">
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Free Analysis
+            </span>
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> No Credit Card
+            </span>
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Your Website. Your Competitors. Your Gaps.
+            </span>
           </div>
 
           <p className="text-[11px] font-black uppercase tracking-[0.2em] text-gray-600">
@@ -431,8 +432,16 @@ export default function RoofingRankingGap() {
             </Button>
           </Link>
 
-          <div className="mt-8 text-[12px] font-black uppercase tracking-[0.2em] text-gray-500">
-            Free Roofing Ranking Gap Analysis &bull; No Credit Card Required
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] font-black uppercase tracking-widest text-gray-500">
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Free Analysis
+            </span>
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> No Credit Card
+            </span>
+            <span className="flex items-center">
+              <Check className="w-4 h-4 text-cyan-400 mr-2" /> Your Website. Your Competitors. Your Gaps.
+            </span>
           </div>
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(6,182,212,0.06),transparent_60%)] pointer-events-none" />
