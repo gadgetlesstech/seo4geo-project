@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import videoThumbnail from "@/src/assets/roofing-ranking-gap-showdown.png";
 
 const obviousKeywords = ["roofing company", "roofer near me", "roof repair", "roof replacement"];
 
@@ -432,14 +433,14 @@ export default function RoofingRankingGap() {
                   aria-label="Play video: See How The Ranking Gap Works"
                 >
                   <img
-                    src="https://img.youtube.com/vi/N4z4ntrDiHM/hqdefault.jpg"
-                    alt="See How The Ranking Gap Works"
-                    className="w-full h-full object-cover"
+                    src={videoThumbnail}
+                    alt="Your Competitor May Not Be Outranking You — They May Be Out-Covering You. 137 vs 624 relevant searches, 487 searches you're missing."
+                    className="w-full h-full object-contain bg-black"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                    <div className="w-20 h-20 rounded-full bg-cyan-500 flex items-center justify-center shadow-[0_0_40px_rgba(6,182,212,0.6)] group-hover:scale-110 transition-transform">
-                      <Play className="w-8 h-8 text-black ml-1" fill="black" />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                    <div className="w-20 h-20 rounded-full bg-red-600 flex items-center justify-center shadow-[0_0_40px_rgba(220,38,38,0.6)] group-hover:scale-110 transition-transform">
+                      <Play className="w-8 h-8 text-white ml-1" fill="white" />
                     </div>
                   </div>
                 </button>
