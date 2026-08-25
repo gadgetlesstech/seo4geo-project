@@ -164,6 +164,58 @@ export default function RoofingRankingGap() {
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
       </section>
 
+      {/* ── Ranking Gap Explained (video) ── */}
+      <section className="relative py-40 bg-[#050505] border-t border-white/5 overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <Eyebrow>The Ranking Gap Explained</Eyebrow>
+          <h2 className="font-display text-3xl md:text-5xl font-black tracking-tighter text-white mb-10 uppercase italic leading-tight">
+            See How The <span className="text-cyan-400">Ranking Gap</span> Works
+          </h2>
+          <p className="text-gray-400 text-lg font-medium mb-4 max-w-2xl mx-auto" style={{ lineHeight: "1.9" }}>
+            Your roofing competitors may not simply be ranking higher than you. They may be visible across hundreds
+            of relevant searches your website isn't competing for at all.
+          </p>
+          <p className="text-gray-400 text-lg font-medium mb-16 max-w-2xl mx-auto" style={{ lineHeight: "1.9" }}>
+            Watch this short video to see how search coverage, competitor gaps, and Query Expansion can reveal
+            opportunities traditional keyword tracking may miss.
+          </p>
+
+          <div className="relative max-w-3xl mx-auto mb-20">
+            <div className="aspect-video w-full rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_60px_rgba(6,182,212,0.15)]">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/N4z4ntrDiHM"
+                title="See How The Ranking Gap Works"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <h3 className="font-display text-2xl md:text-3xl font-black tracking-tighter text-white mb-6 uppercase italic">
+            Now Find Your Own Ranking Gaps
+          </h3>
+          <p className="text-gray-400 text-lg font-medium mb-10 max-w-xl mx-auto">
+            You've seen how the Ranking Gap works. Now let's see what may be happening with your roofing website.
+          </p>
+
+          <Link to="/audit">
+            <Button
+              size="lg"
+              className="bg-[#00b8db] text-black hover:bg-white px-10 py-8 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_30px_rgba(0,184,219,0.3)] transition-all active:scale-95 inline-flex items-center"
+            >
+              Find My Ranking Gaps <ArrowRight className="ml-3 w-5 h-5" />
+            </Button>
+          </Link>
+
+          <div className="mt-8 text-[12px] font-black uppercase tracking-[0.2em] text-gray-500">
+            Free Roofing Ranking Gap Analysis &bull; No Credit Card Required
+          </div>
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(6,182,212,0.06),transparent_60%)] pointer-events-none" />
+      </section>
+
       {/* ── Not just ranking higher ── */}
       <section className="py-32 bg-black border-t border-white/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
