@@ -96,26 +96,33 @@ const receiveCards = [
 const systemLayers = [
   {
     id: "01",
-    title: "Compact Keywords",
-    description: "Identify the commercial topics closest to revenue.",
+    title: "Keyword Mapping",
+    tagline: "Map the Search Market",
+    description:
+      "Identify the high-value services, searches, topics, locations, and intent patterns your roofing company needs to compete for.",
     icon: <Layers className="w-6 h-6 text-cyan-400" />,
   },
   {
     id: "02",
     title: "Topical Authority",
-    description: "Build sufficient subject coverage around the services you want to own.",
+    tagline: "Build Subject Depth",
+    description:
+      "Create the supporting content and topical relationships search engines and AI systems need to understand what your company is relevant for.",
     icon: <Zap className="w-6 h-6 text-cyan-400" />,
   },
   {
     id: "03",
     title: "Page Authority",
-    description: "Strengthen the pages that actually need to rank.",
+    tagline: "Strengthen the Pages That Matter",
+    description: "Concentrate internal and external authority around your highest-value service and conversion pages.",
     icon: <Target className="w-6 h-6 text-cyan-400" />,
   },
   {
     id: "04",
     title: "Query Expansion",
-    description: "Expand core services into the complete universe of relevant customer searches.",
+    tagline: "Expand Search Coverage",
+    description:
+      "Go beyond obvious keywords to uncover the questions, comparisons, problems, costs, services, and related searches your customers actually use.",
     icon: <Search className="w-6 h-6 text-cyan-400" />,
   },
 ];
@@ -713,9 +720,10 @@ export default function RoofingRankingGap() {
                       {layer.icon}
                     </div>
                     <div className="text-[12px] font-black text-gray-700 mb-2 uppercase tracking-[0.2em]">{layer.id}</div>
-                    <CardTitle className="font-display text-xl font-black italic uppercase tracking-tighter text-white">
+                    <CardTitle className="font-display text-xl font-black italic uppercase tracking-tighter text-white mb-1">
                       {layer.title}
                     </CardTitle>
+                    <p className="text-cyan-400 font-black uppercase tracking-widest text-[11px]">{layer.tagline}</p>
                   </CardHeader>
                   <CardContent className="relative z-10">
                     <p className="text-gray-500 text-[14px] leading-relaxed font-medium">{layer.description}</p>
