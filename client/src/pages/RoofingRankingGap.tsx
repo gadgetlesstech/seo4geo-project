@@ -340,7 +340,7 @@ export default function RoofingRankingGap() {
       <section className="relative py-32 bg-black border-t border-white/5 overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <Eyebrow>Example Roofing Market Analysis</Eyebrow>
+            <Eyebrow>Sample Roofing Search Coverage Comparison</Eyebrow>
           </div>
 
           <div className="relative mb-6">
@@ -377,8 +377,9 @@ export default function RoofingRankingGap() {
             </div>
           </div>
 
-          <p className="text-center text-gray-600 text-[11px] font-black uppercase tracking-widest mb-16">
-            Illustrative example only &mdash; not an actual measurement of any specific business.
+          <p className="text-center text-gray-500 text-xs font-medium mb-16">
+            Sample data shown for demonstration. Run your analysis to see your actual search coverage and
+            competitor gaps.
           </p>
 
           <div className="text-center max-w-2xl mx-auto">
