@@ -378,7 +378,7 @@ export default function RoofingRankingGap() {
           </div>
 
           <p className="text-center text-gray-500 text-xs font-medium mb-16">
-            Sample data shown for demonstration. Run your analysis to see your actual search coverage and
+            Average data shown for demonstration. Run your analysis to see your actual search coverage and
             competitor gaps.
           </p>
 
