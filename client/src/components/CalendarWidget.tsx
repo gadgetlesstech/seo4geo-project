@@ -1,8 +1,22 @@
+import { useEffect } from "react";
+import { trackStandard } from "@/src/lib/pixel";
+
 interface CalendarWidgetProps {
   onClose: () => void;
 }
 
 export default function CalendarWidget({ onClose }: CalendarWidgetProps) {
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== "https://calendly.com") return;
+      if (event.data?.event === "calendly.event_scheduled") {
+        trackStandard("Schedule");
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, []);
+
   return (
     <div className="h-full flex flex-col">
       <div className="flex items-center mb-4">

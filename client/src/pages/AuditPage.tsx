@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { ArrowRight, Loader2, TrendingUp, Users, Globe, Star, CheckCircle2, MapPin, BarChart2, Sparkles, Shield, Link2, AlertTriangle, Search, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { trackStandard, trackCustom } from "@/src/lib/pixel";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -204,6 +205,7 @@ export default function AuditPage() {
     setUnlocked(false);
     setLoadingStepIndex(0);
     setLoadingTipIndex(0);
+    trackCustom("AuditStart", { keyword, city });
 
     const stepInterval = window.setInterval(() => {
       setLoadingStepIndex((i) => Math.min(i + 1, loadingSteps.length - 1));
@@ -221,6 +223,7 @@ export default function AuditPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Audit failed");
       setResult(data);
+      trackCustom("AuditComplete", { keyword, city });
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -256,6 +259,7 @@ export default function AuditPage() {
           report: result?.report || "",
         }),
       });
+      trackStandard("Lead");
     } catch (_) {}
     setGateLoading(false);
     setUnlocked(true);

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { trackStandard } from "./lib/pixel";
 import Home from "./pages/Home";
 import Strategy from "./pages/Strategy";
 import ClusterPage from "./pages/ClusterPage";
@@ -27,6 +28,22 @@ function ScrollToTop() {
       window.scrollTo(0, 0);
     }
   }, [pathname, hash, state]);
+  return null;
+}
+
+function PixelPageView() {
+  const { pathname } = useLocation();
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    // The base snippet in index.html already fires PageView on initial load.
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    trackStandard("PageView");
+  }, [pathname]);
+
   return null;
 }
 
@@ -61,6 +78,7 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
+      <PixelPageView />
       <Layout />
     </Router>
   );

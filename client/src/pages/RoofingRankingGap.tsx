@@ -29,6 +29,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import videoThumbnail from "@/src/assets/roofing-ranking-gap-showdown.png";
+import { trackCustom } from "@/src/lib/pixel";
 
 const obviousKeywords = ["roofing company", "roofer near me", "roof repair", "roof replacement"];
 
@@ -946,7 +947,10 @@ export default function RoofingRankingGap() {
           </div>
 
           <Button
-            onClick={() => window.dispatchEvent(new CustomEvent("open-calendar"))}
+            onClick={() => {
+              trackCustom("BlueprintCTA");
+              window.dispatchEvent(new CustomEvent("open-calendar"));
+            }}
             size="lg"
             className="bg-white text-black hover:bg-cyan-400 px-16 py-10 rounded-md text-sm font-black uppercase tracking-widest shadow-[0_0_40px_rgba(255,255,255,0.15)] transition-all inline-flex items-center mb-10"
           >
