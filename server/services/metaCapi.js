@@ -44,6 +44,13 @@ export async function sendMetaCapiEvent({ eventName, eventId, req, email, custom
     ],
   };
 
+  // Only set while verifying in Events Manager > Test Events. Remove
+  // META_CAPI_TEST_EVENT_CODE from the environment once confirmed working,
+  // otherwise these events keep showing as test data instead of real traffic.
+  if (process.env.META_CAPI_TEST_EVENT_CODE) {
+    payload.test_event_code = process.env.META_CAPI_TEST_EVENT_CODE;
+  }
+
   try {
     const res = await fetch(
       `https://graph.facebook.com/${GRAPH_VERSION}/${pixelId}/events?access_token=${accessToken}`,
