@@ -1,10 +1,21 @@
 import express from 'express';
+import { sendMetaCapiEvent } from '../services/metaCapi.js';
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-  const { name, email, website, source, report } = req.body;
+  const { name, email, website, source, report, metaEventId } = req.body;
   if (!email) return res.status(400).json({ error: 'email required' });
+
+  if (metaEventId) {
+    sendMetaCapiEvent({
+      eventName: 'Lead',
+      eventId: metaEventId,
+      req,
+      email,
+      customData: { content_name: source, website },
+    });
+  }
 
   const webhookUrl = process.env.N8N_WEBHOOK_URL;
   if (!webhookUrl) {

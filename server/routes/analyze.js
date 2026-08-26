@@ -4,6 +4,7 @@ import { getDomainKeywordOverlap } from './keywords.js';
 import { crawlPage } from './crawl.js';
 import { generateGapAnalysis } from '../services/claude.js';
 import { sendLeadToN8n } from '../services/n8n.js';
+import { sendMetaCapiEvent } from '../services/metaCapi.js';
 import {
   getDomainOverview,
   getDomainCompetitors,
@@ -31,10 +32,19 @@ import {
 const router = Router();
 
 router.post('/', async (req, res) => {
-  const { url, keyword, city } = req.body;
+  const { url, keyword, city, metaEventIds } = req.body;
 
   if (!url || !keyword || !city) {
     return res.status(400).json({ error: 'url, keyword, and city are required' });
+  }
+
+  if (metaEventIds?.start) {
+    sendMetaCapiEvent({
+      eventName: 'AuditStart',
+      eventId: metaEventIds.start,
+      req,
+      customData: { keyword, city },
+    });
   }
 
   try {
@@ -185,6 +195,15 @@ router.post('/', async (req, res) => {
     };
 
     const report = await generateGapAnalysis(auditData);
+
+    if (metaEventIds?.complete) {
+      sendMetaCapiEvent({
+        eventName: 'AuditComplete',
+        eventId: metaEventIds.complete,
+        req,
+        customData: { keyword, city },
+      });
+    }
 
     res.json({ success: true, report, auditData });
   } catch (err) {

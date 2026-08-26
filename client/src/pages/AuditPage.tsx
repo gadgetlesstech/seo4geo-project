@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { ArrowRight, Loader2, TrendingUp, Users, Globe, Star, CheckCircle2, MapPin, BarChart2, Sparkles, Shield, Link2, AlertTriangle, Search, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { trackStandard, trackCustom } from "@/src/lib/pixel";
+import { trackStandard, trackCustom, generateEventId } from "@/src/lib/pixel";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -205,7 +205,10 @@ export default function AuditPage() {
     setUnlocked(false);
     setLoadingStepIndex(0);
     setLoadingTipIndex(0);
-    trackCustom("AuditStart", { keyword, city });
+
+    const startEventId = generateEventId();
+    const completeEventId = generateEventId();
+    trackCustom("AuditStart", { keyword, city }, startEventId);
 
     const stepInterval = window.setInterval(() => {
       setLoadingStepIndex((i) => Math.min(i + 1, loadingSteps.length - 1));
@@ -218,12 +221,17 @@ export default function AuditPage() {
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url, keyword, city }),
+        body: JSON.stringify({
+          url,
+          keyword,
+          city,
+          metaEventIds: { start: startEventId, complete: completeEventId },
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Audit failed");
       setResult(data);
-      trackCustom("AuditComplete", { keyword, city });
+      trackCustom("AuditComplete", { keyword, city }, completeEventId);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -248,6 +256,7 @@ export default function AuditPage() {
         setGateLimitReached(true);
         return;
       }
+      const leadEventId = generateEventId();
       await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -257,9 +266,10 @@ export default function AuditPage() {
           website: result?.auditData?.url || "",
           source: "seo4geo_audit_gate",
           report: result?.report || "",
+          metaEventId: leadEventId,
         }),
       });
-      trackStandard("Lead");
+      trackStandard("Lead", undefined, leadEventId);
     } catch (_) {}
     setGateLoading(false);
     setUnlocked(true);
