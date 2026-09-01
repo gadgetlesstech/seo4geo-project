@@ -180,6 +180,33 @@ export default function Home() {
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
       </section>
 
+      {/* ── Video ── */}
+      <section className="py-32 bg-black border-y border-white/5">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-cyan-400 font-black uppercase tracking-[0.3em] text-[12px] mb-6 flex items-center justify-center">
+              <div className="w-12 h-px bg-cyan-400/30 mr-4"/>
+              See It In Action
+              <div className="w-12 h-px bg-cyan-400/30 ml-4"/>
+            </span>
+            <h2 className="font-display text-4xl md:text-5xl font-black tracking-tighter text-white mb-6 uppercase italic">
+              WATCH HOW <span className="text-cyan-400">SEO4GEO</span> WORKS
+            </h2>
+          </div>
+          <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(6,182,212,0.15)] aspect-video">
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/4-KAm3jsl-k"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ── Ecosystem ── */}
       <section className="py-32 bg-black border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
