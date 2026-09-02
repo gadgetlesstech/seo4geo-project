@@ -31,6 +31,59 @@ import {
 
 const router = Router();
 
+// Directories, marketplaces, and platforms a local business can never realistically
+// out-rank organically — these pollute "organic SEO competitors" and content-gap results.
+const DIRECTORY_DOMAIN_BLOCKLIST = new Set([
+  'facebook.com', 'instagram.com', 'twitter.com', 'x.com', 'youtube.com', 'linkedin.com',
+  'pinterest.com', 'tiktok.com', 'reddit.com', 'nextdoor.com', 'wikipedia.org',
+  'yelp.com', 'angi.com', 'angieslist.com', 'homeadvisor.com', 'thumbtack.com',
+  'bbb.org', 'mapquest.com', 'manta.com', 'yellowpages.com', 'superpages.com',
+  'foursquare.com', 'tripadvisor.com', 'houzz.com', 'porch.com', 'thervo.com',
+  'indeed.com', 'glassdoor.com', 'craigslist.org', 'buildzoom.com', 'thebluebook.com',
+  'procore.com', 'ferguson.com', 'birdeye.com', 'podium.com', 'nicejob.com',
+  'homeguide.com', 'networx.com', 'bark.com', 'expertise.com', 'clutch.co', 'trustpilot.com',
+  'amazon.com', 'walmart.com', 'homedepot.com', 'lowes.com', 'target.com', 'ebay.com',
+  'google.com', 'bing.com', 'yahoo.com', 'msn.com', 'aol.com', 'apple.com', 'microsoft.com',
+  // National equipment manufacturers/suppliers — never a real local-search competitor
+  'carrier.com', 'trane.com', 'lennox.com', 'rheem.com', 'goodmanmfg.com',
+  'americanstandardair.com', 'daikincomfort.com', 'mitsubishicomfort.com',
+  'york.com', 'bryant.com', 'ruud.com',
+]);
+
+function isDirectoryDomain(domain) {
+  const d = (domain ?? '').replace(/^www\./, '').toLowerCase();
+  if (!d) return true;
+  for (const blocked of DIRECTORY_DOMAIN_BLOCKLIST) {
+    if (d === blocked || d.endsWith(`.${blocked}`)) return true;
+  }
+  return false;
+}
+
+// "tudorhvac.com" -> "tudorhvac" — lets us catch brand-variant domains (e.g.
+// "tudorhvacmechanical.com") that DataForSEO lists as a "competitor" to itself.
+function domainRoot(domain) {
+  const host = (domain ?? '').replace(/^https?:\/\//, '').replace(/^www\./, '').toLowerCase().split('/')[0];
+  return host.replace(/\.[^.]+$/, '').replace(/[^a-z0-9]/g, '');
+}
+
+// Drop the target's own domain (including brand-variant domains) and any
+// directory/platform noise from a competitor list.
+function filterRealCompetitors(competitors, userDomain) {
+  const normalizedUser = userDomain.replace(/^www\./, '').toLowerCase();
+  const userRoot = domainRoot(userDomain);
+  return competitors.filter(c => {
+    const d = (c.domain ?? '').replace(/^www\./, '').toLowerCase();
+    if (!d || d === normalizedUser) return false;
+    if (isDirectoryDomain(d)) return false;
+    const compRoot = domainRoot(d);
+    if (userRoot.length >= 5 && compRoot.length >= 5 &&
+        (compRoot.startsWith(userRoot) || userRoot.startsWith(compRoot))) {
+      return false;
+    }
+    return true;
+  });
+}
+
 router.post('/', async (req, res) => {
   const { url, keyword, city, metaEventIds } = req.body;
 
@@ -75,7 +128,7 @@ router.post('/', async (req, res) => {
     ] = await Promise.all([
       getDomainKeywordOverlap(userDomain, competitorDomains, keyword, competitorTitles),
       getDomainOverview(userDomain),
-      getDomainCompetitors(userDomain, 10),
+      getDomainCompetitors(userDomain, 20),
       getRankedKeywordsFull(userDomain, 200),
       getBacklinkSummary(userDomain),
       getOnPageInstant(url),
@@ -85,8 +138,12 @@ router.post('/', async (req, res) => {
       getLlmMentionMetrics(userDomain),
     ]);
 
+    // Drop the target's own domain plus directories/marketplaces/platforms — a local
+    // business never actually competes with itself, Yelp, Facebook, Home Depot, etc.
+    const realSeoCompetitors = filterRealCompetitors(seoCompetitors, userDomain).slice(0, 10);
+
     // Phase 3: Content gap from top 3 organic competitors
-    const topCompetitorDomains = seoCompetitors.slice(0, 3).map(c => c.domain);
+    const topCompetitorDomains = realSeoCompetitors.slice(0, 3).map(c => c.domain);
     const gapResults = await Promise.allSettled(
       topCompetitorDomains.map(c => getContentGap(userDomain, c, 200))
     );
@@ -153,7 +210,7 @@ router.post('/', async (req, res) => {
     const dimensionScores = {
       keyword:     computeKeywordScore(rankedKeywords),
       technical:   technicalResult.score,
-      competitive: computeCompetitiveScore(domainOverview, seoCompetitors),
+      competitive: computeCompetitiveScore(domainOverview, realSeoCompetitors),
       content:     computeContentScore(rankedKeywords),
       authority:   computeAuthorityScore(backlinkSummary),
     };
@@ -171,7 +228,7 @@ router.post('/', async (req, res) => {
       competitors,
       keywordData,
       domainOverview,
-      seoCompetitors,
+      seoCompetitors: realSeoCompetitors,
       rankedKeywords,
       backlinkSummary,
       onPageData,
