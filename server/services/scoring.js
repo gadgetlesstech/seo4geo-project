@@ -38,32 +38,40 @@ export function computeTechnicalScore(onPageItem) {
   const checks = onPageItem.checks ?? {};
   const meta = onPageItem.meta ?? {};
   const timing = onPageItem.page_timing ?? {};
-  const content = onPageItem.content ?? {};
+  // Word count and other content stats live under meta.content, not the item root
+  const content = meta.content ?? {};
 
   let score = 100;
   const criticalIssues = [];
   const highIssues = [];
   const mediumIssues = [];
 
-  // Critical (-15 each, max -60)
-  if (checks.no_index) { criticalIssues.push('Page is noindexed — invisible to Google'); score -= 15; }
+  // Critical (-15 each)
   if (checks.is_4xx_code) { criticalIssues.push(`4xx client error (${onPageItem.status_code})`); score -= 15; }
   if (checks.is_5xx_code) { criticalIssues.push(`5xx server error (${onPageItem.status_code})`); score -= 15; }
-  if (checks.canonical_to_redirect) { criticalIssues.push('Canonical URL points to a redirect'); score -= 15; }
+  if (checks.is_broken) { criticalIssues.push('Page is broken — failed to load correctly'); score -= 15; }
+  if (!checks.is_https) { criticalIssues.push('Site is not served over HTTPS'); score -= 15; }
 
-  // High (-5 each, max -30)
+  // High (-5 each)
   if (!meta.title) { highIssues.push('Missing page title tag'); score -= 5; }
   if (!meta.description) { highIssues.push('Missing meta description'); score -= 5; }
   if (checks.no_h1_tag) { highIssues.push('No H1 heading found'); score -= 5; }
   if (checks.is_redirect) { highIssues.push('Page is a redirect'); score -= 5; }
   if ((timing.time_to_interactive ?? 0) > 4000) { highIssues.push(`Slow page load — ${Math.round((timing.time_to_interactive ?? 0) / 1000)}s to interactive`); score -= 5; }
-  if (checks.duplicate_title) { highIssues.push('Duplicate title detected across pages'); score -= 5; }
-  if (checks.broken_links) { highIssues.push('Broken links on page'); score -= 5; }
+  if (checks.duplicate_title_tag) { highIssues.push('Duplicate title detected across pages'); score -= 5; }
+  if (onPageItem.broken_links) { highIssues.push('Broken links on page'); score -= 5; }
+  if (onPageItem.duplicate_content) { highIssues.push('Duplicate content detected across pages'); score -= 5; }
+  if (checks.has_render_blocking_resources) { highIssues.push('Render-blocking scripts/stylesheets slow initial page load'); score -= 5; }
 
   // Medium (-2 each)
   if (!checks.canonical) { mediumIssues.push('Missing canonical tag'); score -= 2; }
   if ((content.plain_text_word_count ?? 0) < 300) { mediumIssues.push(`Thin content — only ${content.plain_text_word_count ?? 0} words`); score -= 2; }
   if (checks.lorem_ipsum) { mediumIssues.push('Lorem ipsum placeholder text present'); score -= 2; }
+  if (checks.low_content_rate) { mediumIssues.push('Low text-to-code ratio — content thin relative to page size'); score -= 2; }
+  if (checks.size_greater_than_3mb) { mediumIssues.push('Page size exceeds 3MB'); score -= 2; }
+  if (checks.no_image_alt) { mediumIssues.push('Images missing alt text'); score -= 2; }
+  if (checks.title_too_long) { mediumIssues.push('Title tag is too long'); score -= 2; }
+  if (checks.title_too_short) { mediumIssues.push('Title tag is too short'); score -= 2; }
   if (checks.no_favicon) { mediumIssues.push('No favicon set'); score -= 1; }
 
   return {
