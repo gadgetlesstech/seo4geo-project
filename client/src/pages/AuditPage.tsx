@@ -89,7 +89,6 @@ interface AiData {
 
 interface DomainOverview {
   metrics?: { organic?: { etv?: number; count?: number } };
-  rank?: number;
 }
 
 interface AuditResult {
@@ -440,7 +439,7 @@ export default function AuditPage() {
                           <p className="text-[11px] text-gray-600 uppercase tracking-widest font-bold">Ranking Keywords</p>
                         </div>
                         <div>
-                          <p className="text-2xl font-black text-white">{ad.domainOverview.rank ?? 0}/1000</p>
+                          <p className="text-2xl font-black text-white">{ad.backlinkSummary?.rank ?? 0}/1000</p>
                           <p className="text-[11px] text-gray-600 uppercase tracking-widest font-bold">Domain Rank</p>
                         </div>
                       </div>

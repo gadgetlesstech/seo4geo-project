@@ -57,7 +57,8 @@ export async function getDomainOverview(domain) {
   const data = await safeDataForSEORequest('/dataforseo_labs/google/domain_rank_overview/live', [
     { target: domain, location_name: 'United States', language_code: 'en' },
   ]);
-  return data?.tasks?.[0]?.result?.[0] ?? null;
+  // Metrics live under result[0].items[0], not result[0] itself
+  return data?.tasks?.[0]?.result?.[0]?.items?.[0] ?? null;
 }
 
 // Top organic SEO competitors by SERP overlap
@@ -81,7 +82,7 @@ export async function getRankedKeywordsFull(domain, limit = 200) {
 }
 
 // Keywords a competitor ranks for that you don't (content gap)
-export async function getContentGap(yourDomain, competitorDomain, limit = 50) {
+export async function getContentGap(yourDomain, competitorDomain, limit = 50, maxVolume = 10_000) {
   const data = await safeDataForSEORequest('/dataforseo_labs/google/domain_intersection/live', [{
     target1: competitorDomain,
     target2: yourDomain,
@@ -89,6 +90,9 @@ export async function getContentGap(yourDomain, competitorDomain, limit = 50) {
     location_name: 'United States',
     language_code: 'en',
     limit,
+    // Cap volume server-side — sorting by volume desc without this filter fills the
+    // whole `limit` budget with mega-volume head/brand terms that get discarded downstream.
+    filters: [['keyword_data.keyword_info.search_volume', '<=', maxVolume]],
     order_by: ['keyword_data.keyword_info.search_volume,desc'],
   }]);
   return data?.tasks?.[0]?.result?.[0]?.items ?? [];
@@ -99,7 +103,14 @@ export async function getBacklinkSummary(domain) {
   const data = await safeDataForSEORequest('/backlinks/summary/live', [
     { target: domain, include_subdomains: true },
   ]);
-  return data?.tasks?.[0]?.result?.[0] ?? null;
+  const result = data?.tasks?.[0]?.result?.[0] ?? null;
+  if (result) {
+    // DataForSEO has no direct "dofollow backlinks" field — derive it from
+    // total backlinks minus the ones flagged nofollow in referring_links_attributes.
+    const nofollow = result.referring_links_attributes?.nofollow ?? 0;
+    result.backlinks_dofollow = Math.max(0, (result.backlinks ?? 0) - nofollow);
+  }
+  return result;
 }
 
 // Single-page technical audit (fast — no full crawl)
