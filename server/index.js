@@ -3,6 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { readFileSync } from 'fs';
+import { renderHtmlForRoute } from './seoMeta.js';
 import analyzeRouter from './routes/analyze.js';
 import mapsRouter from './routes/maps.js';
 import gapRouter from './routes/gap.js';
@@ -29,8 +31,12 @@ app.use('/api/gap', gapRouter);
 app.use('/api', calendarRouter);
 app.use('/auth', calendarRouter);
 
+const indexHtmlPath = join(__dirname, '../client/dist/index.html');
+const indexHtmlTemplate = readFileSync(indexHtmlPath, 'utf-8');
+
 app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, '../client/dist/index.html'));
+  res.set('Content-Type', 'text/html');
+  res.send(renderHtmlForRoute(indexHtmlTemplate, req.path));
 });
 
 const httpServer = app.listen(PORT, () => {
